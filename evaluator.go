@@ -1,9 +1,8 @@
 package pencilCalculator
 
 import (
-	"timhilco/go-PencilCalculator/parser"
-
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/timhilco/go-PencilCalculator/parser"
 )
 
 func Evalute(input string) PencilResult {

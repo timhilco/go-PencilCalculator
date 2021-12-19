@@ -1,4 +1,4 @@
-module timhilco/go-PencilCalculator
+module github.com/timhilco/go-PencilCalculator
 
 go 1.17
 
