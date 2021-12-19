@@ -1,0 +1,20 @@
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"EnterProg"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal: INT(18) -> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal <> Binary Operator: PLUS(45) -> +"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal: PLUS(45) -> +"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal: INT(18) -> 200"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"1:Integer --> 200"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal <> Binary Operator: PLUS(45) -> +"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal: PLUS(45) -> +"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"1:Integer --> 200"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"VisitTermnal: INT(18) -> 300"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"1:Integer --> 200"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"2:Integer --> 300"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"ExitAddingExpression"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"0:Integer --> 100"}
+{"level":"info","time":"2021-12-18T16:21:34-05:00","message":"1:Integer --> 500"}
