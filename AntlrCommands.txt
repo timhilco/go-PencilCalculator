@@ -1,4 +1,4 @@
 export CLASSPATH=".:/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH"
-java org.antlr.v4.Tool -Dlanguage=Go -o parser HilcoPencilParser.g4
+java org.antlr.v4.Tool -Dlanguage=Go -o parser HilcoPencilGrammarParser.g4
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
