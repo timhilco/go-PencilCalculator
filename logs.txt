@@ -1,54 +1,60 @@
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"EnterProgram"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: IF(6) -> if"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: INT(43) -> 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"ExitInteger: 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Integer --> 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal <> Binary Operator: GREATER_THAN(17) -> >"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Integer --> 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: INT(43) -> 2"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Integer --> 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"ExitInteger: 2"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Integer --> 1"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"1:Integer --> 2"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"ExitBinaryRelationalCalculator"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: THEN(7) -> then"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: INT(43) -> 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"ExitInteger: 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: ELSE(8) -> else"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"VisitTermnal: INT(43) -> 4"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"ExitInteger: 4"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"0:Boolean --> false"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T20:39:30-05:00","message":"2:Integer --> 4"}
-{"level":"info","time":"2021-12-21T20:39:58-05:00","message":"ExitIf: "}
-{"level":"info","time":"2021-12-21T20:40:01-05:00","message":"0:Integer --> 4"}
-o","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 2"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"VisitTermnal: RPAREN(31) -> )"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 2"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"Enter ExitAtFunction: "}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 2"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"1:Integer --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"ExitAtFunction: Calling Function: Max, Arfs= 2"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"ExitAtFunction: Float --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"Exit ExitAtFunction: "}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"VisitTermnal <> Binary Operator: ADD(15) -> +"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"VisitTermnal: INT(43) -> 8"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"ExitInteger: 8"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 3"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"1:Integer --> 8"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"ExitBinaryExponentialCalculator"}
-{"level":"info","time":"2021-12-21T19:46:16-05:00","message":"0:Float --> 11"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"EnterProgram"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter EnterDataAccessor: "}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit EnterDataAccessor: "}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: Employee"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: CLASSNAME(40) -> Employee"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: ."}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: DOT(36) -> ."}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: salary"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: ID(41) -> salary"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter ExitDataAccessor: "}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Float --> 50000"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit ExitDataAccessor: "}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"VisitTermnal <> Binary Operator: GREATER_THAN(17) -> >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Float --> 50000"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: GREATER_THAN(17) -> >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Float --> 50000"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: INT(43) -> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"ExitInteger: 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Float --> 50000"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Integer --> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"ExitBinaryRelationalCalculator"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"VisitTermnal <> Binary Operator: AND(23) -> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: AND(23) -> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: INT(43) -> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"ExitInteger: 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"2:Integer --> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"VisitTermnal <> Binary Operator: GREATER_THAN(17) -> >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"2:Integer --> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: GREATER_THAN(17) -> >"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter VisitTermnal: 1"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"2:Integer --> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit VisitTermnal: INT(43) -> 1"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"ExitInteger: 1"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"2:Integer --> 10"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"3:Integer --> 1"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"ExitBinaryRelationalCalculator"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"1:Unknown --> AND"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"2:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Enter ExitBinaryLogicalCalculator"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"0:Boolean --> true"}
+{"level":"info","time":"2021-12-22T23:05:16-05:00","message":"Exit ExitBinaryLogicalCalculator"}

@@ -1,13 +1,22 @@
 package pencilCalculator
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 )
 
 func Test1(t *testing.T) {
-	statment := "if 1>2 then 3 else 4"
-	result := Evaluate(statment)
+	empJson := `{
+	"id" : 11,
+	"name" : "Irshad",
+	"department" : "IT",
+	"designation" : "Product Manager",
+	"salary": 50000
+}`
+
+	statment := "Employee.salary > 10 AND 10 > 1"
+	result := Evaluate(statment, []byte(empJson))
 	fmt.Println(result)
 }
 func TestTypeConversations(t *testing.T) {
@@ -40,24 +49,55 @@ func TestTypeConversations(t *testing.T) {
 
 }
 func TestExpresions(t *testing.T) {
-
+	empJson := `{
+		"id" : 11,
+		"name" : "Irshad",
+		"department" : "IT",
+		"designation" : "Product Manager",
+		"salary": 50000
+	}`
 	var tests = []struct {
 		expression string
 		want       interface{}
 	}{
 		{"100+200+300", int64(600)},
 		{"@Max(1,2)", float64(2.0)},
+		{"Employee.salary", float64(50000.0)},
+		{"Employee.salary > 10", true},
+		{"Employee.salary > 10 AND 10 > 1", true},
 	}
 	for _, tt := range tests {
 		testname := fmt.Sprintf("%s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
-			ans := Evaluate(tt.expression)
+			ans := Evaluate(tt.expression, []byte(empJson))
 			if ans.Value != tt.want {
 				t.Errorf("got %d, want %d", ans, tt.want)
 			}
 		})
 	}
 
+}
+func TestJSON(t *testing.T) {
+	//Simple Employee JSON object which we will parse
+	empJson := `{
+        "id" : 11,
+        "name" : "Irshad",
+        "department" : "IT",
+        "designation" : "Product Manager",
+		"salary": 50000
+	}`
+
+	// Declared an empty interface
+	var result map[string]interface{}
+
+	// Unmarshal or Decode the JSON to the interface.
+	json.Unmarshal([]byte(empJson), &result)
+
+	//Reading each value by its key
+	fmt.Println("Id :", result["id"],
+		"\nName :", result["name"],
+		"\nDepartment :", result["department"],
+		"\nSalary :", result["salary"])
 }
 
 /*

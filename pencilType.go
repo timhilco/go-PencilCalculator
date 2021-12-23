@@ -14,6 +14,7 @@ const (
 	PencilTypeArray
 	PencilTypeMap
 	PencilTypeStruct
+	PencilTypeOperation
 )
 
 type BinaryElementType int

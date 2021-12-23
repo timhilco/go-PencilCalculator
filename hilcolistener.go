@@ -1,6 +1,7 @@
 package pencilCalculator
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math"
@@ -13,16 +14,30 @@ import (
 	"github.com/timhilco/go-PencilCalculator/util/logger"
 )
 
+type dataAccessorElement struct {
+	elementName string
+	elementType string
+}
 type HilcoPencilGrammarParserListener struct {
 	*parser.BaseHilcoPencilGrammarParserListener
-	stack           []PencilResult
-	logger          *logger.HilcoLogger
-	lexer           *parser.HilcoPencilGrammarLexer
-	currentOperator string
+	stack             []PencilResult
+	logger            *logger.HilcoLogger
+	lexer             *parser.HilcoPencilGrammarLexer
+	currentOperator   string
+	inputDataObject   map[string]interface{}
+	dataAccessorStack []dataAccessorElement
+	inDataAccessor    bool
 }
 
 func (p *HilcoPencilGrammarParserListener) SetLexer(lexer *parser.HilcoPencilGrammarLexer) {
 	p.lexer = lexer
+}
+func (p *HilcoPencilGrammarParserListener) SetInputData(jsonObject []byte) {
+	var result map[string]interface{}
+
+	// Unmarshal or Decode the JSON to the interface.
+	json.Unmarshal(jsonObject, &result)
+	p.inputDataObject = result
 }
 func (p *HilcoPencilGrammarParserListener) Result() PencilResult {
 	return p.stack[0]
@@ -234,6 +249,38 @@ func (s *HilcoPencilGrammarParserListener) ExitBinaryRelationalCalculator(ctx *p
 	s.logStack()
 }
 
+// EnterBinaryLogicalCalculator is called when production BinaryLogicalCalculator is entered.
+//func ( *HilcoPencilGrammarParserListener) EnterBinaryLogicalCalculator(ctx *parser.BinaryLogicalCalculatorContext) {
+//}
+
+// ExitBinaryLogicalCalculator is called when production BinaryLogicalCalculator is exited.
+func (p *HilcoPencilGrammarParserListener) ExitBinaryLogicalCalculator(ctx *parser.BinaryLogicalCalculatorContext) {
+	p.logger.Info("Enter ExitBinaryLogicalCalculator")
+	right, operation, left := p.pop(), p.pop(), p.pop()
+	binaryType, _ := determineBinaryOperationType(left, right)
+	pr := PencilResult{}
+	switch binaryType {
+	case LeftBooleanRightBoolean:
+
+		leftBoolean := left.Value.(bool)
+		rightBoolean := right.Value.(bool)
+		var resultValue bool
+		switch operation.Value {
+		case "AND":
+			resultValue = leftBoolean && rightBoolean
+		case "OR":
+			resultValue = leftBoolean || rightBoolean
+		default:
+		}
+		pr.Type = PencilTypeBoolean
+		pr.Value = resultValue
+	default:
+	}
+	p.push(pr)
+	p.logStack()
+	p.logger.Info("Exit ExitBinaryLogicalCalculator")
+}
+
 // ExitIf is called when production If is exited.
 func (s *HilcoPencilGrammarParserListener) ExitIf(ctx *parser.IfContext) {
 	falseExpression := s.pop()
@@ -252,6 +299,7 @@ func (s *HilcoPencilGrammarParserListener) ExitIf(ctx *parser.IfContext) {
 // VisitTerminal is called when a terminal node is visited.
 
 func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode) {
+	p.logger.Info("Enter VisitTermnal: " + node.GetText())
 	token := node.GetSymbol()
 	symbol := token.GetTokenType()
 	name := p.lexer.SymbolicNames[token.GetTokenType()]
@@ -259,16 +307,39 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 	text := fmt.Sprintf("%s(%d) -> %s", name, symbol, value)
 	switch name {
 
+	case "AND":
+		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
+		pr := PencilResult{
+			Type:  PencilTypeOperation,
+			Value: name,
+		}
+		p.push(pr)
 	case "ADD",
 		"GREATER_THAN",
 		"EQUAL":
+
 		p.currentOperator = name
 		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
-
+	case "CLASSNAME":
+		if p.inDataAccessor {
+			dae := dataAccessorElement{
+				elementName: value,
+				elementType: "CLASSNAME",
+			}
+			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+		}
+	case "ID":
+		if p.inDataAccessor {
+			dae := dataAccessorElement{
+				elementName: value,
+				elementType: "ID",
+			}
+			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+		}
 	default:
-		p.logger.Info("VisitTermnal: " + text)
 	}
 	p.logStack()
+	p.logger.Info("Exit VisitTermnal: " + text)
 
 }
 
@@ -304,6 +375,57 @@ func (p *HilcoPencilGrammarParserListener) ExitAtFunction(ctx *parser.AtFunction
 	p.push(result.(PencilResult))
 	text = result.(PencilResult).String()
 	p.logger.Info("ExitAtFunction: " + text)
-	p.logger.Info("Exit ExitAtFunction: ")
 	p.logStack()
+	p.logger.Info("Exit ExitAtFunction: ")
+}
+
+// EnterDataAccessor is called when production dataAccessor is entered.
+func (p *HilcoPencilGrammarParserListener) EnterDataAccessor(ctx *parser.DataAccessorContext) {
+	p.logger.Info("Enter EnterDataAccessor: ")
+	p.dataAccessorStack = make([]dataAccessorElement, 0)
+	p.inDataAccessor = true
+	p.logStack()
+	p.logger.Info("Exit EnterDataAccessor: ")
+}
+
+// ExitDataAccessor is called when production dataAccessor is exited.
+func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAccessorContext) {
+	p.logger.Info("Enter ExitDataAccessor: ")
+
+	value := GetDataAccesorValue(1, p.inputDataObject, p.dataAccessorStack)
+	rv := reflect.ValueOf(value).Kind()
+	var resultType PencilType
+	switch rv {
+	case reflect.String:
+		resultType = PencilTypeString
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		resultType = PencilTypeInteger
+	case reflect.Float32, reflect.Float64:
+		resultType = PencilTypeFloat
+
+	default:
+		fmt.Printf("unhandled kind %s", rv)
+	}
+	fmt.Println(rv)
+	pr := PencilResult{
+		Type:  resultType,
+		Value: value,
+	}
+	p.push(pr)
+	p.inDataAccessor = false
+	p.logStack()
+	p.logger.Info("Exit ExitDataAccessor: ")
+
+}
+func GetDataAccesorValue(level int, structure interface{}, elements []dataAccessorElement) interface{} {
+	var result interface{}
+	if level == len(elements) {
+		result = structure
+	} else {
+		//text := fmt.Sprintf("aStrint:%d -> %s", level, elements[level])
+		key := elements[level].elementName
+		value := structure.(map[string]interface{})[key]
+		result = GetDataAccesorValue(level+1, value, elements)
+	}
+	return result
 }
