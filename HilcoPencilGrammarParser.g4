@@ -70,7 +70,7 @@ SpecialKeyword : 'true' {booleanTrueConstant}
 program : expression ;
 
 expression   :  caseStatement       	     			#Case
-            | switchStatement      	 					#ExpressionSwitch
+    //        | switchStatement      	 					#ExpressionSwitch
             | ifStatement           					#If
             | LPAREN expression RPAREN          		#Parens
             | MINUS expression              			#UnaryMinusCalculator
@@ -100,9 +100,10 @@ expression   :  caseStatement       	     			#Case
             ;
 
 caseStatement : CASE expression IS caseList END_CASE ;
-switchStatement : SWITCH  caseList END_SWITCH ;  
+//switchStatement : SWITCH  caseList END_SWITCH ;  
 caseList : caseItem caseList 
            | ;
+           // Add default  as lead expression before DOUBLE COlON
 caseItem : expression DOUBLE_COLON expression SEMI_COLON ;
 ifStatement : IF expression THEN expression (ELSE expression)? 
  ;

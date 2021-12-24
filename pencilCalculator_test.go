@@ -15,7 +15,7 @@ func Test1(t *testing.T) {
 	"salary": 50000
 }`
 
-	statment := "Employee.salary > 10 AND 10 > 1"
+	statment := "case Employee.department is 'ITS' :: 1; 'default' :: 2 ; endcase"
 	result := Evaluate(statment, []byte(empJson))
 	fmt.Println(result)
 }
@@ -65,9 +65,11 @@ func TestExpresions(t *testing.T) {
 		{"Employee.salary", float64(50000.0)},
 		{"Employee.salary > 10", true},
 		{"Employee.salary > 10 AND 10 > 1", true},
+		{"case Employee.department is 'IT' :: 1; 'default' :: 2 ; endcase", int64(1)},
+		{"case Employee.department is 'ITS' :: 1; 'default' :: 2 ; endcase", int64(2)},
 	}
 	for _, tt := range tests {
-		testname := fmt.Sprintf("%s", tt.expression)
+		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
 			ans := Evaluate(tt.expression, []byte(empJson))
 			if ans.Value != tt.want {

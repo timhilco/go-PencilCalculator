@@ -27,6 +27,7 @@ type HilcoPencilGrammarParserListener struct {
 	inputDataObject   map[string]interface{}
 	dataAccessorStack []dataAccessorElement
 	inDataAccessor    bool
+	inCaseItem        bool
 }
 
 func (p *HilcoPencilGrammarParserListener) SetLexer(lexer *parser.HilcoPencilGrammarLexer) {
@@ -60,6 +61,10 @@ func (l *HilcoPencilGrammarParserListener) pop() PencilResult {
 	return result
 }
 func (p *HilcoPencilGrammarParserListener) logStack() {
+	if len(p.stack) == 0 {
+		p.logger.Info("Stack is empty")
+		return
+	}
 	for i, pr := range p.stack {
 		text := fmt.Sprintf("%d:%s", i, pr.String())
 		p.logger.Info(text)
@@ -71,6 +76,8 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	var rightNumberINT int64
 	var leftNumberFLOAT float64
 	var rightNumberFLOAT float64
+	var leftString string
+	var rightString string
 	binaryType, resultType := determineBinaryOperationType(left, right)
 
 	switch binaryType {
@@ -92,6 +99,9 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		rightInteger := float64(fi.IntegerValue)
 		divisor := math.Pow10(int(fi.Precision))
 		rightNumberFLOAT = rightInteger / divisor
+	case LeftStringRightString:
+		leftString = left.Value.(string)
+		rightString = right.Value.(string)
 	case InvalidTypes:
 		return PencilResult{}, fmt.Errorf("invaild binary operation element types")
 	default:
@@ -138,6 +148,8 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			returnType = PencilTypeBoolean
 		case "BOOLEAN":
 		case "STRING":
+			result = leftString == rightString
+			returnType = PencilTypeBoolean
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -184,8 +196,8 @@ func Call(f reflect.Value, params []interface{}) (result interface{}, err error)
 	for k, param := range params {
 		in[k] = reflect.ValueOf(param)
 	}
-	var res []reflect.Value
-	res = f.Call(in)
+	//var res []reflect.Value
+	res := f.Call(in)
 	result = res[0].Interface()
 	return
 }
@@ -220,6 +232,7 @@ func (p *HilcoPencilGrammarParserListener) EnterProgram(ctx *parser.ProgramConte
 
 // ExitInteger is called when production Integer is exited.
 func (s *HilcoPencilGrammarParserListener) ExitInteger(ctx *parser.IntegerContext) {
+	s.logger.Info("Enter ExitInteger: ")
 
 	value := ctx.GetText()
 	number, _ := strconv.ParseInt(value, 10, 64)
@@ -228,7 +241,22 @@ func (s *HilcoPencilGrammarParserListener) ExitInteger(ctx *parser.IntegerContex
 		Value: number,
 	}
 	s.push(pr)
-	s.logger.Info("ExitInteger: " + value)
+	s.logger.Info("Exit ExitInteger: " + value)
+	s.logStack()
+}
+
+// ExitInteger is called when production Integer is exited.
+func (s *HilcoPencilGrammarParserListener) ExitString(ctx *parser.StringContext) {
+	s.logger.Info(" Enter ExitString: ")
+
+	value := ctx.GetText()
+	value = strings.ReplaceAll(value, "'", "")
+	pr := PencilResult{
+		Type:  PencilTypeString,
+		Value: value,
+	}
+	s.push(pr)
+	s.logger.Info(" Exit ExitString: " + value)
 	s.logStack()
 }
 func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *parser.BinaryArthmeticCalculatorContext) {
@@ -296,50 +324,96 @@ func (s *HilcoPencilGrammarParserListener) ExitIf(ctx *parser.IfContext) {
 	s.logStack()
 }
 
-// VisitTerminal is called when a terminal node is visited.
-
-func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode) {
-	p.logger.Info("Enter VisitTermnal: " + node.GetText())
-	token := node.GetSymbol()
-	symbol := token.GetTokenType()
-	name := p.lexer.SymbolicNames[token.GetTokenType()]
-	value := node.GetText()
-	text := fmt.Sprintf("%s(%d) -> %s", name, symbol, value)
-	switch name {
-
-	case "AND":
-		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
-		pr := PencilResult{
-			Type:  PencilTypeOperation,
-			Value: name,
+// EnterCaseStatement is called when production caseStatement is entered.
+func (p *HilcoPencilGrammarParserListener) EnterCaseStatement(ctx *parser.CaseStatementContext) {
+	p.logger.Info("Enter EnterCaseStatement ")
+	/*
+		pr := PencilResult {
+			Type: PencilTypeCaseStatement
+			Value: "CASE STATEMENT"
 		}
-		p.push(pr)
-	case "ADD",
-		"GREATER_THAN",
-		"EQUAL":
+		p.logStack()
+	*/
+	p.logger.Info("Exit EnterCaseStatement ")
 
-		p.currentOperator = name
-		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
-	case "CLASSNAME":
-		if p.inDataAccessor {
-			dae := dataAccessorElement{
-				elementName: value,
-				elementType: "CLASSNAME",
-			}
-			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+}
+func (cs CaseStatement) executeCaseStatement() PencilResult {
+	var hitMatchingCondition bool = false
+	pr := PencilResult{}
+	for _, ci := range cs.caseItems {
+		c1 := cs.expressionPencilResultValue
+		c2 := ci.matchValue
+		br, _ := doBinaryArithmatic(c1, c2, "EQUAL")
+		b := br.Value.(bool)
+		if b {
+			hitMatchingCondition = true
+			pr = ci.resultValue
+			break
 		}
-	case "ID":
-		if p.inDataAccessor {
-			dae := dataAccessorElement{
-				elementName: value,
-				elementType: "ID",
-			}
-			p.dataAccessorStack = append(p.dataAccessorStack, dae)
-		}
-	default:
+
 	}
+	if !hitMatchingCondition {
+		pr = cs.defaultCaseItem.resultValue
+	}
+	return pr
+}
+
+// ExitCaseStatement is called when production caseStatement is exited.
+func (p *HilcoPencilGrammarParserListener) ExitCaseStatement(ctx *parser.CaseStatementContext) {
+	p.logger.Info("Enter ExitCaseStatement ")
+	// Build Case Statement and determine value
+	caseStatement := CaseStatement{}
+	hitCaseExpression := false
+	var pr PencilResult
+	for !hitCaseExpression {
+		pr = p.pop()
+		switch pr.Type {
+		case PencilTypeCaseItem:
+			ci := pr.Value.(CaseItem)
+			mv := ci.matchValue.Value.(string)
+			if mv == "default" {
+				caseStatement.defaultCaseItem = ci
+			} else {
+				caseStatement.caseItems = append(caseStatement.caseItems, ci)
+			}
+		default:
+			caseStatement.expressionPencilResultValue = pr
+			hitCaseExpression = true
+
+		}
+
+	}
+	newResult := caseStatement.executeCaseStatement()
+	p.push(newResult)
 	p.logStack()
-	p.logger.Info("Exit VisitTermnal: " + text)
+	p.logger.Info("Exit ExitCaseStatement ")
+
+}
+
+// EnterCaseItem is called when production caseItem is entered.
+func (p *HilcoPencilGrammarParserListener) EnterCaseItem(ctx *parser.CaseItemContext) {
+	p.logger.Info("Enter EnterCaseItem ")
+	p.inCaseItem = true
+	p.logStack()
+	p.logger.Info("Exit EnterCaseItem ")
+
+}
+
+// ExitCaseItem is called when production caseItem is exited.
+func (p *HilcoPencilGrammarParserListener) ExitCaseItem(ctx *parser.CaseItemContext) {
+	p.logger.Info("Enter ExitCaseItem ")
+	resultValue, matchValue := p.pop(), p.pop()
+	pr := PencilResult{
+		Type: PencilTypeCaseItem,
+		Value: CaseItem{
+			matchValue:  matchValue,
+			resultValue: resultValue,
+		},
+	}
+	p.push(pr)
+	p.inCaseItem = false
+	p.logStack()
+	p.logger.Info("Exit ExitCaseItem ")
 
 }
 
@@ -406,7 +480,7 @@ func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAcce
 	default:
 		fmt.Printf("unhandled kind %s", rv)
 	}
-	fmt.Println(rv)
+	//fmt.Println(rv)
 	pr := PencilResult{
 		Type:  resultType,
 		Value: value,
@@ -428,4 +502,51 @@ func GetDataAccesorValue(level int, structure interface{}, elements []dataAccess
 		result = GetDataAccesorValue(level+1, value, elements)
 	}
 	return result
+}
+
+// VisitTerminal is called when a terminal node is visited.
+func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode) {
+	p.logger.Info("Enter VisitTerminal: " + node.GetText())
+	token := node.GetSymbol()
+	symbol := token.GetTokenType()
+	name := p.lexer.SymbolicNames[token.GetTokenType()]
+	value := node.GetText()
+	text := fmt.Sprintf("%s(%d) -> %s", name, symbol, value)
+	switch name {
+
+	case "AND":
+		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
+		pr := PencilResult{
+			Type:  PencilTypeOperation,
+			Value: name,
+		}
+		p.push(pr)
+	case "ADD",
+		"GREATER_THAN",
+		"EQUAL":
+
+		p.currentOperator = name
+		p.logger.Info("VisitTerminal <> Binary Operator: " + text)
+	case "CLASSNAME":
+		if p.inDataAccessor {
+			dae := dataAccessorElement{
+				elementName: value,
+				elementType: "CLASSNAME",
+			}
+			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+		}
+	case "ID":
+		if p.inDataAccessor {
+			dae := dataAccessorElement{
+				elementName: value,
+				elementType: "ID",
+			}
+			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+		}
+	default:
+		p.logger.Info("VisitTerminal <> Ignoring Terminal:  " + name)
+	}
+	p.logStack()
+	p.logger.Info("Exit VisitTerminal: " + text)
+
 }
