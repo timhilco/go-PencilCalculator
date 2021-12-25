@@ -1,6 +1,7 @@
 package pencilCalculator
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -14,9 +15,9 @@ func Test1(t *testing.T) {
 	"designation" : "Product Manager",
 	"salary": 50000
 }`
-
-	statment := "case Employee.department is 'ITS' :: 1; 'default' :: 2 ; endcase"
-	result := Evaluate(statment, []byte(empJson))
+	context := context.Background()
+	statment := "{01-01-2021}"
+	result := Evaluate(context, statment, []byte(empJson))
 	fmt.Println(result)
 }
 func TestTypeConversations(t *testing.T) {
@@ -49,6 +50,7 @@ func TestTypeConversations(t *testing.T) {
 
 }
 func TestExpresions(t *testing.T) {
+	context := context.Background()
 	empJson := `{
 		"id" : 11,
 		"name" : "Irshad",
@@ -71,9 +73,39 @@ func TestExpresions(t *testing.T) {
 	for _, tt := range tests {
 		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
-			ans := Evaluate(tt.expression, []byte(empJson))
+			ans := Evaluate(context, tt.expression, []byte(empJson))
 			if ans.Value != tt.want {
 				t.Errorf("got %d, want %d", ans, tt.want)
+			}
+		})
+	}
+
+}
+func TestFloat(t *testing.T) {
+
+	var tests = []struct {
+		expression string
+		want       float64
+	}{
+		{"123.45", float64(123.45)},
+		{"123.1234567", float64(123.123457)},
+		{"123.1234565", float64(123.123456)},
+		{"123.1234564", float64(123.123456)},
+		{"123.123456", float64(123.123456)},
+		{"123.12345", float64(123.12345)},
+		{"123.1234", float64(123.1234)},
+		{"123.123", float64(123.123)},
+		{"123.12", float64(123.12)},
+		{"123.1", float64(123.1)},
+		{"123", float64(123)},
+	}
+	for _, tt := range tests {
+		testname := fmt.Sprintf("Expression: %s", tt.expression)
+		t.Run(testname, func(t *testing.T) {
+			fi := convertFloatStringToFloatIntegerNumber(tt.expression)
+			ans := fi.convertToFloat6Decimal()
+			if ans != tt.want {
+				t.Errorf("got %f, want %f", ans, tt.want)
 			}
 		})
 	}

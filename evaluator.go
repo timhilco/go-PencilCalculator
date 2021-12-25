@@ -1,11 +1,13 @@
 package pencilCalculator
 
 import (
+	"context"
+
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/timhilco/go-PencilCalculator/parser"
 )
 
-func Evaluate(input string, jsonObject []byte) PencilResult {
+func Evaluate(ctx context.Context, input string, jsonObject []byte) PencilResult {
 	// Setup the input
 	is := antlr.NewInputStream(input)
 

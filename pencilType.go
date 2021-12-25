@@ -1,6 +1,9 @@
 package pencilCalculator
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type PencilType int
 
@@ -10,6 +13,7 @@ const (
 	PencilTypeFloat
 	PencilTypeIntegerFloat
 	PencilTypeBoolean
+	PencilTypeDateTime
 	PencilTypeSlice
 	PencilTypeArray
 	PencilTypeMap
@@ -44,7 +48,25 @@ type CaseItem struct {
 	matchValue  PencilResult
 	resultValue PencilResult
 }
+type floatIntegerNumber struct {
+	IntegerValue int64
+	Precision    int64
+}
 
+func (fin floatIntegerNumber) Equal(in floatIntegerNumber) bool {
+	b := ((fin.IntegerValue == in.IntegerValue) &&
+		(fin.Precision == in.Precision))
+	return b
+}
+func (fin floatIntegerNumber) convertToFloat6Decimal() float64 {
+	numerator := float64(fin.IntegerValue)
+	divisor := (float64)(math.Pow10(int(fin.Precision)))
+	return numerator / float64(divisor)
+}
+func (fin floatIntegerNumber) String() string {
+
+	return fmt.Sprintf("%d (%d)", fin.IntegerValue, fin.Precision)
+}
 func (c CaseItem) String() string {
 	t := fmt.Sprintf("Match: %s <> Result: %s", c.matchValue, c.resultValue)
 	return t
@@ -66,8 +88,12 @@ func (p PencilResult) String() string {
 		t = "Integer"
 	case PencilTypeFloat:
 		t = "Float"
+	case PencilTypeIntegerFloat:
+		t = "InternalFloat (Integer)"
 	case PencilTypeBoolean:
 		t = "Boolean"
+	case PencilTypeDateTime:
+		t = "DateTime"
 	case PencilTypeCaseItem:
 		t = "CaseItem"
 		v = p.Value.(CaseItem).String()

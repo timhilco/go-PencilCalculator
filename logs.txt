@@ -1,24 +1,25 @@
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"EnterProgram"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter EnterCaseStatement "}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit EnterCaseStatement "}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter VisitTerminal: case"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"VisitTerminal <> Ignoring Terminal:  CASE"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit VisitTerminal: CASE(1) -> case"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter EnterDataAccessor: "}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit EnterDataAccessor: "}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter VisitTerminal: Employee"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit VisitTerminal: CLASSNAME(40) -> Employee"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter VisitTerminal: ."}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"VisitTerminal <> Ignoring Terminal:  DOT"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit VisitTerminal: DOT(36) -> ."}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter VisitTerminal: department"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit VisitTerminal: ID(41) -> department"}
-{"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter ExitDataAccessor: "}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":"EnterProgram"}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":"Enter VisitTerminal: {01-01-2021}"}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":"VisitTerminal <> Ignoring Terminal:  DATE"}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":"Stack is empty"}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":"Exit VisitTerminal: DATE(47) -> {01-01-2021}"}
+{"level":"info","time":"2021-12-24T15:51:28-05:00","message":" Enter ExitDate: "}
+{"level":"info","time":"2021-12-24T14:33:27-05:00","message":"0:DateTime --> 2021-12-24 14:33:27.708707 -0500 EST m=+0.001622455"}
+{"level":"info","time":"2021-12-24T14:33:27-05:00","message":" Exit ExitDate: {01-01-2021}"}
+al: -"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"VisitTerminal <> Ignoring Terminal:  MINUS"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"Exit VisitTerminal: MINUS(16) -> -"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"Enter VisitTerminal: 01"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"Exit VisitTerminal: INT(43) -> 01"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"Enter ExitInteger: "}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"1:Integer --> 1"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"Exit ExitInteger: 01"}
+{"level":"info","time":"2021-12-24T14:33:18-05:00","message":"ExitBinaryExponentialCalculator"}
+5:00","message":"Enter ExitDataAccessor: "}
 {"level":"info","time":"2021-12-23T20:43:06-05:00","message":"0:String --> IT"}
 {"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Exit ExitDataAccessor: "}
 {"level":"info","time":"2021-12-23T20:43:06-05:00","message":"Enter VisitTerminal: is"}

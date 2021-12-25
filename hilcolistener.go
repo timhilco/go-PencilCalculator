@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/timhilco/go-PencilCalculator/parser"
@@ -163,11 +164,6 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	return pr, nil
 }
 
-type floatIntegerNumber struct {
-	IntegerValue int64
-	Precision    int64
-}
-
 func convertFloatStringToFloatIntegerNumber(floatString string) floatIntegerNumber {
 
 	//negative := strings.ContainsAny(floatString, "-")
@@ -176,10 +172,24 @@ func convertFloatStringToFloatIntegerNumber(floatString string) floatIntegerNumb
 	var decimal int64 = 0
 	if len(parts) == 2 {
 		precision = len(parts[1])
-		decimal, _ = strconv.ParseInt(parts[0], 10, 64)
+		sDecimal := parts[1]
+		var rounder int64 = 0
+		if precision > 6 {
+			sDecimal = sDecimal[0:6]
+			precision = 6
+			rounder, _ = strconv.ParseInt(parts[1][6:7], 10, 64)
+			if rounder > 5 {
+				rounder = 1
+			} else {
+				rounder = 0
+			}
+		}
+		decimal, _ = strconv.ParseInt(sDecimal, 10, 64)
+		decimal = decimal + rounder
 	}
 	val, _ := strconv.ParseInt(parts[0], 10, 64)
-	val = (val * 100) + decimal
+	power := (int64)(math.Pow10(int(precision)))
+	val = (val * power) + decimal
 
 	return floatIntegerNumber{
 		IntegerValue: val,
@@ -241,8 +251,8 @@ func (s *HilcoPencilGrammarParserListener) ExitInteger(ctx *parser.IntegerContex
 		Value: number,
 	}
 	s.push(pr)
-	s.logger.Info("Exit ExitInteger: " + value)
 	s.logStack()
+	s.logger.Info("Exit ExitInteger: " + value)
 }
 
 // ExitInteger is called when production Integer is exited.
@@ -251,13 +261,47 @@ func (s *HilcoPencilGrammarParserListener) ExitString(ctx *parser.StringContext)
 
 	value := ctx.GetText()
 	value = strings.ReplaceAll(value, "'", "")
+
 	pr := PencilResult{
 		Type:  PencilTypeString,
 		Value: value,
 	}
 	s.push(pr)
-	s.logger.Info(" Exit ExitString: " + value)
 	s.logStack()
+	s.logger.Info(" Exit ExitString: " + value)
+}
+
+// ExitDate is called when production Date is exited.
+func (s *HilcoPencilGrammarParserListener) ExitDate(ctx *parser.DateContext) {
+	s.logger.Info(" Enter ExitDate: ")
+
+	value := ctx.GetText()
+	value = value[1 : len(value)-1]
+	parts := strings.Split(value, "-")
+	sDate := parts[2] + "-" + parts[1] + "-" + parts[0]
+
+	date, err := time.Parse("2006-01-02", sDate)
+	fmt.Printf("%s -> %v", date, err)
+	pr := PencilResult{
+		Type:  PencilTypeDateTime,
+		Value: date,
+	}
+	s.push(pr)
+	s.logStack()
+	s.logger.Info(" Exit ExitDate: " + value)
+}
+func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
+	s.logger.Info(" Enter ExitFloat: ")
+
+	value := ctx.GetText()
+	f := convertFloatStringToFloatIntegerNumber(value)
+	pr := PencilResult{
+		Type:  PencilTypeIntegerFloat,
+		Value: f,
+	}
+	s.push(pr)
+	s.logStack()
+	s.logger.Info(" Exit ExitFloat: " + value)
 }
 func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *parser.BinaryArthmeticCalculatorContext) {
 
