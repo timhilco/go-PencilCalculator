@@ -1,6 +1,7 @@
 package pencilCalculator
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -21,19 +22,36 @@ type dataAccessorElement struct {
 }
 type HilcoPencilGrammarParserListener struct {
 	*parser.BaseHilcoPencilGrammarParserListener
-	stack             []PencilResult
-	logger            *logger.HilcoLogger
-	lexer             *parser.HilcoPencilGrammarLexer
-	currentOperator   string
-	inputDataObject   map[string]interface{}
+	stack           []PencilResult
+	logger          *logger.HilcoLogger
+	lexer           *parser.HilcoPencilGrammarLexer
+	currentOperator string
+	//inputDataObject   map[string]interface{}
 	dataAccessorStack []dataAccessorElement
 	inDataAccessor    bool
 	inCaseItem        bool
+	processingContext context.Context
+	inputDataStore    map[string]interface{}
 }
 
 func (p *HilcoPencilGrammarParserListener) SetLexer(lexer *parser.HilcoPencilGrammarLexer) {
 	p.lexer = lexer
 }
+func (p *HilcoPencilGrammarParserListener) SetContext(ctx context.Context) {
+	p.processingContext = ctx
+	inputData := ctx.Value(InputDataContextKey{}).(map[string]string)
+	inputDataStore := make(map[string]interface{})
+	// Unmarshal or Decode the JSON to the interface.
+	for key, value := range inputData {
+		var result map[string]interface{}
+		jsonObject := value
+		json.Unmarshal([]byte(jsonObject), &result)
+		inputDataStore[key] = result
+	}
+	p.inputDataStore = inputDataStore
+}
+
+/*
 func (p *HilcoPencilGrammarParserListener) SetInputData(jsonObject []byte) {
 	var result map[string]interface{}
 
@@ -41,6 +59,7 @@ func (p *HilcoPencilGrammarParserListener) SetInputData(jsonObject []byte) {
 	json.Unmarshal(jsonObject, &result)
 	p.inputDataObject = result
 }
+*/
 func (p *HilcoPencilGrammarParserListener) Result() PencilResult {
 	return p.stack[0]
 }
@@ -79,6 +98,8 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	var rightNumberFLOAT float64
 	var leftString string
 	var rightString string
+	var leftIntFloat floatIntegerNumber
+	var rightIntFloat floatIntegerNumber
 	binaryType, resultType := determineBinaryOperationType(left, right)
 
 	switch binaryType {
@@ -100,6 +121,9 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		rightInteger := float64(fi.IntegerValue)
 		divisor := math.Pow10(int(fi.Precision))
 		rightNumberFLOAT = rightInteger / divisor
+	case LeftFloatIntRightIntFloat:
+		leftIntFloat = left.Value.(floatIntegerNumber)
+		rightIntFloat = right.Value.(floatIntegerNumber)
 	case LeftStringRightString:
 		leftString = left.Value.(string)
 		rightString = right.Value.(string)
@@ -112,6 +136,7 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	var result interface{}
 	returnType := PencilTypeInteger
 	switch operator {
+
 	case "ADD":
 		switch resultType {
 		case "INT":
@@ -119,6 +144,57 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		case "FLOAT":
 			result = leftNumberFLOAT + rightNumberFLOAT
 			returnType = PencilTypeFloat
+		case "INT_FLOAT":
+			result = leftIntFloat.Add(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		case "BOOLEAN":
+		case "STRING":
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
+	case "MINUS":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT - rightNumberINT
+		case "FLOAT":
+			result = leftNumberFLOAT - rightNumberFLOAT
+			returnType = PencilTypeFloat
+		case "INT_FLOAT":
+			result = leftIntFloat.Subtract(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		case "BOOLEAN":
+		case "STRING":
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
+	case "MULTIPLY":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT * rightNumberINT
+		case "FLOAT":
+			result = leftNumberFLOAT * rightNumberFLOAT
+			returnType = PencilTypeFloat
+		case "INT_FLOAT":
+			result = leftIntFloat.Multiply(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		case "BOOLEAN":
+		case "STRING":
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
+	case "DIVIDE":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT / rightNumberINT
+		case "FLOAT":
+			result = leftNumberFLOAT / rightNumberFLOAT
+			returnType = PencilTypeFloat
+		case "INT_FLOAT":
+			result = leftIntFloat.Divide(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
 		case "BOOLEAN":
 		case "STRING":
 		default:
@@ -164,7 +240,7 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	return pr, nil
 }
 
-func convertFloatStringToFloatIntegerNumber(floatString string) floatIntegerNumber {
+func convertFloatStringToFloatIntegerNumber(floatString string) (floatIntegerNumber, float64) {
 
 	//negative := strings.ContainsAny(floatString, "-")
 	parts := strings.Split(floatString, ".")
@@ -190,11 +266,19 @@ func convertFloatStringToFloatIntegerNumber(floatString string) floatIntegerNumb
 	val, _ := strconv.ParseInt(parts[0], 10, 64)
 	power := (int64)(math.Pow10(int(precision)))
 	val = (val * power) + decimal
-
+	sDecimal := strconv.Itoa(int(decimal))
+	difference := precision - len(sDecimal)
+	prefix := ""
+	for i := 0; i < difference; i++ {
+		prefix = prefix + "0"
+	}
+	sDecimal = prefix + sDecimal
+	s := parts[0] + "." + sDecimal
+	f64, _ := strconv.ParseFloat(s, 64)
 	return floatIntegerNumber{
 		IntegerValue: val,
 		Precision:    int64(precision),
-	}
+	}, f64
 }
 
 func Call(f reflect.Value, params []interface{}) (result interface{}, err error) {
@@ -294,7 +378,7 @@ func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
 	s.logger.Info(" Enter ExitFloat: ")
 
 	value := ctx.GetText()
-	f := convertFloatStringToFloatIntegerNumber(value)
+	f, _ := convertFloatStringToFloatIntegerNumber(value)
 	pr := PencilResult{
 		Type:  PencilTypeIntegerFloat,
 		Value: f,
@@ -305,11 +389,12 @@ func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
 }
 func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *parser.BinaryArthmeticCalculatorContext) {
 
-	s.logger.Info("ExitBinaryExponentialCalculator")
+	s.logger.Info(" Enter ExitBinaryArthmeticCalculator")
 	right, left := s.pop(), s.pop()
 	pr, _ := doBinaryArithmatic(left, right, s.currentOperator)
 	s.push(pr)
 	s.logStack()
+	s.logger.Info(" Exit ExitBinaryArthmeticCalculator")
 }
 
 // ExitBinaryRelationalCalculator is called when production BinaryRelationalCalculator is exited.
@@ -509,8 +594,9 @@ func (p *HilcoPencilGrammarParserListener) EnterDataAccessor(ctx *parser.DataAcc
 // ExitDataAccessor is called when production dataAccessor is exited.
 func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAccessorContext) {
 	p.logger.Info("Enter ExitDataAccessor: ")
-
-	value := GetDataAccesorValue(1, p.inputDataObject, p.dataAccessorStack)
+	key := p.dataAccessorStack[0].elementName
+	dataInputObject := p.inputDataStore[key]
+	value := GetDataAccesorValue(1, dataInputObject, p.dataAccessorStack)
 	rv := reflect.ValueOf(value).Kind()
 	var resultType PencilType
 	switch rv {
@@ -566,6 +652,10 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 		}
 		p.push(pr)
 	case "ADD",
+		"MINUS",
+		"MULTIPLY",
+		"DIVIDE",
+		"LESS_THAN",
 		"GREATER_THAN",
 		"EQUAL":
 

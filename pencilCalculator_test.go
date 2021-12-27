@@ -15,16 +15,27 @@ func Test1(t *testing.T) {
 	"designation" : "Product Manager",
 	"salary": 50000
 }`
-	context := context.Background()
-	statment := "{01-01-2021}"
-	result := Evaluate(context, statment, []byte(empJson))
-	fmt.Println(result)
+	ctx := context.Background()
+	inputData := make(map[string]string)
+	inputData["Employee"] = empJson
+
+	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
+	statment := "Employee.salary"
+	result := Evaluate(ctx, statment)
+	want := 1.524156
+	fmt.Printf("Result:%v -> Want:%f", result, want)
 }
 func TestTypeConversations(t *testing.T) {
 
+	f64, _ := convertFloatStringToFloatIntegerNumber("123.45")
 	fi1 := PencilResult{
 		PencilTypeIntegerFloat,
-		convertFloatStringToFloatIntegerNumber("123.45"),
+		f64,
+	}
+	f64, _ = convertFloatStringToFloatIntegerNumber("123.456")
+	fi2 := PencilResult{
+		PencilTypeIntegerFloat,
+		f64,
 	}
 	var tests = []struct {
 		left      PencilResult
@@ -32,6 +43,7 @@ func TestTypeConversations(t *testing.T) {
 		operation string
 		want      interface{}
 	}{
+		{fi1, fi2, "ADD", float64(246.906)},
 		{PencilResult{PencilTypeInteger, int64(10)}, fi1, "ADD", float64(133.45)},
 		{PencilResult{PencilTypeFloat, 10.0}, PencilResult{PencilTypeFloat, 20.0}, "ADD", float64(30.0)},
 		{PencilResult{PencilTypeInteger, int64(10)}, PencilResult{PencilTypeFloat, 20.0}, "ADD", float64(30.0)},
@@ -50,7 +62,7 @@ func TestTypeConversations(t *testing.T) {
 
 }
 func TestExpresions(t *testing.T) {
-	context := context.Background()
+	ctx := context.Background()
 	empJson := `{
 		"id" : 11,
 		"name" : "Irshad",
@@ -58,10 +70,18 @@ func TestExpresions(t *testing.T) {
 		"designation" : "Product Manager",
 		"salary": 50000
 	}`
+	inputData := make(map[string]string)
+	inputData["Employee"] = empJson
+
+	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
 	var tests = []struct {
 		expression string
 		want       interface{}
 	}{
+		{"1.234567-1.234", float64(0.000567)},
+		{"1.234567+1.234", float64(2.468567)},
+		{"1.234567*1.234567", float64(1.524156)},
+		{"123.45*123.45", float64(15239.9025)},
 		{"100+200+300", int64(600)},
 		{"@Max(1,2)", float64(2.0)},
 		{"Employee.salary", float64(50000.0)},
@@ -73,7 +93,7 @@ func TestExpresions(t *testing.T) {
 	for _, tt := range tests {
 		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
-			ans := Evaluate(context, tt.expression, []byte(empJson))
+			ans := Evaluate(ctx, tt.expression)
 			if ans.Value != tt.want {
 				t.Errorf("got %d, want %d", ans, tt.want)
 			}
@@ -87,6 +107,7 @@ func TestFloat(t *testing.T) {
 		expression string
 		want       float64
 	}{
+
 		{"123.45", float64(123.45)},
 		{"123.1234567", float64(123.123457)},
 		{"123.1234565", float64(123.123456)},
@@ -102,7 +123,7 @@ func TestFloat(t *testing.T) {
 	for _, tt := range tests {
 		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
-			fi := convertFloatStringToFloatIntegerNumber(tt.expression)
+			fi, _ := convertFloatStringToFloatIntegerNumber(tt.expression)
 			ans := fi.convertToFloat6Decimal()
 			if ans != tt.want {
 				t.Errorf("got %f, want %f", ans, tt.want)

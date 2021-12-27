@@ -6,6 +6,7 @@ import (
 )
 
 type PencilType int
+type InputDataContextKey struct{}
 
 const (
 	PencilTypeString PencilType = iota
@@ -53,15 +54,89 @@ type floatIntegerNumber struct {
 	Precision    int64
 }
 
-func (fin floatIntegerNumber) Equal(in floatIntegerNumber) bool {
-	b := ((fin.IntegerValue == in.IntegerValue) &&
-		(fin.Precision == in.Precision))
+func convertTwoFloatIntNumberToCommonPrecision(a floatIntegerNumber, b floatIntegerNumber) (floatIntegerNumber, floatIntegerNumber) {
+	xPrecision := a.Precision
+	yPrecision := b.Precision
+	xInteger := a.IntegerValue
+	yInteger := b.IntegerValue
+	var difference int64 = 0
+	var changeX bool = false
+	if xPrecision > yPrecision {
+		difference = xPrecision - yPrecision
+		yPrecision = xPrecision
+	} else {
+		if xPrecision < yPrecision {
+			difference = yPrecision - xPrecision
+			xPrecision = yPrecision
+			changeX = true
+		}
+	}
+	power := (int64)(math.Pow10(int(difference)))
+	if changeX {
+		xInteger = xInteger * power
+	} else {
+		yInteger = yInteger * power
+
+	}
+	x := floatIntegerNumber{
+		IntegerValue: xInteger,
+		Precision:    xPrecision,
+	}
+	y := floatIntegerNumber{
+		IntegerValue: yInteger,
+		Precision:    yPrecision,
+	}
+	return x, y
+}
+
+func (fin floatIntegerNumber) Add(input floatIntegerNumber) floatIntegerNumber {
+	left, right := convertTwoFloatIntNumberToCommonPrecision(fin, input)
+
+	newInteger := (left.IntegerValue + right.IntegerValue)
+	return floatIntegerNumber{
+		IntegerValue: newInteger,
+		Precision:    left.Precision,
+	}
+}
+func (fin floatIntegerNumber) Subtract(input floatIntegerNumber) floatIntegerNumber {
+	left, right := convertTwoFloatIntNumberToCommonPrecision(fin, input)
+
+	newInteger := (left.IntegerValue - right.IntegerValue)
+	return floatIntegerNumber{
+		IntegerValue: newInteger,
+		Precision:    left.Precision,
+	}
+}
+
+func (fin floatIntegerNumber) Multiply(input floatIntegerNumber) floatIntegerNumber {
+	precision := fin.Precision + input.Precision
+	newInteger := fin.IntegerValue * input.IntegerValue
+	return floatIntegerNumber{
+		IntegerValue: newInteger,
+		Precision:    precision,
+	}
+}
+func (fin floatIntegerNumber) Divide(input floatIntegerNumber) floatIntegerNumber {
+	//TODO Fix the precision
+	precision := fin.Precision + input.Precision
+	newInteger := fin.IntegerValue / input.IntegerValue
+	return floatIntegerNumber{
+		IntegerValue: newInteger,
+		Precision:    precision,
+	}
+}
+func (fin floatIntegerNumber) Equal(i floatIntegerNumber) bool {
+	b := ((fin.IntegerValue == i.IntegerValue) &&
+		(fin.Precision == i.Precision))
 	return b
 }
 func (fin floatIntegerNumber) convertToFloat6Decimal() float64 {
 	numerator := float64(fin.IntegerValue)
 	divisor := (float64)(math.Pow10(int(fin.Precision)))
-	return numerator / float64(divisor)
+	n := numerator / float64(divisor)
+	s := fmt.Sprintf("%.7f", n)
+	_, f64 := convertFloatStringToFloatIntegerNumber(s)
+	return f64
 }
 func (fin floatIntegerNumber) String() string {
 
@@ -118,7 +193,7 @@ func determineBinaryOperationType(left PencilResult, right PencilResult) (Binary
 		case PencilTypeFloat:
 			return LeftIntRightFloat, "FLOAT"
 		case PencilTypeIntegerFloat:
-			return LeftIntRightIntFloat, "FLOAT"
+			return LeftIntRightIntFloat, "INT_FLOAT"
 		default:
 			return InvalidTypes, "INT"
 		}
@@ -153,7 +228,7 @@ func determineBinaryOperationType(left PencilResult, right PencilResult) (Binary
 		case PencilTypeString, PencilTypeBoolean:
 			return InvalidTypes, "INT"
 		case PencilTypeIntegerFloat:
-			return LeftFloatIntRightIntFloat, "INT"
+			return LeftFloatIntRightIntFloat, "INT_FLOAT"
 		default:
 			return InvalidTypes, "INT"
 		}

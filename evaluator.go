@@ -7,7 +7,7 @@ import (
 	"github.com/timhilco/go-PencilCalculator/parser"
 )
 
-func Evaluate(ctx context.Context, input string, jsonObject []byte) PencilResult {
+func Evaluate(ctx context.Context, input string) PencilResult {
 	// Setup the input
 	is := antlr.NewInputStream(input)
 
@@ -21,9 +21,17 @@ func Evaluate(ctx context.Context, input string, jsonObject []byte) PencilResult
 	// Finally parse the expression (by walking the tree)
 	var listener HilcoPencilGrammarParserListener
 	listener.SetLexer(lexer)
-	listener.SetInputData(jsonObject)
+	//listener.SetInputData(jsonObject)
+	listener.SetContext(ctx)
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 	value := listener.Result()
+	if value.Type == PencilTypeIntegerFloat {
+		v := value.Value.(floatIntegerNumber)
+		value = PencilResult{
+			Type:  PencilTypeFloat,
+			Value: v.convertToFloat6Decimal(),
+		}
+	}
 	return value
 
 }
