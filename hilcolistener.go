@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/rs/zerolog"
 	"github.com/timhilco/go-PencilCalculator/parser"
 	"github.com/timhilco/go-PencilCalculator/util/logger"
 )
@@ -148,7 +149,10 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			result = leftIntFloat.Add(rightIntFloat)
 			returnType = PencilTypeIntegerFloat
 		case "BOOLEAN":
+			panic(fmt.Sprintf("Can not add Booleans - unexpected resultType: %s", operator))
 		case "STRING":
+			result = leftString + rightString
+			returnType = PencilTypeString
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -163,8 +167,9 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		case "INT_FLOAT":
 			result = leftIntFloat.Subtract(rightIntFloat)
 			returnType = PencilTypeIntegerFloat
-		case "BOOLEAN":
-		case "STRING":
+		case "BOOLEAN",
+			"STRING":
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -179,8 +184,9 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		case "INT_FLOAT":
 			result = leftIntFloat.Multiply(rightIntFloat)
 			returnType = PencilTypeIntegerFloat
-		case "BOOLEAN":
-		case "STRING":
+		case "BOOLEAN",
+			"STRING":
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -195,8 +201,9 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		case "INT_FLOAT":
 			result = leftIntFloat.Divide(rightIntFloat)
 			returnType = PencilTypeIntegerFloat
-		case "BOOLEAN":
-		case "STRING":
+		case "BOOLEAN",
+			"STRING":
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -211,6 +218,26 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			returnType = PencilTypeBoolean
 		case "BOOLEAN":
 		case "STRING":
+		case "INT_FLOAT":
+			result = leftIntFloat.GreaterThan(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
+	case "LESS_THAN":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT < rightNumberINT
+			returnType = PencilTypeBoolean
+		case "FLOAT":
+			result = leftNumberFLOAT < rightNumberFLOAT
+			returnType = PencilTypeBoolean
+		case "BOOLEAN":
+		case "STRING":
+		case "INT_FLOAT":
+			result = leftIntFloat.LessThan(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
 		default:
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
@@ -224,6 +251,8 @@ func doBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			result = leftNumberFLOAT == rightNumberFLOAT
 			returnType = PencilTypeBoolean
 		case "BOOLEAN":
+			result = left.Value == right.Value
+			returnType = PencilTypeBoolean
 		case "STRING":
 			result = leftString == rightString
 			returnType = PencilTypeBoolean
@@ -320,6 +349,12 @@ func doBooleanLogic(left PencilResult, right PencilResult, operator string) Penc
 //
 func (p *HilcoPencilGrammarParserListener) EnterProgram(ctx *parser.ProgramContext) {
 	p.logger = logger.NewMultiWithFile(false)
+	loggingLevel := p.processingContext.Value(LoggingLevelContextKey{})
+	if loggingLevel != nil {
+		level := loggingLevel.(zerolog.Level)
+		zerolog.SetGlobalLevel(level)
+	}
+
 	p.logger.Info("EnterProgram")
 	p.stack = make([]PencilResult, 0)
 }
@@ -644,7 +679,8 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 	text := fmt.Sprintf("%s(%d) -> %s", name, symbol, value)
 	switch name {
 
-	case "AND":
+	case "AND",
+		"OR":
 		p.logger.Info("VisitTermnal <> Binary Operator: " + text)
 		pr := PencilResult{
 			Type:  PencilTypeOperation,

@@ -7,6 +7,7 @@ import (
 
 type PencilType int
 type InputDataContextKey struct{}
+type LoggingLevelContextKey struct{}
 
 const (
 	PencilTypeString PencilType = iota
@@ -118,14 +119,27 @@ func (fin floatIntegerNumber) Multiply(input floatIntegerNumber) floatIntegerNum
 }
 func (fin floatIntegerNumber) Divide(input floatIntegerNumber) floatIntegerNumber {
 	//TODO Fix the precision
-	precision := fin.Precision + input.Precision
-	newInteger := fin.IntegerValue / input.IntegerValue
-	return floatIntegerNumber{
-		IntegerValue: newInteger,
-		Precision:    precision,
-	}
+
+	left := fin.convertToFloat6Decimal()
+	right := input.convertToFloat6Decimal()
+	f := left / right
+	s := fmt.Sprintf("%.7f", f)
+	fif, _ := convertFloatStringToFloatIntegerNumber(s)
+	return fif
 }
 func (fin floatIntegerNumber) Equal(i floatIntegerNumber) bool {
+	b := ((fin.IntegerValue == i.IntegerValue) &&
+		(fin.Precision == i.Precision))
+	return b
+}
+func (fin floatIntegerNumber) LessThan(i floatIntegerNumber) bool {
+	//TODO Fix
+	b := ((fin.IntegerValue == i.IntegerValue) &&
+		(fin.Precision == i.Precision))
+	return b
+}
+func (fin floatIntegerNumber) GreaterThan(i floatIntegerNumber) bool {
+	//TODO fix
 	b := ((fin.IntegerValue == i.IntegerValue) &&
 		(fin.Precision == i.Precision))
 	return b

@@ -64,11 +64,19 @@ func TestTypeConversations(t *testing.T) {
 func TestExpresions(t *testing.T) {
 	ctx := context.Background()
 	empJson := `{
-		"id" : 11,
-		"name" : "Irshad",
-		"department" : "IT",
-		"designation" : "Product Manager",
-		"salary": 50000
+		"id": 11,
+		"name": "Irshad",
+		"department": "IT",
+		"designation": "Product Manager",
+		"salary": 50000,
+		"payHistory": [{
+			"effectiveDate": "01/01/2021",
+			"amount": 40000
+		}, {
+			"effectiveDate": "01/01/2022",
+			"amount": 50000
+		}]
+	
 	}`
 	inputData := make(map[string]string)
 	inputData["Employee"] = empJson
@@ -78,6 +86,7 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
+		{"123.45 / 54.321", float64(2.272602)},
 		{"1.234567-1.234", float64(0.000567)},
 		{"1.234567+1.234", float64(2.468567)},
 		{"1.234567*1.234567", float64(1.524156)},

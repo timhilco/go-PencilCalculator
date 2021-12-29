@@ -20,6 +20,7 @@ func Evaluate(ctx context.Context, input string) PencilResult {
 
 	// Finally parse the expression (by walking the tree)
 	var listener HilcoPencilGrammarParserListener
+
 	listener.SetLexer(lexer)
 	//listener.SetInputData(jsonObject)
 	listener.SetContext(ctx)
