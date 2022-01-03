@@ -324,12 +324,12 @@ func convertFloatStringToFloatIntegerNumber(floatString string) (floatIntegerNum
 	for i := 0; i < difference; i++ {
 		prefix = prefix + "0"
 	}
-	sDecimal = prefix + sDecimal
-	s := parts[0] + "." + sDecimal
-	f64, _ := strconv.ParseFloat(s, 64)
-	fmt.Printf("Before Rounding: s=%s -> %.10f\n", s, f64)
-	f64 = math.Round(f64*100) / 100
-	fmt.Printf("After  Rounding: s=%s -> %.10f\n", s, f64)
+	//sDecimal = prefix + sDecimal
+	//s := parts[0] + "." + sDecimal
+	f64, _ := strconv.ParseFloat(floatString, 64)
+	//fmt.Printf("Before Rounding: s=%s -> %.10f\n", s, f64)
+	//f64 = math.Round(f64*100) / 100
+	//fmt.Printf("After  Rounding: s=%s -> %.10f\n", s, f64)
 	return floatIntegerNumber{
 		IntegerValue: val,
 		Precision:    int64(precision),
@@ -439,9 +439,9 @@ func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
 	s.logger.Info(" Enter ExitFloat: ")
 
 	value := ctx.GetText()
-	f, _ := convertFloatStringToFloatIntegerNumber(value)
+	_, f := convertFloatStringToFloatIntegerNumber(value)
 	pr := PencilResult{
-		Type:  PencilTypeIntegerFloat,
+		Type:  PencilTypeFloat,
 		Value: f,
 	}
 	s.push(pr)
@@ -654,8 +654,27 @@ func (p *HilcoPencilGrammarParserListener) ExitAtFunction(ctx *parser.AtFunction
 	children := ctx.GetChildren()
 	name := children[0].(antlr.TerminalNode).GetText()
 	name = name[1:]
-	i := children[2].GetChildCount()
-	numberOfArgs := (i / 2) + 1
+	args := make([]PencilResult, 0)
+	foundLeftParen := false
+	for !foundLeftParen {
+
+		foundComma := false
+		for !foundComma {
+			pr := p.pop()
+			switch pr.Type {
+			case PencilTypeLeftParen:
+				foundLeftParen = true
+				foundComma = true
+			case PencilTypeComma:
+				foundComma = true
+			default:
+				args = append(args, pr)
+
+			}
+		}
+
+	}
+	numberOfArgs := len(args)
 	text := fmt.Sprintf("Calling Function: %s, Arfs= %d", name, numberOfArgs)
 	p.logger.Info("ExitAtFunction: " + text)
 	f := functionMap[name]
@@ -663,8 +682,7 @@ func (p *HilcoPencilGrammarParserListener) ExitAtFunction(ctx *parser.AtFunction
 	params := make([]interface{}, numberOfArgs)
 	j := numberOfArgs - 1
 	for i := 0; i < numberOfArgs; i++ {
-		r := p.pop()
-		params[j] = r
+		params[j] = args[i]
 		j = j - 1
 	}
 	result, _ := Call(frv, params)

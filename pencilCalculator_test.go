@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -30,9 +31,8 @@ func Test1(t *testing.T) {
 	inputData["Employee"] = empJson
 
 	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
-	statment := "Employee.payHistory(effectiveDate={01-01-2022},amount=50000).units"
-	//statment := "Employee.name.first"
-	//statment := "Employee.payHistory.amount"
+	statment := "@Now()"
+
 	result := Evaluate(ctx, statment)
 	want := 1.524156
 	fmt.Printf("Result:%v -> Want:%f", result, want)
@@ -77,16 +77,18 @@ func TestExpresions(t *testing.T) {
 	ctx := context.Background()
 	empJson := `{
 		"id": 11,
-		"name": "Irshad",
+		"name": { "first": "John", "last" : "Sample"},
 		"department": "IT",
 		"designation": "Product Manager",
 		"salary": 50000,
 		"payHistory": [{
 			"effectiveDate": "01/01/2021",
-			"amount": 40000
+			"amount": 40000,
+			"units" : 100
 		}, {
 			"effectiveDate": "01/01/2022",
-			"amount": 50000
+			"amount": 50000,
+			"units" : 110
 		}]
 	
 	}`
@@ -98,13 +100,10 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
-		{"228000.312433*175551.068670", float64(228000.312433 * 175551.068670)},
-		{"1.234567-1.234", float64(0.000567)},
-		{"1.234567+1.234", float64(2.468567)},
-		{"1.234567*1.234567", float64(1.524156)},
-		{"123.45*123.45", float64(15239.9025)},
+		{"Employee.payHistory(effectiveDate={01-01-2022},amount=50000).units", float64(110)},
 		{"100+200+300", int64(600)},
 		{"@Max(1,2)", float64(2.0)},
+		{"@Now()", "Time"},
 		{"Employee.salary", float64(50000.0)},
 		{"Employee.salary > 10", true},
 		{"Employee.salary > 10 AND 10 > 1", true},
@@ -115,12 +114,71 @@ func TestExpresions(t *testing.T) {
 		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
 			ans := Evaluate(ctx, tt.expression)
-			if ans.Value != tt.want {
-				t.Errorf("got %d, want %d", ans, tt.want)
+			isPass, sResult, sWant, message := DoesTestPass(ans, tt.want)
+			if !isPass {
+				t.Errorf("got %s, want %s --> %s", sResult, sWant, message)
 			}
 		})
 	}
 
+}
+func DoesTestPass(result PencilResult, want interface{}) (bool, string, string, string) {
+	var pass bool = false
+	var sResult string
+	var sWant string
+	var message string = "N/A"
+	switch result.Type {
+	case PencilTypeInteger:
+		sResult = fmt.Sprintf("%d", result.Value)
+		sWant = fmt.Sprintf("%d", want)
+		if sResult == sWant {
+			pass = true
+		}
+	case PencilTypeFloat:
+		sResult = fmt.Sprintf("%.7f", result.Value)
+		sWant = fmt.Sprintf("%.7f", want)
+		if sResult == sWant {
+			pass = true
+		} else {
+			sResult = fmt.Sprintf("%.10f", result.Value)
+			sWant = fmt.Sprintf("%.10f", want)
+			f1 := result.Value.(float64)
+			f2 := want.(float64)
+			diff := f1 - f2
+			message = fmt.Sprintf("Difference: %.10f", diff)
+			if math.Abs(diff) < 0.0009 {
+				pass = true
+			}
+
+		}
+	case PencilTypeString:
+		sResult = fmt.Sprintf("%s", result.Value)
+		sWant = fmt.Sprintf("%s", want)
+		if sResult == sWant {
+			pass = true
+		}
+	case PencilTypeBoolean:
+		sResult = fmt.Sprintf("%t", result.Value)
+		sWant = fmt.Sprintf("%t", want)
+		if sResult == sWant {
+			pass = true
+		}
+	case PencilTypeDateTime:
+		if want == "Time" {
+			pass = true
+		}
+		sResult = fmt.Sprintf("%v", result.Value)
+		sWant = fmt.Sprintf("%v", want)
+		if sResult == sWant {
+			pass = true
+		}
+
+	default:
+		pass = false
+		sResult = " UnKnown Result"
+		sWant = fmt.Sprintf("%v", want)
+	}
+	return pass, sResult, sWant, message
 }
 func TestFloat(t *testing.T) {
 

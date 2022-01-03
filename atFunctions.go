@@ -2,11 +2,13 @@ package pencilCalculator
 
 import (
 	"math"
+	"time"
 )
 
 var functionMap = map[string]interface{}{
 
 	"Max": Max,
+	"Now": Now,
 }
 
 func convertBinaryElementsToFloat(a PencilResult, b PencilResult) (float64, float64) {
@@ -49,6 +51,13 @@ func Max(a, b interface{}) PencilResult {
 	}
 	return PencilResult{
 		Type:  PencilTypeFloat,
+		Value: result,
+	}
+}
+func Now() PencilResult {
+	result := time.Now()
+	return PencilResult{
+		Type:  PencilTypeDateTime,
 		Value: result,
 	}
 }
