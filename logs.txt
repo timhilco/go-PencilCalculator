@@ -1,121 +1,169 @@
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"EnterProgram"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Enter VisitTerminal: 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Stack is empty"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Exit VisitTerminal: INT(43) -> 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Enter ExitInteger: "}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"0:Integer --> 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Exit ExitInteger: 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Enter VisitTerminal: +"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"VisitTerminal <> Binary Operator: ADD(15) -> +"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"0:Integer --> 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Exit VisitTerminal: ADD(15) -> +"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Enter VisitTerminal: 9"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"0:Integer --> 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Exit VisitTerminal: INT(43) -> 9"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Enter ExitInteger: "}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"0:Integer --> 100"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"1:Integer --> 9"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"Exit ExitInteger: 9"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":" Enter ExitBinaryArthmeticCalculator"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":"0:Integer --> 109"}
-{"level":"info","time":"2021-12-28T11:45:06-05:00","message":" Exit ExitBinaryArthmeticCalculator"}
-taAccessor: "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: is"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  IS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: IS(3) -> is"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter EnterCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit EnterCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: 'ITS'"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  STRING"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: STRING(44) -> 'ITS'"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":" Enter ExitString: "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:String --> ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":" Exit ExitString: ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: ::"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  DOUBLE_COLON"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:String --> ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: DOUBLE_COLON(9) -> ::"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:String --> ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: INT(43) -> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter ExitInteger: "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:String --> ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit ExitInteger: 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: ;"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  SEMI_COLON"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:String --> ITS"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: SEMI_COLON(10) -> ;"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter ExitCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit ExitCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter EnterCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit EnterCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: 'default'"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  STRING"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: STRING(44) -> 'default'"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":" Enter ExitString: "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:String --> default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":" Exit ExitString: default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: ::"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  DOUBLE_COLON"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:String --> default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: DOUBLE_COLON(9) -> ::"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:String --> default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: INT(43) -> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter ExitInteger: "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:String --> default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"3:Integer --> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit ExitInteger: 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: ;"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  SEMI_COLON"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:String --> default"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"3:Integer --> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: SEMI_COLON(10) -> ;"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter ExitCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:CaseItem --> Match: String --> default <> Result: Integer --> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit ExitCaseItem "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter VisitTerminal: endcase"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"VisitTerminal <> Ignoring Terminal:  END_CASE"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:String --> IT"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"1:CaseItem --> Match: String --> ITS <> Result: Integer --> 1"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"2:CaseItem --> Match: String --> default <> Result: Integer --> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit VisitTerminal: END_CASE(2) -> endcase"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Enter ExitCaseStatement "}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"0:Integer --> 2"}
-{"level":"info","time":"2021-12-28T09:09:04-05:00","message":"Exit ExitCaseStatement "}
-t: Integer --> 1"}
-{"level":"info","time":"2021-12-23T16:14:01-05:00","message":"2:CaseItem --> Match: String --> default <> Result: Integer --> 2"}
-{"level":"info","time":"2021-12-23T16:14:01-05:00","message":"3:String --> <nil>"}
-{"level":"info","time":"2021-12-23T16:14:01-05:00","message":"Exit ExitCaseStatement "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"EnterProgram"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter EnterDataAccessor: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {No Name set []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit EnterDataAccessor: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: Employee"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: CLASSNAME(40) -> Employee"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ."}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Ignoring Terminal:  DOT"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: DOT(36) -> ."}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: ID(41) -> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ("}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: LPAREN(30) -> ("}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: ID(41) -> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Enter ExitNameCalculator: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Exit ExitNameCalculator: effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Binary Operator: EQUAL(21) -> ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: EQUAL(21) -> ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: {01-01-2022}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Ignoring Terminal:  DATE"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: DATE(47) -> {01-01-2022}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Enter ExitDate: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Exit ExitDate: 01-01-2022"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitBinaryRelationalCalculator"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit ExitBinaryRelationalCalculator: Exit because in DataAccessor"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ,"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: COMMA(35) -> ,"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: ID(41) -> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Enter ExitNameCalculator: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":" Exit ExitNameCalculator: amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Binary Operator: EQUAL(21) -> ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: EQUAL(21) -> ="}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: INT(43) -> 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitInteger: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"8:Integer --> 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit ExitInteger: 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitBinaryRelationalCalculator"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"8:Integer --> 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"9:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit ExitBinaryRelationalCalculator: Exit because in DataAccessor"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: )"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Ignoring Terminal:  RPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"8:Integer --> 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"9:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: RPAREN(31) -> )"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitAccessArray: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:NameCalculator --> payHistory"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:LeftParen --> LPAREN"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"3:NameCalculator --> effectiveDate"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"4:DateTime --> 2022-01-01 00:00:00 +0000 UTC"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"5:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"6:Comma --> COMMA"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"7:NameCalculator --> amount"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"8:Integer --> 50000"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"9:Operation --> EQUAL"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:DataAccessorElement --> {payHistory [{{1 50000} {6 amount} {13 EQUAL}} {{5 {0 63776592000 <nil>}} {6 effectiveDate} {13 EQUAL}}]}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit ExitAccessorArray: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: ."}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"VisitTerminal <> Ignoring Terminal:  DOT"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:DataAccessorElement --> {payHistory [{{1 50000} {6 amount} {13 EQUAL}} {{5 {0 63776592000 <nil>}} {6 effectiveDate} {13 EQUAL}}]}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: DOT(36) -> ."}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter VisitTerminal: units"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:DataAccessorElement --> {payHistory [{{1 50000} {6 amount} {13 EQUAL}} {{5 {0 63776592000 <nil>}} {6 effectiveDate} {13 EQUAL}}]}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:NameCalculator --> units"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit VisitTerminal: ID(41) -> units"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitAccessorObject: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"0:DataAccessor --> {Employee []}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"1:DataAccessorElement --> {payHistory [{{1 50000} {6 amount} {13 EQUAL}} {{5 {0 63776592000 <nil>}} {6 effectiveDate} {13 EQUAL}}]}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"2:DataAccessorElement --> {units}"}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Exit ExitAccessorObject: "}
+{"level":"info","time":"2022-01-02T21:56:23-05:00","message":"Enter ExitDataAccessor: "}
+{"level":"info","time":"2022-01-02T21:56:11-05:00","message":"0:Float --> 110"}
+{"level":"info","time":"2022-01-02T21:56:11-05:00","message":"Exit ExitDataAccessor: "}
+: "}

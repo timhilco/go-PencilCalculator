@@ -9,18 +9,30 @@ import (
 
 func Test1(t *testing.T) {
 	empJson := `{
-	"id" : 11,
-	"name" : "Irshad",
-	"department" : "IT",
-	"designation" : "Product Manager",
-	"salary": 50000
-}`
+		"id": 11,
+		"name": { "first": "John", "last" : "Sample"},
+		"department": "IT",
+		"designation": "Product Manager",
+		"salary": 50000,
+		"payHistory": [{
+			"effectiveDate": "01/01/2021",
+			"amount": 40000,
+			"units" : 100
+		}, {
+			"effectiveDate": "01/01/2022",
+			"amount": 50000,
+			"units" : 110
+		}]
+	
+	}`
 	ctx := context.Background()
 	inputData := make(map[string]string)
 	inputData["Employee"] = empJson
 
 	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
-	statment := "Employee.salary"
+	statment := "Employee.payHistory(effectiveDate={01-01-2022},amount=50000).units"
+	//statment := "Employee.name.first"
+	//statment := "Employee.payHistory.amount"
 	result := Evaluate(ctx, statment)
 	want := 1.524156
 	fmt.Printf("Result:%v -> Want:%f", result, want)
@@ -86,7 +98,7 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
-		{"123.45 / 54.321", float64(2.272602)},
+		{"228000.312433*175551.068670", float64(228000.312433 * 175551.068670)},
 		{"1.234567-1.234", float64(0.000567)},
 		{"1.234567+1.234", float64(2.468567)},
 		{"1.234567*1.234567", float64(1.524156)},
@@ -133,7 +145,7 @@ func TestFloat(t *testing.T) {
 		testname := fmt.Sprintf("Expression: %s", tt.expression)
 		t.Run(testname, func(t *testing.T) {
 			fi, _ := convertFloatStringToFloatIntegerNumber(tt.expression)
-			ans := fi.convertToFloat6Decimal()
+			ans := fi.convertFloatIntToFloat6Decimal()
 			if ans != tt.want {
 				t.Errorf("got %f, want %f", ans, tt.want)
 			}

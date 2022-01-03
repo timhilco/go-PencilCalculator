@@ -16,83 +16,81 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 51, 174,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 51, 171,
 	4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7,
 	4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 4, 12, 9, 12, 4, 13,
-	9, 13, 4, 14, 9, 14, 4, 15, 9, 15, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3,
+	9, 13, 4, 14, 9, 14, 4, 15, 9, 15, 4, 16, 9, 16, 3, 2, 3, 2, 3, 3, 3, 3,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 54, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 55, 10, 3, 3, 3, 3, 3, 3, 3,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7, 3,
-	95, 10, 3, 12, 3, 14, 3, 98, 11, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,
-	3, 5, 3, 5, 3, 5, 3, 5, 3, 6, 3, 6, 3, 6, 3, 6, 5, 6, 114, 10, 6, 3, 7,
-	3, 7, 3, 7, 3, 7, 3, 7, 3, 8, 3, 8, 3, 8, 3, 8, 3, 8, 3, 8, 5, 8, 127,
-	10, 8, 3, 9, 3, 9, 3, 9, 3, 9, 5, 9, 133, 10, 9, 3, 10, 3, 10, 3, 10, 5,
-	10, 138, 10, 10, 3, 10, 3, 10, 3, 11, 3, 11, 3, 11, 5, 11, 145, 10, 11,
-	7, 11, 147, 10, 11, 12, 11, 14, 11, 150, 11, 11, 3, 12, 3, 12, 7, 12, 154,
-	10, 12, 12, 12, 14, 12, 157, 11, 12, 3, 13, 3, 13, 3, 13, 5, 13, 162, 10,
-	13, 3, 14, 3, 14, 3, 14, 3, 14, 3, 14, 3, 14, 5, 14, 170, 10, 14, 3, 15,
-	3, 15, 3, 15, 2, 3, 4, 16, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24,
-	26, 28, 2, 3, 3, 2, 39, 41, 2, 195, 2, 30, 3, 2, 2, 2, 4, 53, 3, 2, 2,
-	2, 6, 99, 3, 2, 2, 2, 8, 105, 3, 2, 2, 2, 10, 113, 3, 2, 2, 2, 12, 115,
-	3, 2, 2, 2, 14, 120, 3, 2, 2, 2, 16, 132, 3, 2, 2, 2, 18, 134, 3, 2, 2,
-	2, 20, 141, 3, 2, 2, 2, 22, 151, 3, 2, 2, 2, 24, 158, 3, 2, 2, 2, 26, 169,
-	3, 2, 2, 2, 28, 171, 3, 2, 2, 2, 30, 31, 5, 4, 3, 2, 31, 3, 3, 2, 2, 2,
-	32, 33, 8, 3, 1, 2, 33, 54, 5, 6, 4, 2, 34, 54, 5, 8, 5, 2, 35, 54, 5,
-	14, 8, 2, 36, 37, 7, 32, 2, 2, 37, 38, 5, 4, 3, 2, 38, 39, 7, 33, 2, 2,
-	39, 54, 3, 2, 2, 2, 40, 41, 7, 18, 2, 2, 41, 54, 5, 4, 3, 26, 42, 43, 7,
-	13, 2, 2, 43, 54, 5, 4, 3, 25, 44, 54, 5, 16, 9, 2, 45, 54, 5, 18, 10,
-	2, 46, 54, 5, 22, 12, 2, 47, 54, 5, 28, 15, 2, 48, 54, 7, 48, 2, 2, 49,
-	54, 7, 45, 2, 2, 50, 54, 7, 47, 2, 2, 51, 54, 7, 46, 2, 2, 52, 54, 7, 49,
-	2, 2, 53, 32, 3, 2, 2, 2, 53, 34, 3, 2, 2, 2, 53, 35, 3, 2, 2, 2, 53, 36,
-	3, 2, 2, 2, 53, 40, 3, 2, 2, 2, 53, 42, 3, 2, 2, 2, 53, 44, 3, 2, 2, 2,
-	53, 45, 3, 2, 2, 2, 53, 46, 3, 2, 2, 2, 53, 47, 3, 2, 2, 2, 53, 48, 3,
-	2, 2, 2, 53, 49, 3, 2, 2, 2, 53, 50, 3, 2, 2, 2, 53, 51, 3, 2, 2, 2, 53,
-	52, 3, 2, 2, 2, 54, 96, 3, 2, 2, 2, 55, 56, 12, 24, 2, 2, 56, 57, 7, 14,
-	2, 2, 57, 95, 5, 4, 3, 24, 58, 59, 12, 23, 2, 2, 59, 60, 7, 15, 2, 2, 60,
-	95, 5, 4, 3, 24, 61, 62, 12, 22, 2, 2, 62, 63, 7, 16, 2, 2, 63, 95, 5,
-	4, 3, 23, 64, 65, 12, 21, 2, 2, 65, 66, 7, 17, 2, 2, 66, 95, 5, 4, 3, 22,
-	67, 68, 12, 20, 2, 2, 68, 69, 7, 18, 2, 2, 69, 95, 5, 4, 3, 21, 70, 71,
-	12, 19, 2, 2, 71, 72, 7, 19, 2, 2, 72, 95, 5, 4, 3, 20, 73, 74, 12, 18,
-	2, 2, 74, 75, 7, 20, 2, 2, 75, 95, 5, 4, 3, 19, 76, 77, 12, 17, 2, 2, 77,
-	78, 7, 21, 2, 2, 78, 95, 5, 4, 3, 18, 79, 80, 12, 16, 2, 2, 80, 81, 7,
-	22, 2, 2, 81, 95, 5, 4, 3, 17, 82, 83, 12, 15, 2, 2, 83, 84, 7, 23, 2,
-	2, 84, 95, 5, 4, 3, 16, 85, 86, 12, 14, 2, 2, 86, 87, 7, 24, 2, 2, 87,
-	95, 5, 4, 3, 15, 88, 89, 12, 13, 2, 2, 89, 90, 7, 25, 2, 2, 90, 95, 5,
-	4, 3, 14, 91, 92, 12, 12, 2, 2, 92, 93, 7, 26, 2, 2, 93, 95, 5, 4, 3, 13,
-	94, 55, 3, 2, 2, 2, 94, 58, 3, 2, 2, 2, 94, 61, 3, 2, 2, 2, 94, 64, 3,
-	2, 2, 2, 94, 67, 3, 2, 2, 2, 94, 70, 3, 2, 2, 2, 94, 73, 3, 2, 2, 2, 94,
-	76, 3, 2, 2, 2, 94, 79, 3, 2, 2, 2, 94, 82, 3, 2, 2, 2, 94, 85, 3, 2, 2,
-	2, 94, 88, 3, 2, 2, 2, 94, 91, 3, 2, 2, 2, 95, 98, 3, 2, 2, 2, 96, 94,
-	3, 2, 2, 2, 96, 97, 3, 2, 2, 2, 97, 5, 3, 2, 2, 2, 98, 96, 3, 2, 2, 2,
-	99, 100, 7, 3, 2, 2, 100, 101, 5, 4, 3, 2, 101, 102, 7, 5, 2, 2, 102, 103,
-	5, 10, 6, 2, 103, 104, 7, 4, 2, 2, 104, 7, 3, 2, 2, 2, 105, 106, 7, 6,
-	2, 2, 106, 107, 5, 10, 6, 2, 107, 108, 7, 7, 2, 2, 108, 9, 3, 2, 2, 2,
-	109, 110, 5, 12, 7, 2, 110, 111, 5, 10, 6, 2, 111, 114, 3, 2, 2, 2, 112,
-	114, 3, 2, 2, 2, 113, 109, 3, 2, 2, 2, 113, 112, 3, 2, 2, 2, 114, 11, 3,
-	2, 2, 2, 115, 116, 5, 4, 3, 2, 116, 117, 7, 11, 2, 2, 117, 118, 5, 4, 3,
-	2, 118, 119, 7, 12, 2, 2, 119, 13, 3, 2, 2, 2, 120, 121, 7, 8, 2, 2, 121,
-	122, 5, 4, 3, 2, 122, 123, 7, 9, 2, 2, 123, 126, 5, 4, 3, 2, 124, 125,
-	7, 10, 2, 2, 125, 127, 5, 4, 3, 2, 126, 124, 3, 2, 2, 2, 126, 127, 3, 2,
-	2, 2, 127, 15, 3, 2, 2, 2, 128, 133, 7, 43, 2, 2, 129, 130, 7, 42, 2, 2,
-	130, 131, 7, 27, 2, 2, 131, 133, 7, 43, 2, 2, 132, 128, 3, 2, 2, 2, 132,
-	129, 3, 2, 2, 2, 133, 17, 3, 2, 2, 2, 134, 135, 7, 44, 2, 2, 135, 137,
-	7, 32, 2, 2, 136, 138, 5, 20, 11, 2, 137, 136, 3, 2, 2, 2, 137, 138, 3,
-	2, 2, 2, 138, 139, 3, 2, 2, 2, 139, 140, 7, 33, 2, 2, 140, 19, 3, 2, 2,
-	2, 141, 148, 5, 4, 3, 2, 142, 144, 7, 37, 2, 2, 143, 145, 5, 4, 3, 2, 144,
-	143, 3, 2, 2, 2, 144, 145, 3, 2, 2, 2, 145, 147, 3, 2, 2, 2, 146, 142,
-	3, 2, 2, 2, 147, 150, 3, 2, 2, 2, 148, 146, 3, 2, 2, 2, 148, 149, 3, 2,
-	2, 2, 149, 21, 3, 2, 2, 2, 150, 148, 3, 2, 2, 2, 151, 155, 7, 42, 2, 2,
-	152, 154, 5, 24, 13, 2, 153, 152, 3, 2, 2, 2, 154, 157, 3, 2, 2, 2, 155,
-	153, 3, 2, 2, 2, 155, 156, 3, 2, 2, 2, 156, 23, 3, 2, 2, 2, 157, 155, 3,
-	2, 2, 2, 158, 161, 7, 38, 2, 2, 159, 162, 5, 26, 14, 2, 160, 162, 7, 42,
-	2, 2, 161, 159, 3, 2, 2, 2, 161, 160, 3, 2, 2, 2, 162, 25, 3, 2, 2, 2,
-	163, 170, 7, 43, 2, 2, 164, 165, 7, 43, 2, 2, 165, 166, 7, 32, 2, 2, 166,
-	167, 5, 20, 11, 2, 167, 168, 7, 33, 2, 2, 168, 170, 3, 2, 2, 2, 169, 163,
-	3, 2, 2, 2, 169, 164, 3, 2, 2, 2, 170, 27, 3, 2, 2, 2, 171, 172, 9, 2,
-	2, 2, 172, 29, 3, 2, 2, 2, 14, 53, 94, 96, 113, 126, 132, 137, 144, 148,
-	155, 161, 169,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	7, 3, 96, 10, 3, 12, 3, 14, 3, 99, 11, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,
+	3, 4, 3, 5, 3, 5, 3, 5, 3, 5, 5, 5, 111, 10, 5, 3, 6, 3, 6, 3, 6, 3, 6,
+	3, 6, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 5, 7, 124, 10, 7, 3, 8, 3, 8,
+	3, 8, 3, 8, 5, 8, 130, 10, 8, 3, 9, 3, 9, 3, 9, 5, 9, 135, 10, 9, 3, 9,
+	3, 9, 3, 10, 3, 10, 3, 10, 5, 10, 142, 10, 10, 7, 10, 144, 10, 10, 12,
+	10, 14, 10, 147, 11, 10, 3, 11, 3, 11, 6, 11, 151, 10, 11, 13, 11, 14,
+	11, 152, 3, 12, 3, 12, 3, 12, 3, 13, 3, 13, 5, 13, 160, 10, 13, 3, 14,
+	3, 14, 3, 15, 3, 15, 3, 15, 3, 15, 3, 15, 3, 16, 3, 16, 3, 16, 2, 3, 4,
+	17, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 2, 3, 3, 2,
+	39, 41, 2, 189, 2, 32, 3, 2, 2, 2, 4, 54, 3, 2, 2, 2, 6, 100, 3, 2, 2,
+	2, 8, 110, 3, 2, 2, 2, 10, 112, 3, 2, 2, 2, 12, 117, 3, 2, 2, 2, 14, 129,
+	3, 2, 2, 2, 16, 131, 3, 2, 2, 2, 18, 138, 3, 2, 2, 2, 20, 148, 3, 2, 2,
+	2, 22, 154, 3, 2, 2, 2, 24, 159, 3, 2, 2, 2, 26, 161, 3, 2, 2, 2, 28, 163,
+	3, 2, 2, 2, 30, 168, 3, 2, 2, 2, 32, 33, 5, 4, 3, 2, 33, 3, 3, 2, 2, 2,
+	34, 35, 8, 3, 1, 2, 35, 55, 5, 6, 4, 2, 36, 55, 5, 12, 7, 2, 37, 38, 7,
+	32, 2, 2, 38, 39, 5, 4, 3, 2, 39, 40, 7, 33, 2, 2, 40, 55, 3, 2, 2, 2,
+	41, 42, 7, 18, 2, 2, 42, 55, 5, 4, 3, 26, 43, 44, 7, 13, 2, 2, 44, 55,
+	5, 4, 3, 25, 45, 55, 5, 14, 8, 2, 46, 55, 5, 16, 9, 2, 47, 55, 5, 20, 11,
+	2, 48, 55, 5, 30, 16, 2, 49, 55, 7, 48, 2, 2, 50, 55, 7, 45, 2, 2, 51,
+	55, 7, 47, 2, 2, 52, 55, 7, 46, 2, 2, 53, 55, 7, 49, 2, 2, 54, 34, 3, 2,
+	2, 2, 54, 36, 3, 2, 2, 2, 54, 37, 3, 2, 2, 2, 54, 41, 3, 2, 2, 2, 54, 43,
+	3, 2, 2, 2, 54, 45, 3, 2, 2, 2, 54, 46, 3, 2, 2, 2, 54, 47, 3, 2, 2, 2,
+	54, 48, 3, 2, 2, 2, 54, 49, 3, 2, 2, 2, 54, 50, 3, 2, 2, 2, 54, 51, 3,
+	2, 2, 2, 54, 52, 3, 2, 2, 2, 54, 53, 3, 2, 2, 2, 55, 97, 3, 2, 2, 2, 56,
+	57, 12, 24, 2, 2, 57, 58, 7, 14, 2, 2, 58, 96, 5, 4, 3, 24, 59, 60, 12,
+	23, 2, 2, 60, 61, 7, 15, 2, 2, 61, 96, 5, 4, 3, 24, 62, 63, 12, 22, 2,
+	2, 63, 64, 7, 16, 2, 2, 64, 96, 5, 4, 3, 23, 65, 66, 12, 21, 2, 2, 66,
+	67, 7, 17, 2, 2, 67, 96, 5, 4, 3, 22, 68, 69, 12, 20, 2, 2, 69, 70, 7,
+	18, 2, 2, 70, 96, 5, 4, 3, 21, 71, 72, 12, 19, 2, 2, 72, 73, 7, 19, 2,
+	2, 73, 96, 5, 4, 3, 20, 74, 75, 12, 18, 2, 2, 75, 76, 7, 20, 2, 2, 76,
+	96, 5, 4, 3, 19, 77, 78, 12, 17, 2, 2, 78, 79, 7, 21, 2, 2, 79, 96, 5,
+	4, 3, 18, 80, 81, 12, 16, 2, 2, 81, 82, 7, 22, 2, 2, 82, 96, 5, 4, 3, 17,
+	83, 84, 12, 15, 2, 2, 84, 85, 7, 23, 2, 2, 85, 96, 5, 4, 3, 16, 86, 87,
+	12, 14, 2, 2, 87, 88, 7, 24, 2, 2, 88, 96, 5, 4, 3, 15, 89, 90, 12, 13,
+	2, 2, 90, 91, 7, 25, 2, 2, 91, 96, 5, 4, 3, 14, 92, 93, 12, 12, 2, 2, 93,
+	94, 7, 26, 2, 2, 94, 96, 5, 4, 3, 13, 95, 56, 3, 2, 2, 2, 95, 59, 3, 2,
+	2, 2, 95, 62, 3, 2, 2, 2, 95, 65, 3, 2, 2, 2, 95, 68, 3, 2, 2, 2, 95, 71,
+	3, 2, 2, 2, 95, 74, 3, 2, 2, 2, 95, 77, 3, 2, 2, 2, 95, 80, 3, 2, 2, 2,
+	95, 83, 3, 2, 2, 2, 95, 86, 3, 2, 2, 2, 95, 89, 3, 2, 2, 2, 95, 92, 3,
+	2, 2, 2, 96, 99, 3, 2, 2, 2, 97, 95, 3, 2, 2, 2, 97, 98, 3, 2, 2, 2, 98,
+	5, 3, 2, 2, 2, 99, 97, 3, 2, 2, 2, 100, 101, 7, 3, 2, 2, 101, 102, 5, 4,
+	3, 2, 102, 103, 7, 5, 2, 2, 103, 104, 5, 8, 5, 2, 104, 105, 7, 4, 2, 2,
+	105, 7, 3, 2, 2, 2, 106, 107, 5, 10, 6, 2, 107, 108, 5, 8, 5, 2, 108, 111,
+	3, 2, 2, 2, 109, 111, 3, 2, 2, 2, 110, 106, 3, 2, 2, 2, 110, 109, 3, 2,
+	2, 2, 111, 9, 3, 2, 2, 2, 112, 113, 5, 4, 3, 2, 113, 114, 7, 11, 2, 2,
+	114, 115, 5, 4, 3, 2, 115, 116, 7, 12, 2, 2, 116, 11, 3, 2, 2, 2, 117,
+	118, 7, 8, 2, 2, 118, 119, 5, 4, 3, 2, 119, 120, 7, 9, 2, 2, 120, 123,
+	5, 4, 3, 2, 121, 122, 7, 10, 2, 2, 122, 124, 5, 4, 3, 2, 123, 121, 3, 2,
+	2, 2, 123, 124, 3, 2, 2, 2, 124, 13, 3, 2, 2, 2, 125, 130, 7, 43, 2, 2,
+	126, 127, 7, 42, 2, 2, 127, 128, 7, 27, 2, 2, 128, 130, 7, 43, 2, 2, 129,
+	125, 3, 2, 2, 2, 129, 126, 3, 2, 2, 2, 130, 15, 3, 2, 2, 2, 131, 132, 7,
+	44, 2, 2, 132, 134, 7, 32, 2, 2, 133, 135, 5, 18, 10, 2, 134, 133, 3, 2,
+	2, 2, 134, 135, 3, 2, 2, 2, 135, 136, 3, 2, 2, 2, 136, 137, 7, 33, 2, 2,
+	137, 17, 3, 2, 2, 2, 138, 145, 5, 4, 3, 2, 139, 141, 7, 37, 2, 2, 140,
+	142, 5, 4, 3, 2, 141, 140, 3, 2, 2, 2, 141, 142, 3, 2, 2, 2, 142, 144,
+	3, 2, 2, 2, 143, 139, 3, 2, 2, 2, 144, 147, 3, 2, 2, 2, 145, 143, 3, 2,
+	2, 2, 145, 146, 3, 2, 2, 2, 146, 19, 3, 2, 2, 2, 147, 145, 3, 2, 2, 2,
+	148, 150, 7, 42, 2, 2, 149, 151, 5, 22, 12, 2, 150, 149, 3, 2, 2, 2, 151,
+	152, 3, 2, 2, 2, 152, 150, 3, 2, 2, 2, 152, 153, 3, 2, 2, 2, 153, 21, 3,
+	2, 2, 2, 154, 155, 7, 38, 2, 2, 155, 156, 5, 24, 13, 2, 156, 23, 3, 2,
+	2, 2, 157, 160, 5, 26, 14, 2, 158, 160, 5, 28, 15, 2, 159, 157, 3, 2, 2,
+	2, 159, 158, 3, 2, 2, 2, 160, 25, 3, 2, 2, 2, 161, 162, 7, 43, 2, 2, 162,
+	27, 3, 2, 2, 2, 163, 164, 7, 43, 2, 2, 164, 165, 7, 32, 2, 2, 165, 166,
+	5, 18, 10, 2, 166, 167, 7, 33, 2, 2, 167, 29, 3, 2, 2, 2, 168, 169, 9,
+	2, 2, 2, 169, 31, 3, 2, 2, 2, 13, 54, 95, 97, 110, 123, 129, 134, 141,
+	145, 152, 159,
 }
 var literalNames = []string{
 	"", "'case'", "'endcase'", "'is'", "'switch'", "'endswitch'", "'if'", "'then'",
@@ -113,9 +111,9 @@ var symbolicNames = []string{
 }
 
 var ruleNames = []string{
-	"program", "expression", "caseStatement", "switchStatement", "caseList",
-	"caseItem", "ifStatement", "name", "atFunction", "argList", "dataAccessor",
-	"accessList", "accessorMessage", "specialKeyword",
+	"program", "expression", "caseStatement", "caseList", "caseItem", "ifStatement",
+	"name", "atFunction", "argList", "dataAccessor", "accessorList", "accessorObjectOrArray",
+	"accessorObject", "accessorArray", "specialKeyword",
 }
 
 type HilcoPencilGrammarParser struct {
@@ -203,20 +201,21 @@ const (
 
 // HilcoPencilGrammarParser rules.
 const (
-	HilcoPencilGrammarParserRULE_program         = 0
-	HilcoPencilGrammarParserRULE_expression      = 1
-	HilcoPencilGrammarParserRULE_caseStatement   = 2
-	HilcoPencilGrammarParserRULE_switchStatement = 3
-	HilcoPencilGrammarParserRULE_caseList        = 4
-	HilcoPencilGrammarParserRULE_caseItem        = 5
-	HilcoPencilGrammarParserRULE_ifStatement     = 6
-	HilcoPencilGrammarParserRULE_name            = 7
-	HilcoPencilGrammarParserRULE_atFunction      = 8
-	HilcoPencilGrammarParserRULE_argList         = 9
-	HilcoPencilGrammarParserRULE_dataAccessor    = 10
-	HilcoPencilGrammarParserRULE_accessList      = 11
-	HilcoPencilGrammarParserRULE_accessorMessage = 12
-	HilcoPencilGrammarParserRULE_specialKeyword  = 13
+	HilcoPencilGrammarParserRULE_program               = 0
+	HilcoPencilGrammarParserRULE_expression            = 1
+	HilcoPencilGrammarParserRULE_caseStatement         = 2
+	HilcoPencilGrammarParserRULE_caseList              = 3
+	HilcoPencilGrammarParserRULE_caseItem              = 4
+	HilcoPencilGrammarParserRULE_ifStatement           = 5
+	HilcoPencilGrammarParserRULE_name                  = 6
+	HilcoPencilGrammarParserRULE_atFunction            = 7
+	HilcoPencilGrammarParserRULE_argList               = 8
+	HilcoPencilGrammarParserRULE_dataAccessor          = 9
+	HilcoPencilGrammarParserRULE_accessorList          = 10
+	HilcoPencilGrammarParserRULE_accessorObjectOrArray = 11
+	HilcoPencilGrammarParserRULE_accessorObject        = 12
+	HilcoPencilGrammarParserRULE_accessorArray         = 13
+	HilcoPencilGrammarParserRULE_specialKeyword        = 14
 )
 
 // IProgramContext is an interface to support dynamic dispatch.
@@ -309,7 +308,7 @@ func (p *HilcoPencilGrammarParser) Program() (localctx IProgramContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(28)
+		p.SetState(30)
 		p.expression(0)
 	}
 
@@ -995,46 +994,6 @@ func (s *FloatContext) ExitRule(listener antlr.ParseTreeListener) {
 	}
 }
 
-type ExpressionSwitchContext struct {
-	*ExpressionContext
-}
-
-func NewExpressionSwitchContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionSwitchContext {
-	var p = new(ExpressionSwitchContext)
-
-	p.ExpressionContext = NewEmptyExpressionContext()
-	p.parser = parser
-	p.CopyFrom(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionSwitchContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionSwitchContext) SwitchStatement() ISwitchStatementContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*ISwitchStatementContext)(nil)).Elem(), 0)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(ISwitchStatementContext)
-}
-
-func (s *ExpressionSwitchContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.EnterExpressionSwitch(s)
-	}
-}
-
-func (s *ExpressionSwitchContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.ExitExpressionSwitch(s)
-	}
-}
-
 type UnaryMinusCalculatorContext struct {
 	*ExpressionContext
 }
@@ -1248,7 +1207,7 @@ func (p *HilcoPencilGrammarParser) expression(_p int) (localctx IExpressionConte
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(51)
+	p.SetState(52)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 0, p.GetParserRuleContext()) {
 	case 1:
@@ -1257,155 +1216,146 @@ func (p *HilcoPencilGrammarParser) expression(_p int) (localctx IExpressionConte
 		_prevctx = localctx
 
 		{
-			p.SetState(31)
+			p.SetState(33)
 			p.CaseStatement()
 		}
 
 	case 2:
-		localctx = NewExpressionSwitchContext(p, localctx)
-		p.SetParserRuleContext(localctx)
-		_prevctx = localctx
-		{
-			p.SetState(32)
-			p.SwitchStatement()
-		}
-
-	case 3:
 		localctx = NewIfContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(33)
+			p.SetState(34)
 			p.IfStatement()
 		}
 
-	case 4:
+	case 3:
 		localctx = NewParensContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(34)
+			p.SetState(35)
 			p.Match(HilcoPencilGrammarParserLPAREN)
 		}
 		{
-			p.SetState(35)
+			p.SetState(36)
 			p.expression(0)
 		}
 		{
-			p.SetState(36)
+			p.SetState(37)
 			p.Match(HilcoPencilGrammarParserRPAREN)
 		}
 
-	case 5:
+	case 4:
 		localctx = NewUnaryMinusCalculatorContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(38)
+			p.SetState(39)
 			p.Match(HilcoPencilGrammarParserMINUS)
 		}
 		{
-			p.SetState(39)
+			p.SetState(40)
 			p.expression(24)
 		}
 
-	case 6:
+	case 5:
 		localctx = NewUnaryNotCalculatorContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(40)
+			p.SetState(41)
 			p.Match(HilcoPencilGrammarParserNOT)
 		}
 		{
-			p.SetState(41)
+			p.SetState(42)
 			p.expression(23)
 		}
 
-	case 7:
+	case 6:
 		localctx = NewNameCalculatorContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(42)
+			p.SetState(43)
 			p.Name()
 		}
 
-	case 8:
+	case 7:
 		localctx = NewExpressionAtFunctionContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(43)
+			p.SetState(44)
 			p.AtFunction()
 		}
 
-	case 9:
+	case 8:
 		localctx = NewExpressionDataAccessContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(44)
+			p.SetState(45)
 			p.DataAccessor()
 		}
 
-	case 10:
+	case 9:
 		localctx = NewExpressionKeywordContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(45)
+			p.SetState(46)
 			p.SpecialKeyword()
 		}
 
-	case 11:
+	case 10:
 		localctx = NewPercentContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(46)
+			p.SetState(47)
 			p.Match(HilcoPencilGrammarParserPERCENT)
 		}
 
-	case 12:
+	case 11:
 		localctx = NewIntegerContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(47)
+			p.SetState(48)
 			p.Match(HilcoPencilGrammarParserINT)
 		}
 
-	case 13:
+	case 12:
 		localctx = NewFloatContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(48)
+			p.SetState(49)
 			p.Match(HilcoPencilGrammarParserFLOAT)
 		}
 
-	case 14:
+	case 13:
 		localctx = NewStringContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(49)
+			p.SetState(50)
 			p.Match(HilcoPencilGrammarParserSTRING)
 		}
 
-	case 15:
+	case 14:
 		localctx = NewDateContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(50)
+			p.SetState(51)
 			p.Match(HilcoPencilGrammarParserDATE)
 		}
 
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(94)
+	p.SetState(95)
 	p.GetErrorHandler().Sync(p)
 	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 2, p.GetParserRuleContext())
 
@@ -1415,234 +1365,234 @@ func (p *HilcoPencilGrammarParser) expression(_p int) (localctx IExpressionConte
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			p.SetState(92)
+			p.SetState(93)
 			p.GetErrorHandler().Sync(p)
 			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 1, p.GetParserRuleContext()) {
 			case 1:
 				localctx = NewBinaryExponentialCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(53)
+				p.SetState(54)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 22)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 22)", ""))
 				}
 				{
-					p.SetState(54)
+					p.SetState(55)
 					p.Match(HilcoPencilGrammarParserEXPONENTIAL)
 				}
 				{
-					p.SetState(55)
+					p.SetState(56)
 					p.expression(22)
 				}
 
 			case 2:
 				localctx = NewBinaryArthmeticCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(56)
+				p.SetState(57)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 21)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 21)", ""))
 				}
 				{
-					p.SetState(57)
+					p.SetState(58)
 					p.Match(HilcoPencilGrammarParserMULTIPLY)
 				}
 				{
-					p.SetState(58)
+					p.SetState(59)
 					p.expression(22)
 				}
 
 			case 3:
 				localctx = NewBinaryArthmeticCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(59)
+				p.SetState(60)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 20)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 20)", ""))
 				}
 				{
-					p.SetState(60)
+					p.SetState(61)
 					p.Match(HilcoPencilGrammarParserDIVIDE)
 				}
 				{
-					p.SetState(61)
+					p.SetState(62)
 					p.expression(21)
 				}
 
 			case 4:
 				localctx = NewBinaryArthmeticCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(62)
+				p.SetState(63)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 19)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 19)", ""))
 				}
 				{
-					p.SetState(63)
+					p.SetState(64)
 					p.Match(HilcoPencilGrammarParserADD)
 				}
 				{
-					p.SetState(64)
+					p.SetState(65)
 					p.expression(20)
 				}
 
 			case 5:
 				localctx = NewBinaryArthmeticCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(65)
+				p.SetState(66)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 18)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 18)", ""))
 				}
 				{
-					p.SetState(66)
+					p.SetState(67)
 					p.Match(HilcoPencilGrammarParserMINUS)
 				}
 				{
-					p.SetState(67)
+					p.SetState(68)
 					p.expression(19)
 				}
 
 			case 6:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(68)
+				p.SetState(69)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 17)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 17)", ""))
 				}
 				{
-					p.SetState(69)
+					p.SetState(70)
 					p.Match(HilcoPencilGrammarParserGREATER_THAN)
 				}
 				{
-					p.SetState(70)
+					p.SetState(71)
 					p.expression(18)
 				}
 
 			case 7:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(71)
+				p.SetState(72)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 16)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 16)", ""))
 				}
 				{
-					p.SetState(72)
+					p.SetState(73)
 					p.Match(HilcoPencilGrammarParserGREATER_THAN_EQUAL)
 				}
 				{
-					p.SetState(73)
+					p.SetState(74)
 					p.expression(17)
 				}
 
 			case 8:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(74)
+				p.SetState(75)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 15)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 15)", ""))
 				}
 				{
-					p.SetState(75)
+					p.SetState(76)
 					p.Match(HilcoPencilGrammarParserLESS_THAN)
 				}
 				{
-					p.SetState(76)
+					p.SetState(77)
 					p.expression(16)
 				}
 
 			case 9:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(77)
+				p.SetState(78)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 14)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
 				}
 				{
-					p.SetState(78)
+					p.SetState(79)
 					p.Match(HilcoPencilGrammarParserLESS_THAN_EQUAL)
 				}
 				{
-					p.SetState(79)
+					p.SetState(80)
 					p.expression(15)
 				}
 
 			case 10:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(80)
+				p.SetState(81)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 13)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 13)", ""))
 				}
 				{
-					p.SetState(81)
+					p.SetState(82)
 					p.Match(HilcoPencilGrammarParserEQUAL)
 				}
 				{
-					p.SetState(82)
+					p.SetState(83)
 					p.expression(14)
 				}
 
 			case 11:
 				localctx = NewBinaryRelationalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(83)
+				p.SetState(84)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 12)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 12)", ""))
 				}
 				{
-					p.SetState(84)
+					p.SetState(85)
 					p.Match(HilcoPencilGrammarParserNOT_EQUAL)
 				}
 				{
-					p.SetState(85)
+					p.SetState(86)
 					p.expression(13)
 				}
 
 			case 12:
 				localctx = NewBinaryLogicalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(86)
+				p.SetState(87)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 11)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 11)", ""))
 				}
 				{
-					p.SetState(87)
+					p.SetState(88)
 					p.Match(HilcoPencilGrammarParserAND)
 				}
 				{
-					p.SetState(88)
+					p.SetState(89)
 					p.expression(12)
 				}
 
 			case 13:
 				localctx = NewBinaryLogicalCalculatorContext(p, NewExpressionContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, HilcoPencilGrammarParserRULE_expression)
-				p.SetState(89)
+				p.SetState(90)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 10)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 10)", ""))
 				}
 				{
-					p.SetState(90)
+					p.SetState(91)
 					p.Match(HilcoPencilGrammarParserOR)
 				}
 				{
-					p.SetState(91)
+					p.SetState(92)
 					p.expression(11)
 				}
 
 			}
 
 		}
-		p.SetState(96)
+		p.SetState(97)
 		p.GetErrorHandler().Sync(p)
 		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 2, p.GetParserRuleContext())
 	}
@@ -1762,137 +1712,24 @@ func (p *HilcoPencilGrammarParser) CaseStatement() (localctx ICaseStatementConte
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(97)
+		p.SetState(98)
 		p.Match(HilcoPencilGrammarParserCASE)
 	}
 	{
-		p.SetState(98)
+		p.SetState(99)
 		p.expression(0)
 	}
 	{
-		p.SetState(99)
+		p.SetState(100)
 		p.Match(HilcoPencilGrammarParserIS)
 	}
 	{
-		p.SetState(100)
-		p.CaseList()
-	}
-	{
 		p.SetState(101)
-		p.Match(HilcoPencilGrammarParserEND_CASE)
-	}
-
-	return localctx
-}
-
-// ISwitchStatementContext is an interface to support dynamic dispatch.
-type ISwitchStatementContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// IsSwitchStatementContext differentiates from other interfaces.
-	IsSwitchStatementContext()
-}
-
-type SwitchStatementContext struct {
-	*antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptySwitchStatementContext() *SwitchStatementContext {
-	var p = new(SwitchStatementContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = HilcoPencilGrammarParserRULE_switchStatement
-	return p
-}
-
-func (*SwitchStatementContext) IsSwitchStatementContext() {}
-
-func NewSwitchStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *SwitchStatementContext {
-	var p = new(SwitchStatementContext)
-
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = HilcoPencilGrammarParserRULE_switchStatement
-
-	return p
-}
-
-func (s *SwitchStatementContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *SwitchStatementContext) SWITCH() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserSWITCH, 0)
-}
-
-func (s *SwitchStatementContext) CaseList() ICaseListContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*ICaseListContext)(nil)).Elem(), 0)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(ICaseListContext)
-}
-
-func (s *SwitchStatementContext) END_SWITCH() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserEND_SWITCH, 0)
-}
-
-func (s *SwitchStatementContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *SwitchStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *SwitchStatementContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.EnterSwitchStatement(s)
-	}
-}
-
-func (s *SwitchStatementContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.ExitSwitchStatement(s)
-	}
-}
-
-func (p *HilcoPencilGrammarParser) SwitchStatement() (localctx ISwitchStatementContext) {
-	localctx = NewSwitchStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 6, HilcoPencilGrammarParserRULE_switchStatement)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(103)
-		p.Match(HilcoPencilGrammarParserSWITCH)
-	}
-	{
-		p.SetState(104)
 		p.CaseList()
 	}
 	{
-		p.SetState(105)
-		p.Match(HilcoPencilGrammarParserEND_SWITCH)
+		p.SetState(102)
+		p.Match(HilcoPencilGrammarParserEND_CASE)
 	}
 
 	return localctx
@@ -1978,7 +1815,7 @@ func (s *CaseListContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) CaseList() (localctx ICaseListContext) {
 	localctx = NewCaseListContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 8, HilcoPencilGrammarParserRULE_caseList)
+	p.EnterRule(localctx, 6, HilcoPencilGrammarParserRULE_caseList)
 
 	defer func() {
 		p.ExitRule()
@@ -1996,22 +1833,22 @@ func (p *HilcoPencilGrammarParser) CaseList() (localctx ICaseListContext) {
 		}
 	}()
 
-	p.SetState(111)
+	p.SetState(108)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case HilcoPencilGrammarParserCASE, HilcoPencilGrammarParserSWITCH, HilcoPencilGrammarParserIF, HilcoPencilGrammarParserNOT, HilcoPencilGrammarParserMINUS, HilcoPencilGrammarParserLPAREN, HilcoPencilGrammarParserKEYWORD_TRUE, HilcoPencilGrammarParserKEYWORD_FALSE, HilcoPencilGrammarParserKEYWORD_NIL, HilcoPencilGrammarParserCLASSNAME, HilcoPencilGrammarParserID, HilcoPencilGrammarParserATFUNCTION, HilcoPencilGrammarParserINT, HilcoPencilGrammarParserSTRING, HilcoPencilGrammarParserFLOAT, HilcoPencilGrammarParserPERCENT, HilcoPencilGrammarParserDATE:
+	case HilcoPencilGrammarParserCASE, HilcoPencilGrammarParserIF, HilcoPencilGrammarParserNOT, HilcoPencilGrammarParserMINUS, HilcoPencilGrammarParserLPAREN, HilcoPencilGrammarParserKEYWORD_TRUE, HilcoPencilGrammarParserKEYWORD_FALSE, HilcoPencilGrammarParserKEYWORD_NIL, HilcoPencilGrammarParserCLASSNAME, HilcoPencilGrammarParserID, HilcoPencilGrammarParserATFUNCTION, HilcoPencilGrammarParserINT, HilcoPencilGrammarParserSTRING, HilcoPencilGrammarParserFLOAT, HilcoPencilGrammarParserPERCENT, HilcoPencilGrammarParserDATE:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(107)
+			p.SetState(104)
 			p.CaseItem()
 		}
 		{
-			p.SetState(108)
+			p.SetState(105)
 			p.CaseList()
 		}
 
-	case HilcoPencilGrammarParserEND_CASE, HilcoPencilGrammarParserEND_SWITCH:
+	case HilcoPencilGrammarParserEND_CASE:
 		p.EnterOuterAlt(localctx, 2)
 
 	default:
@@ -2112,7 +1949,7 @@ func (s *CaseItemContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) CaseItem() (localctx ICaseItemContext) {
 	localctx = NewCaseItemContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 10, HilcoPencilGrammarParserRULE_caseItem)
+	p.EnterRule(localctx, 8, HilcoPencilGrammarParserRULE_caseItem)
 
 	defer func() {
 		p.ExitRule()
@@ -2132,19 +1969,19 @@ func (p *HilcoPencilGrammarParser) CaseItem() (localctx ICaseItemContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(113)
+		p.SetState(110)
 		p.expression(0)
 	}
 	{
-		p.SetState(114)
+		p.SetState(111)
 		p.Match(HilcoPencilGrammarParserDOUBLE_COLON)
 	}
 	{
-		p.SetState(115)
+		p.SetState(112)
 		p.expression(0)
 	}
 	{
-		p.SetState(116)
+		p.SetState(113)
 		p.Match(HilcoPencilGrammarParserSEMI_COLON)
 	}
 
@@ -2246,7 +2083,7 @@ func (s *IfStatementContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) IfStatement() (localctx IIfStatementContext) {
 	localctx = NewIfStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 12, HilcoPencilGrammarParserRULE_ifStatement)
+	p.EnterRule(localctx, 10, HilcoPencilGrammarParserRULE_ifStatement)
 
 	defer func() {
 		p.ExitRule()
@@ -2266,31 +2103,31 @@ func (p *HilcoPencilGrammarParser) IfStatement() (localctx IIfStatementContext) 
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(118)
+		p.SetState(115)
 		p.Match(HilcoPencilGrammarParserIF)
 	}
 	{
-		p.SetState(119)
+		p.SetState(116)
 		p.expression(0)
 	}
 	{
-		p.SetState(120)
+		p.SetState(117)
 		p.Match(HilcoPencilGrammarParserTHEN)
 	}
 	{
-		p.SetState(121)
+		p.SetState(118)
 		p.expression(0)
 	}
-	p.SetState(124)
+	p.SetState(121)
 	p.GetErrorHandler().Sync(p)
 
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext()) == 1 {
 		{
-			p.SetState(122)
+			p.SetState(119)
 			p.Match(HilcoPencilGrammarParserELSE)
 		}
 		{
-			p.SetState(123)
+			p.SetState(120)
 			p.expression(0)
 		}
 
@@ -2371,7 +2208,7 @@ func (s *NameContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) Name() (localctx INameContext) {
 	localctx = NewNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 14, HilcoPencilGrammarParserRULE_name)
+	p.EnterRule(localctx, 12, HilcoPencilGrammarParserRULE_name)
 
 	defer func() {
 		p.ExitRule()
@@ -2389,29 +2226,29 @@ func (p *HilcoPencilGrammarParser) Name() (localctx INameContext) {
 		}
 	}()
 
-	p.SetState(130)
+	p.SetState(127)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case HilcoPencilGrammarParserID:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(126)
+			p.SetState(123)
 			p.Match(HilcoPencilGrammarParserID)
 		}
 
 	case HilcoPencilGrammarParserCLASSNAME:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(127)
+			p.SetState(124)
 			p.Match(HilcoPencilGrammarParserCLASSNAME)
 		}
 		{
-			p.SetState(128)
+			p.SetState(125)
 			p.Match(HilcoPencilGrammarParserCOLON)
 		}
 		{
-			p.SetState(129)
+			p.SetState(126)
 			p.Match(HilcoPencilGrammarParserID)
 		}
 
@@ -2504,7 +2341,7 @@ func (s *AtFunctionContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) AtFunction() (localctx IAtFunctionContext) {
 	localctx = NewAtFunctionContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 16, HilcoPencilGrammarParserRULE_atFunction)
+	p.EnterRule(localctx, 14, HilcoPencilGrammarParserRULE_atFunction)
 	var _la int
 
 	defer func() {
@@ -2525,26 +2362,26 @@ func (p *HilcoPencilGrammarParser) AtFunction() (localctx IAtFunctionContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(132)
+		p.SetState(129)
 		p.Match(HilcoPencilGrammarParserATFUNCTION)
 	}
 	{
-		p.SetState(133)
+		p.SetState(130)
 		p.Match(HilcoPencilGrammarParserLPAREN)
 	}
-	p.SetState(135)
+	p.SetState(132)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<HilcoPencilGrammarParserCASE)|(1<<HilcoPencilGrammarParserSWITCH)|(1<<HilcoPencilGrammarParserIF)|(1<<HilcoPencilGrammarParserNOT)|(1<<HilcoPencilGrammarParserMINUS)|(1<<HilcoPencilGrammarParserLPAREN))) != 0) || (((_la-37)&-(0x1f+1)) == 0 && ((1<<uint((_la-37)))&((1<<(HilcoPencilGrammarParserKEYWORD_TRUE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_FALSE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_NIL-37))|(1<<(HilcoPencilGrammarParserCLASSNAME-37))|(1<<(HilcoPencilGrammarParserID-37))|(1<<(HilcoPencilGrammarParserATFUNCTION-37))|(1<<(HilcoPencilGrammarParserINT-37))|(1<<(HilcoPencilGrammarParserSTRING-37))|(1<<(HilcoPencilGrammarParserFLOAT-37))|(1<<(HilcoPencilGrammarParserPERCENT-37))|(1<<(HilcoPencilGrammarParserDATE-37)))) != 0) {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<HilcoPencilGrammarParserCASE)|(1<<HilcoPencilGrammarParserIF)|(1<<HilcoPencilGrammarParserNOT)|(1<<HilcoPencilGrammarParserMINUS)|(1<<HilcoPencilGrammarParserLPAREN))) != 0) || (((_la-37)&-(0x1f+1)) == 0 && ((1<<uint((_la-37)))&((1<<(HilcoPencilGrammarParserKEYWORD_TRUE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_FALSE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_NIL-37))|(1<<(HilcoPencilGrammarParserCLASSNAME-37))|(1<<(HilcoPencilGrammarParserID-37))|(1<<(HilcoPencilGrammarParserATFUNCTION-37))|(1<<(HilcoPencilGrammarParserINT-37))|(1<<(HilcoPencilGrammarParserSTRING-37))|(1<<(HilcoPencilGrammarParserFLOAT-37))|(1<<(HilcoPencilGrammarParserPERCENT-37))|(1<<(HilcoPencilGrammarParserDATE-37)))) != 0) {
 		{
-			p.SetState(134)
+			p.SetState(131)
 			p.ArgList()
 		}
 
 	}
 	{
-		p.SetState(137)
+		p.SetState(134)
 		p.Match(HilcoPencilGrammarParserRPAREN)
 	}
 
@@ -2642,7 +2479,7 @@ func (s *ArgListContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) ArgList() (localctx IArgListContext) {
 	localctx = NewArgListContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 18, HilcoPencilGrammarParserRULE_argList)
+	p.EnterRule(localctx, 16, HilcoPencilGrammarParserRULE_argList)
 	var _la int
 
 	defer func() {
@@ -2663,31 +2500,31 @@ func (p *HilcoPencilGrammarParser) ArgList() (localctx IArgListContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(139)
+		p.SetState(136)
 		p.expression(0)
 	}
-	p.SetState(146)
+	p.SetState(143)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == HilcoPencilGrammarParserCOMMA {
 		{
-			p.SetState(140)
+			p.SetState(137)
 			p.Match(HilcoPencilGrammarParserCOMMA)
 		}
-		p.SetState(142)
+		p.SetState(139)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<HilcoPencilGrammarParserCASE)|(1<<HilcoPencilGrammarParserSWITCH)|(1<<HilcoPencilGrammarParserIF)|(1<<HilcoPencilGrammarParserNOT)|(1<<HilcoPencilGrammarParserMINUS)|(1<<HilcoPencilGrammarParserLPAREN))) != 0) || (((_la-37)&-(0x1f+1)) == 0 && ((1<<uint((_la-37)))&((1<<(HilcoPencilGrammarParserKEYWORD_TRUE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_FALSE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_NIL-37))|(1<<(HilcoPencilGrammarParserCLASSNAME-37))|(1<<(HilcoPencilGrammarParserID-37))|(1<<(HilcoPencilGrammarParserATFUNCTION-37))|(1<<(HilcoPencilGrammarParserINT-37))|(1<<(HilcoPencilGrammarParserSTRING-37))|(1<<(HilcoPencilGrammarParserFLOAT-37))|(1<<(HilcoPencilGrammarParserPERCENT-37))|(1<<(HilcoPencilGrammarParserDATE-37)))) != 0) {
+		if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<HilcoPencilGrammarParserCASE)|(1<<HilcoPencilGrammarParserIF)|(1<<HilcoPencilGrammarParserNOT)|(1<<HilcoPencilGrammarParserMINUS)|(1<<HilcoPencilGrammarParserLPAREN))) != 0) || (((_la-37)&-(0x1f+1)) == 0 && ((1<<uint((_la-37)))&((1<<(HilcoPencilGrammarParserKEYWORD_TRUE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_FALSE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_NIL-37))|(1<<(HilcoPencilGrammarParserCLASSNAME-37))|(1<<(HilcoPencilGrammarParserID-37))|(1<<(HilcoPencilGrammarParserATFUNCTION-37))|(1<<(HilcoPencilGrammarParserINT-37))|(1<<(HilcoPencilGrammarParserSTRING-37))|(1<<(HilcoPencilGrammarParserFLOAT-37))|(1<<(HilcoPencilGrammarParserPERCENT-37))|(1<<(HilcoPencilGrammarParserDATE-37)))) != 0) {
 			{
-				p.SetState(141)
+				p.SetState(138)
 				p.expression(0)
 			}
 
 		}
 
-		p.SetState(148)
+		p.SetState(145)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -2737,27 +2574,27 @@ func (s *DataAccessorContext) CLASSNAME() antlr.TerminalNode {
 	return s.GetToken(HilcoPencilGrammarParserCLASSNAME, 0)
 }
 
-func (s *DataAccessorContext) AllAccessList() []IAccessListContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IAccessListContext)(nil)).Elem())
-	var tst = make([]IAccessListContext, len(ts))
+func (s *DataAccessorContext) AllAccessorList() []IAccessorListContext {
+	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IAccessorListContext)(nil)).Elem())
+	var tst = make([]IAccessorListContext, len(ts))
 
 	for i, t := range ts {
 		if t != nil {
-			tst[i] = t.(IAccessListContext)
+			tst[i] = t.(IAccessorListContext)
 		}
 	}
 
 	return tst
 }
 
-func (s *DataAccessorContext) AccessList(i int) IAccessListContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessListContext)(nil)).Elem(), i)
+func (s *DataAccessorContext) AccessorList(i int) IAccessorListContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessorListContext)(nil)).Elem(), i)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IAccessListContext)
+	return t.(IAccessorListContext)
 }
 
 func (s *DataAccessorContext) GetRuleContext() antlr.RuleContext {
@@ -2782,7 +2619,7 @@ func (s *DataAccessorContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) DataAccessor() (localctx IDataAccessorContext) {
 	localctx = NewDataAccessorContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 20, HilcoPencilGrammarParserRULE_dataAccessor)
+	p.EnterRule(localctx, 18, HilcoPencilGrammarParserRULE_dataAccessor)
 
 	defer func() {
 		p.ExitRule()
@@ -2804,22 +2641,25 @@ func (p *HilcoPencilGrammarParser) DataAccessor() (localctx IDataAccessorContext
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(149)
+		p.SetState(146)
 		p.Match(HilcoPencilGrammarParserCLASSNAME)
 	}
-	p.SetState(153)
+	p.SetState(148)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 9, p.GetParserRuleContext())
-
-	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
-		if _alt == 1 {
+	_alt = 1
+	for ok := true; ok; ok = _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
+		switch _alt {
+		case 1:
 			{
-				p.SetState(150)
-				p.AccessList()
+				p.SetState(147)
+				p.AccessorList()
 			}
 
+		default:
+			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 		}
-		p.SetState(155)
+
+		p.SetState(150)
 		p.GetErrorHandler().Sync(p)
 		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 9, p.GetParserRuleContext())
 	}
@@ -2827,85 +2667,81 @@ func (p *HilcoPencilGrammarParser) DataAccessor() (localctx IDataAccessorContext
 	return localctx
 }
 
-// IAccessListContext is an interface to support dynamic dispatch.
-type IAccessListContext interface {
+// IAccessorListContext is an interface to support dynamic dispatch.
+type IAccessorListContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsAccessListContext differentiates from other interfaces.
-	IsAccessListContext()
+	// IsAccessorListContext differentiates from other interfaces.
+	IsAccessorListContext()
 }
 
-type AccessListContext struct {
+type AccessorListContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyAccessListContext() *AccessListContext {
-	var p = new(AccessListContext)
+func NewEmptyAccessorListContext() *AccessorListContext {
+	var p = new(AccessorListContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = HilcoPencilGrammarParserRULE_accessList
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorList
 	return p
 }
 
-func (*AccessListContext) IsAccessListContext() {}
+func (*AccessorListContext) IsAccessorListContext() {}
 
-func NewAccessListContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessListContext {
-	var p = new(AccessListContext)
+func NewAccessorListContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessorListContext {
+	var p = new(AccessorListContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = HilcoPencilGrammarParserRULE_accessList
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorList
 
 	return p
 }
 
-func (s *AccessListContext) GetParser() antlr.Parser { return s.parser }
+func (s *AccessorListContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *AccessListContext) DOT() antlr.TerminalNode {
+func (s *AccessorListContext) DOT() antlr.TerminalNode {
 	return s.GetToken(HilcoPencilGrammarParserDOT, 0)
 }
 
-func (s *AccessListContext) AccessorMessage() IAccessorMessageContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessorMessageContext)(nil)).Elem(), 0)
+func (s *AccessorListContext) AccessorObjectOrArray() IAccessorObjectOrArrayContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessorObjectOrArrayContext)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IAccessorMessageContext)
+	return t.(IAccessorObjectOrArrayContext)
 }
 
-func (s *AccessListContext) CLASSNAME() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserCLASSNAME, 0)
-}
-
-func (s *AccessListContext) GetRuleContext() antlr.RuleContext {
+func (s *AccessorListContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AccessListContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *AccessorListContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *AccessListContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AccessorListContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.EnterAccessList(s)
+		listenerT.EnterAccessorList(s)
 	}
 }
 
-func (s *AccessListContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AccessorListContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.ExitAccessList(s)
+		listenerT.ExitAccessorList(s)
 	}
 }
 
-func (p *HilcoPencilGrammarParser) AccessList() (localctx IAccessListContext) {
-	localctx = NewAccessListContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 22, HilcoPencilGrammarParserRULE_accessList)
+func (p *HilcoPencilGrammarParser) AccessorList() (localctx IAccessorListContext) {
+	localctx = NewAccessorListContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 20, HilcoPencilGrammarParserRULE_accessorList)
 
 	defer func() {
 		p.ExitRule()
@@ -2925,115 +2761,99 @@ func (p *HilcoPencilGrammarParser) AccessList() (localctx IAccessListContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(156)
+		p.SetState(152)
 		p.Match(HilcoPencilGrammarParserDOT)
 	}
-	p.SetState(159)
-	p.GetErrorHandler().Sync(p)
 
-	switch p.GetTokenStream().LA(1) {
-	case HilcoPencilGrammarParserID:
-		{
-			p.SetState(157)
-			p.AccessorMessage()
-		}
-
-	case HilcoPencilGrammarParserCLASSNAME:
-		{
-			p.SetState(158)
-			p.Match(HilcoPencilGrammarParserCLASSNAME)
-		}
-
-	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+	{
+		p.SetState(153)
+		p.AccessorObjectOrArray()
 	}
 
 	return localctx
 }
 
-// IAccessorMessageContext is an interface to support dynamic dispatch.
-type IAccessorMessageContext interface {
+// IAccessorObjectOrArrayContext is an interface to support dynamic dispatch.
+type IAccessorObjectOrArrayContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsAccessorMessageContext differentiates from other interfaces.
-	IsAccessorMessageContext()
+	// IsAccessorObjectOrArrayContext differentiates from other interfaces.
+	IsAccessorObjectOrArrayContext()
 }
 
-type AccessorMessageContext struct {
+type AccessorObjectOrArrayContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyAccessorMessageContext() *AccessorMessageContext {
-	var p = new(AccessorMessageContext)
+func NewEmptyAccessorObjectOrArrayContext() *AccessorObjectOrArrayContext {
+	var p = new(AccessorObjectOrArrayContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorMessage
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorObjectOrArray
 	return p
 }
 
-func (*AccessorMessageContext) IsAccessorMessageContext() {}
+func (*AccessorObjectOrArrayContext) IsAccessorObjectOrArrayContext() {}
 
-func NewAccessorMessageContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessorMessageContext {
-	var p = new(AccessorMessageContext)
+func NewAccessorObjectOrArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessorObjectOrArrayContext {
+	var p = new(AccessorObjectOrArrayContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorMessage
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorObjectOrArray
 
 	return p
 }
 
-func (s *AccessorMessageContext) GetParser() antlr.Parser { return s.parser }
+func (s *AccessorObjectOrArrayContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *AccessorMessageContext) ID() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserID, 0)
-}
-
-func (s *AccessorMessageContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserLPAREN, 0)
-}
-
-func (s *AccessorMessageContext) ArgList() IArgListContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IArgListContext)(nil)).Elem(), 0)
+func (s *AccessorObjectOrArrayContext) AccessorObject() IAccessorObjectContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessorObjectContext)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IArgListContext)
+	return t.(IAccessorObjectContext)
 }
 
-func (s *AccessorMessageContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(HilcoPencilGrammarParserRPAREN, 0)
+func (s *AccessorObjectOrArrayContext) AccessorArray() IAccessorArrayContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IAccessorArrayContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IAccessorArrayContext)
 }
 
-func (s *AccessorMessageContext) GetRuleContext() antlr.RuleContext {
+func (s *AccessorObjectOrArrayContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AccessorMessageContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *AccessorObjectOrArrayContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *AccessorMessageContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AccessorObjectOrArrayContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.EnterAccessorMessage(s)
+		listenerT.EnterAccessorObjectOrArray(s)
 	}
 }
 
-func (s *AccessorMessageContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AccessorObjectOrArrayContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
-		listenerT.ExitAccessorMessage(s)
+		listenerT.ExitAccessorObjectOrArray(s)
 	}
 }
 
-func (p *HilcoPencilGrammarParser) AccessorMessage() (localctx IAccessorMessageContext) {
-	localctx = NewAccessorMessageContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 24, HilcoPencilGrammarParserRULE_accessorMessage)
+func (p *HilcoPencilGrammarParser) AccessorObjectOrArray() (localctx IAccessorObjectOrArrayContext) {
+	localctx = NewAccessorObjectOrArrayContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 22, HilcoPencilGrammarParserRULE_accessorObjectOrArray)
 
 	defer func() {
 		p.ExitRule()
@@ -3051,35 +2871,235 @@ func (p *HilcoPencilGrammarParser) AccessorMessage() (localctx IAccessorMessageC
 		}
 	}()
 
-	p.SetState(167)
+	p.SetState(157)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 11, p.GetParserRuleContext()) {
+	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 10, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(161)
-			p.Match(HilcoPencilGrammarParserID)
+			p.SetState(155)
+			p.AccessorObject()
 		}
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(162)
-			p.Match(HilcoPencilGrammarParserID)
-		}
-		{
-			p.SetState(163)
-			p.Match(HilcoPencilGrammarParserLPAREN)
-		}
-		{
-			p.SetState(164)
-			p.ArgList()
-		}
-		{
-			p.SetState(165)
-			p.Match(HilcoPencilGrammarParserRPAREN)
+			p.SetState(156)
+			p.AccessorArray()
 		}
 
+	}
+
+	return localctx
+}
+
+// IAccessorObjectContext is an interface to support dynamic dispatch.
+type IAccessorObjectContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsAccessorObjectContext differentiates from other interfaces.
+	IsAccessorObjectContext()
+}
+
+type AccessorObjectContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyAccessorObjectContext() *AccessorObjectContext {
+	var p = new(AccessorObjectContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorObject
+	return p
+}
+
+func (*AccessorObjectContext) IsAccessorObjectContext() {}
+
+func NewAccessorObjectContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessorObjectContext {
+	var p = new(AccessorObjectContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorObject
+
+	return p
+}
+
+func (s *AccessorObjectContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *AccessorObjectContext) ID() antlr.TerminalNode {
+	return s.GetToken(HilcoPencilGrammarParserID, 0)
+}
+
+func (s *AccessorObjectContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *AccessorObjectContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *AccessorObjectContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
+		listenerT.EnterAccessorObject(s)
+	}
+}
+
+func (s *AccessorObjectContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
+		listenerT.ExitAccessorObject(s)
+	}
+}
+
+func (p *HilcoPencilGrammarParser) AccessorObject() (localctx IAccessorObjectContext) {
+	localctx = NewAccessorObjectContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 24, HilcoPencilGrammarParserRULE_accessorObject)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(159)
+		p.Match(HilcoPencilGrammarParserID)
+	}
+
+	return localctx
+}
+
+// IAccessorArrayContext is an interface to support dynamic dispatch.
+type IAccessorArrayContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsAccessorArrayContext differentiates from other interfaces.
+	IsAccessorArrayContext()
+}
+
+type AccessorArrayContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyAccessorArrayContext() *AccessorArrayContext {
+	var p = new(AccessorArrayContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorArray
+	return p
+}
+
+func (*AccessorArrayContext) IsAccessorArrayContext() {}
+
+func NewAccessorArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AccessorArrayContext {
+	var p = new(AccessorArrayContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = HilcoPencilGrammarParserRULE_accessorArray
+
+	return p
+}
+
+func (s *AccessorArrayContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *AccessorArrayContext) ID() antlr.TerminalNode {
+	return s.GetToken(HilcoPencilGrammarParserID, 0)
+}
+
+func (s *AccessorArrayContext) LPAREN() antlr.TerminalNode {
+	return s.GetToken(HilcoPencilGrammarParserLPAREN, 0)
+}
+
+func (s *AccessorArrayContext) ArgList() IArgListContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IArgListContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IArgListContext)
+}
+
+func (s *AccessorArrayContext) RPAREN() antlr.TerminalNode {
+	return s.GetToken(HilcoPencilGrammarParserRPAREN, 0)
+}
+
+func (s *AccessorArrayContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *AccessorArrayContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *AccessorArrayContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
+		listenerT.EnterAccessorArray(s)
+	}
+}
+
+func (s *AccessorArrayContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(HilcoPencilGrammarParserListener); ok {
+		listenerT.ExitAccessorArray(s)
+	}
+}
+
+func (p *HilcoPencilGrammarParser) AccessorArray() (localctx IAccessorArrayContext) {
+	localctx = NewAccessorArrayContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 26, HilcoPencilGrammarParserRULE_accessorArray)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(161)
+		p.Match(HilcoPencilGrammarParserID)
+	}
+	{
+		p.SetState(162)
+		p.Match(HilcoPencilGrammarParserLPAREN)
+	}
+	{
+		p.SetState(163)
+		p.ArgList()
+	}
+	{
+		p.SetState(164)
+		p.Match(HilcoPencilGrammarParserRPAREN)
 	}
 
 	return localctx
@@ -3157,7 +3177,7 @@ func (s *SpecialKeywordContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *HilcoPencilGrammarParser) SpecialKeyword() (localctx ISpecialKeywordContext) {
 	localctx = NewSpecialKeywordContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, HilcoPencilGrammarParserRULE_specialKeyword)
+	p.EnterRule(localctx, 28, HilcoPencilGrammarParserRULE_specialKeyword)
 	var _la int
 
 	defer func() {
@@ -3178,7 +3198,7 @@ func (p *HilcoPencilGrammarParser) SpecialKeyword() (localctx ISpecialKeywordCon
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(169)
+		p.SetState(166)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(((_la-37)&-(0x1f+1)) == 0 && ((1<<uint((_la-37)))&((1<<(HilcoPencilGrammarParserKEYWORD_TRUE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_FALSE-37))|(1<<(HilcoPencilGrammarParserKEYWORD_NIL-37)))) != 0) {

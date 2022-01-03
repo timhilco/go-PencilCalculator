@@ -122,12 +122,6 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterFloat(ctx *FloatContext) {}
 // ExitFloat is called when production Float is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitFloat(ctx *FloatContext) {}
 
-// EnterExpressionSwitch is called when production ExpressionSwitch is entered.
-func (s *BaseHilcoPencilGrammarParserListener) EnterExpressionSwitch(ctx *ExpressionSwitchContext) {}
-
-// ExitExpressionSwitch is called when production ExpressionSwitch is exited.
-func (s *BaseHilcoPencilGrammarParserListener) ExitExpressionSwitch(ctx *ExpressionSwitchContext) {}
-
 // EnterUnaryMinusCalculator is called when production UnaryMinusCalculator is entered.
 func (s *BaseHilcoPencilGrammarParserListener) EnterUnaryMinusCalculator(ctx *UnaryMinusCalculatorContext) {
 }
@@ -163,12 +157,6 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterCaseStatement(ctx *CaseState
 
 // ExitCaseStatement is called when production caseStatement is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitCaseStatement(ctx *CaseStatementContext) {}
-
-// EnterSwitchStatement is called when production switchStatement is entered.
-func (s *BaseHilcoPencilGrammarParserListener) EnterSwitchStatement(ctx *SwitchStatementContext) {}
-
-// ExitSwitchStatement is called when production switchStatement is exited.
-func (s *BaseHilcoPencilGrammarParserListener) ExitSwitchStatement(ctx *SwitchStatementContext) {}
 
 // EnterCaseList is called when production caseList is entered.
 func (s *BaseHilcoPencilGrammarParserListener) EnterCaseList(ctx *CaseListContext) {}
@@ -212,17 +200,31 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterDataAccessor(ctx *DataAccess
 // ExitDataAccessor is called when production dataAccessor is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitDataAccessor(ctx *DataAccessorContext) {}
 
-// EnterAccessList is called when production accessList is entered.
-func (s *BaseHilcoPencilGrammarParserListener) EnterAccessList(ctx *AccessListContext) {}
+// EnterAccessorList is called when production accessorList is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterAccessorList(ctx *AccessorListContext) {}
 
-// ExitAccessList is called when production accessList is exited.
-func (s *BaseHilcoPencilGrammarParserListener) ExitAccessList(ctx *AccessListContext) {}
+// ExitAccessorList is called when production accessorList is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitAccessorList(ctx *AccessorListContext) {}
 
-// EnterAccessorMessage is called when production accessorMessage is entered.
-func (s *BaseHilcoPencilGrammarParserListener) EnterAccessorMessage(ctx *AccessorMessageContext) {}
+// EnterAccessorObjectOrArray is called when production accessorObjectOrArray is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterAccessorObjectOrArray(ctx *AccessorObjectOrArrayContext) {
+}
 
-// ExitAccessorMessage is called when production accessorMessage is exited.
-func (s *BaseHilcoPencilGrammarParserListener) ExitAccessorMessage(ctx *AccessorMessageContext) {}
+// ExitAccessorObjectOrArray is called when production accessorObjectOrArray is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitAccessorObjectOrArray(ctx *AccessorObjectOrArrayContext) {
+}
+
+// EnterAccessorObject is called when production accessorObject is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterAccessorObject(ctx *AccessorObjectContext) {}
+
+// ExitAccessorObject is called when production accessorObject is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitAccessorObject(ctx *AccessorObjectContext) {}
+
+// EnterAccessorArray is called when production accessorArray is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterAccessorArray(ctx *AccessorArrayContext) {}
+
+// ExitAccessorArray is called when production accessorArray is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitAccessorArray(ctx *AccessorArrayContext) {}
 
 // EnterSpecialKeyword is called when production specialKeyword is entered.
 func (s *BaseHilcoPencilGrammarParserListener) EnterSpecialKeyword(ctx *SpecialKeywordContext) {}

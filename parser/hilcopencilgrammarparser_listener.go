@@ -53,9 +53,6 @@ type HilcoPencilGrammarParserListener interface {
 	// EnterFloat is called when entering the Float production.
 	EnterFloat(c *FloatContext)
 
-	// EnterExpressionSwitch is called when entering the ExpressionSwitch production.
-	EnterExpressionSwitch(c *ExpressionSwitchContext)
-
 	// EnterUnaryMinusCalculator is called when entering the UnaryMinusCalculator production.
 	EnterUnaryMinusCalculator(c *UnaryMinusCalculatorContext)
 
@@ -70,9 +67,6 @@ type HilcoPencilGrammarParserListener interface {
 
 	// EnterCaseStatement is called when entering the caseStatement production.
 	EnterCaseStatement(c *CaseStatementContext)
-
-	// EnterSwitchStatement is called when entering the switchStatement production.
-	EnterSwitchStatement(c *SwitchStatementContext)
 
 	// EnterCaseList is called when entering the caseList production.
 	EnterCaseList(c *CaseListContext)
@@ -95,11 +89,17 @@ type HilcoPencilGrammarParserListener interface {
 	// EnterDataAccessor is called when entering the dataAccessor production.
 	EnterDataAccessor(c *DataAccessorContext)
 
-	// EnterAccessList is called when entering the accessList production.
-	EnterAccessList(c *AccessListContext)
+	// EnterAccessorList is called when entering the accessorList production.
+	EnterAccessorList(c *AccessorListContext)
 
-	// EnterAccessorMessage is called when entering the accessorMessage production.
-	EnterAccessorMessage(c *AccessorMessageContext)
+	// EnterAccessorObjectOrArray is called when entering the accessorObjectOrArray production.
+	EnterAccessorObjectOrArray(c *AccessorObjectOrArrayContext)
+
+	// EnterAccessorObject is called when entering the accessorObject production.
+	EnterAccessorObject(c *AccessorObjectContext)
+
+	// EnterAccessorArray is called when entering the accessorArray production.
+	EnterAccessorArray(c *AccessorArrayContext)
 
 	// EnterSpecialKeyword is called when entering the specialKeyword production.
 	EnterSpecialKeyword(c *SpecialKeywordContext)
@@ -149,9 +149,6 @@ type HilcoPencilGrammarParserListener interface {
 	// ExitFloat is called when exiting the Float production.
 	ExitFloat(c *FloatContext)
 
-	// ExitExpressionSwitch is called when exiting the ExpressionSwitch production.
-	ExitExpressionSwitch(c *ExpressionSwitchContext)
-
 	// ExitUnaryMinusCalculator is called when exiting the UnaryMinusCalculator production.
 	ExitUnaryMinusCalculator(c *UnaryMinusCalculatorContext)
 
@@ -166,9 +163,6 @@ type HilcoPencilGrammarParserListener interface {
 
 	// ExitCaseStatement is called when exiting the caseStatement production.
 	ExitCaseStatement(c *CaseStatementContext)
-
-	// ExitSwitchStatement is called when exiting the switchStatement production.
-	ExitSwitchStatement(c *SwitchStatementContext)
 
 	// ExitCaseList is called when exiting the caseList production.
 	ExitCaseList(c *CaseListContext)
@@ -191,11 +185,17 @@ type HilcoPencilGrammarParserListener interface {
 	// ExitDataAccessor is called when exiting the dataAccessor production.
 	ExitDataAccessor(c *DataAccessorContext)
 
-	// ExitAccessList is called when exiting the accessList production.
-	ExitAccessList(c *AccessListContext)
+	// ExitAccessorList is called when exiting the accessorList production.
+	ExitAccessorList(c *AccessorListContext)
 
-	// ExitAccessorMessage is called when exiting the accessorMessage production.
-	ExitAccessorMessage(c *AccessorMessageContext)
+	// ExitAccessorObjectOrArray is called when exiting the accessorObjectOrArray production.
+	ExitAccessorObjectOrArray(c *AccessorObjectOrArrayContext)
+
+	// ExitAccessorObject is called when exiting the accessorObject production.
+	ExitAccessorObject(c *AccessorObjectContext)
+
+	// ExitAccessorArray is called when exiting the accessorArray production.
+	ExitAccessorArray(c *AccessorArrayContext)
 
 	// ExitSpecialKeyword is called when exiting the specialKeyword production.
 	ExitSpecialKeyword(c *SpecialKeywordContext)

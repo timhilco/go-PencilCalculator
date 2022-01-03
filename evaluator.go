@@ -30,7 +30,7 @@ func Evaluate(ctx context.Context, input string) PencilResult {
 		v := value.Value.(floatIntegerNumber)
 		value = PencilResult{
 			Type:  PencilTypeFloat,
-			Value: v.convertToFloat6Decimal(),
+			Value: v.convertFloatIntToFloat6Decimal(),
 		}
 	}
 	return value

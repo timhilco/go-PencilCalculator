@@ -70,7 +70,7 @@ SpecialKeyword : 'true' {booleanTrueConstant}
 program : expression ;
 
 expression   :  caseStatement       	     			#Case
-         //   | switchStatement      	 					#ExpressionSwitch
+    //        | switchStatement      	 					#ExpressionSwitch
             | ifStatement           					#If
             | LPAREN expression RPAREN          		#Parens
             | MINUS expression              			#UnaryMinusCalculator
@@ -103,6 +103,7 @@ caseStatement : CASE expression IS caseList END_CASE ;
 //switchStatement : SWITCH  caseList END_SWITCH ;  
 caseList : caseItem caseList 
            | ;
+           // Add default  as lead expression before DOUBLE COlON
 caseItem : expression DOUBLE_COLON expression SEMI_COLON ;
 ifStatement : IF expression THEN expression (ELSE expression)? 
  ;
@@ -113,17 +114,15 @@ name  :    ID
 atFunction : ATFUNCTION  LPAREN argList? RPAREN;
 argList : expression (COMMA expression? )*;
 
-dataAccessor : CLASSNAME accessorList+ ;
-  accessorList : DOT (accessorObjectOrArray) ; 
+dataAccessor : CLASSNAME accessList* ;
+  accessList : DOT (accessorMessage | CLASSNAME) ; 
             
 //accessList : DOT accessorMessageOrObjectType accessList 
 // ;
 //accessorMessageOrObjectType : accessorMessage | CLASSNAME ;
-accessorObjectOrArray : accessorObject
-           | accessorArray;
+accessorMessage : ID 
+           | ID LPAREN argList RPAREN;
 
-accessorObject: ID;
-accessorArray: ID LPAREN argList RPAREN;
 specialKeyword : KEYWORD_TRUE
               | KEYWORD_FALSE 
               | KEYWORD_NIL 

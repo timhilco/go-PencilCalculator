@@ -18,8 +18,24 @@ import (
 )
 
 type dataAccessorElement struct {
-	elementName string
-	elementType string
+	className             string
+	accessorFieldElements []accessorElement
+}
+type accessorElement interface {
+	GetDataAccesorValue(level int, structure interface{}, elements []accessorElement) interface{}
+}
+type accessorObjectElement struct {
+	fieldName string
+	//elementType string
+}
+type accessorArrayElement struct {
+	fieldName       string
+	accessorArgList []accessorArrayElementExpression
+}
+type accessorArrayElementExpression struct {
+	right     PencilResult
+	left      PencilResult
+	operation PencilResult
 }
 type HilcoPencilGrammarParserListener struct {
 	*parser.BaseHilcoPencilGrammarParserListener
@@ -28,8 +44,9 @@ type HilcoPencilGrammarParserListener struct {
 	lexer           *parser.HilcoPencilGrammarLexer
 	currentOperator string
 	//inputDataObject   map[string]interface{}
-	dataAccessorStack []dataAccessorElement
-	inDataAccessor    bool
+	//dataAccessorStack []dataAccessorElement
+	inDataAccessor bool
+	//inArgList         bool
 	inCaseItem        bool
 	processingContext context.Context
 	inputDataStore    map[string]interface{}
@@ -67,6 +84,12 @@ func (p *HilcoPencilGrammarParserListener) Result() PencilResult {
 func (l *HilcoPencilGrammarParserListener) push(i PencilResult) {
 	l.stack = append(l.stack, i)
 }
+
+/*
+func (p *HilcoPencilGrammarParserListener) getTop() PencilResult {
+	return p.stack[(len(p.stack) - 1)]
+}
+*/
 
 func (l *HilcoPencilGrammarParserListener) pop() PencilResult {
 	if len(l.stack) < 1 {
@@ -304,6 +327,9 @@ func convertFloatStringToFloatIntegerNumber(floatString string) (floatIntegerNum
 	sDecimal = prefix + sDecimal
 	s := parts[0] + "." + sDecimal
 	f64, _ := strconv.ParseFloat(s, 64)
+	fmt.Printf("Before Rounding: s=%s -> %.10f\n", s, f64)
+	f64 = math.Round(f64*100) / 100
+	fmt.Printf("After  Rounding: s=%s -> %.10f\n", s, f64)
 	return floatIntegerNumber{
 		IntegerValue: val,
 		Precision:    int64(precision),
@@ -399,8 +425,8 @@ func (s *HilcoPencilGrammarParserListener) ExitDate(ctx *parser.DateContext) {
 	parts := strings.Split(value, "-")
 	sDate := parts[2] + "-" + parts[1] + "-" + parts[0]
 
-	date, err := time.Parse("2006-01-02", sDate)
-	fmt.Printf("%s -> %v", date, err)
+	date, _ := time.Parse("2006-01-02", sDate)
+	//fmt.Printf("%s -> %v\n", date, err)
 	pr := PencilResult{
 		Type:  PencilTypeDateTime,
 		Value: date,
@@ -422,6 +448,26 @@ func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
 	s.logStack()
 	s.logger.Info(" Exit ExitFloat: " + value)
 }
+
+// EnterNameCalculator is called when production NameCalculator is entered.
+//func (s *BaseHilcoPencilGrammarParserListener) EnterNameCalculator(ctx *NameCalculatorContext) {}
+
+// ExitNameCalculator is called when production NameCalculator is exited.
+func (s *HilcoPencilGrammarParserListener) ExitNameCalculator(ctx *parser.NameCalculatorContext) {
+	s.logger.Info(" Enter ExitNameCalculator: ")
+
+	value := ctx.GetText()
+	/*
+		pr := PencilResult{
+			Type:  PencilTypeNameCalculator,
+			Value: value,
+		}
+		s.push(pr)
+		s.logStack()
+	*/
+	s.logger.Info(" Exit ExitNameCalculator: " + value)
+}
+
 func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *parser.BinaryArthmeticCalculatorContext) {
 
 	s.logger.Info(" Enter ExitBinaryArthmeticCalculator")
@@ -434,11 +480,23 @@ func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *pa
 
 // ExitBinaryRelationalCalculator is called when production BinaryRelationalCalculator is exited.
 func (s *HilcoPencilGrammarParserListener) ExitBinaryRelationalCalculator(ctx *parser.BinaryRelationalCalculatorContext) {
-	s.logger.Info("ExitBinaryRelationalCalculator")
+	s.logger.Info("Enter ExitBinaryRelationalCalculator")
+	if s.inDataAccessor {
+		pr := PencilResult{
+			Type:  PencilTypeOperation,
+			Value: s.currentOperator,
+		}
+		s.push(pr)
+		s.logStack()
+		s.logger.Info("Exit ExitBinaryRelationalCalculator: Exit because in DataAccessor")
+		return
+
+	}
 	right, left := s.pop(), s.pop()
 	pr, _ := doBinaryArithmatic(left, right, s.currentOperator)
 	s.push(pr)
 	s.logStack()
+	s.logger.Info("Exit ExitBinaryRelationalCalculator")
 }
 
 // EnterBinaryLogicalCalculator is called when production BinaryLogicalCalculator is entered.
@@ -620,18 +678,58 @@ func (p *HilcoPencilGrammarParserListener) ExitAtFunction(ctx *parser.AtFunction
 // EnterDataAccessor is called when production dataAccessor is entered.
 func (p *HilcoPencilGrammarParserListener) EnterDataAccessor(ctx *parser.DataAccessorContext) {
 	p.logger.Info("Enter EnterDataAccessor: ")
-	p.dataAccessorStack = make([]dataAccessorElement, 0)
+	da := dataAccessorElement{
+		className:             "No Name set",
+		accessorFieldElements: make([]accessorElement, 0),
+	}
+
 	p.inDataAccessor = true
+	pr := PencilResult{
+		Type:  PencilTypeDataAccessor,
+		Value: da,
+	}
+	p.push(pr)
 	p.logStack()
+
 	p.logger.Info("Exit EnterDataAccessor: ")
 }
 
 // ExitDataAccessor is called when production dataAccessor is exited.
 func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAccessorContext) {
 	p.logger.Info("Enter ExitDataAccessor: ")
-	key := p.dataAccessorStack[0].elementName
-	dataInputObject := p.inputDataStore[key]
-	value := GetDataAccesorValue(1, dataInputObject, p.dataAccessorStack)
+	dataAccessorElements := make([]accessorElement, 0)
+	foundDataAccessor := false
+	var da dataAccessorElement
+	for !foundDataAccessor {
+		pr := p.pop()
+		switch pr.Type {
+		case PencilTypeDataAccessor:
+			da = pr.Value.(dataAccessorElement)
+			foundDataAccessor = true
+
+		case PencilTypeDataAccessorElement:
+			dae := pr.Value.(accessorElement)
+			dataAccessorElements = append(dataAccessorElements, dae)
+		default:
+		}
+
+	}
+	lenx := len(dataAccessorElements)               // lenx holds the original array length
+	reversed_array := make([]accessorElement, lenx) // creates a slice that refer to a new array of length lenx
+
+	for i := 0; i < lenx; i++ {
+		j := lenx - (i + 1) // j initially holds (lenx - 1) and decreases to 0 while i initially holds 0 and increase to (lenx - 1)
+		reversed_array[i] = dataAccessorElements[j]
+	}
+	da.accessorFieldElements = reversed_array
+
+	key := da.className
+	dataInputObjectMap := p.inputDataStore
+	dataInputObject := dataInputObjectMap[key]
+
+	afe := da.accessorFieldElements[0]
+	value := afe.GetDataAccesorValue(0, dataInputObject, da.accessorFieldElements)
+
 	rv := reflect.ValueOf(value).Kind()
 	var resultType PencilType
 	switch rv {
@@ -645,7 +743,7 @@ func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAcce
 	default:
 		fmt.Printf("unhandled kind %s", rv)
 	}
-	//fmt.Println(rv)
+
 	pr := PencilResult{
 		Type:  resultType,
 		Value: value,
@@ -653,22 +751,188 @@ func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAcce
 	p.push(pr)
 	p.inDataAccessor = false
 	p.logStack()
+
 	p.logger.Info("Exit ExitDataAccessor: ")
 
 }
-func GetDataAccesorValue(level int, structure interface{}, elements []dataAccessorElement) interface{} {
+func (a accessorObjectElement) GetDataAccesorValue(level int, structure interface{}, elements []accessorElement) interface{} {
+
 	var result interface{}
-	if level == len(elements) {
-		result = structure
+	//text := fmt.Sprintf("aStrintf:%d: %s -> %s", level, a, elements[level])
+	//fmt.Println(text)
+	name := a.fieldName
+	value := structure.(map[string]interface{})[name]
+	nextLevel := level + 1
+	if nextLevel == len(elements) {
+		result = value
 	} else {
-		//text := fmt.Sprintf("aStrint:%d -> %s", level, elements[level])
-		key := elements[level].elementName
-		value := structure.(map[string]interface{})[key]
-		result = GetDataAccesorValue(level+1, value, elements)
+		e := elements[nextLevel]
+		result = e.GetDataAccesorValue(nextLevel, value, elements)
 	}
 	return result
 }
+func (a accessorArrayElement) GetDataAccesorValue(level int, structure interface{}, elements []accessorElement) interface{} {
 
+	var result interface{}
+	//text := fmt.Sprintf("aStrintf:%d: %s -> %s", level, a, elements[level])
+	//fmt.Println(text)
+	name := a.fieldName
+	value := structure.(map[string]interface{})[name]
+	anArray := value.([]interface{})
+	var item interface{}
+	for _, v := range anArray {
+		item = v
+	}
+
+	nextLevel := level + 1
+	if nextLevel == len(elements) {
+		result = item
+	} else {
+		e := elements[nextLevel]
+		result = e.GetDataAccesorValue(nextLevel, item, elements)
+	}
+
+	return result
+
+}
+
+/*
+// EnterAccessorObjectOrArray is called when production accessorObjectOrArray is entered.
+func (p *HilcoPencilGrammarParserListener) EnterAccessorObjectOrArray(ctx *parser.AccessorObjectOrArrayContext) {
+	p.logger.Info("Enter EnterAccessorObjectOrArray: ")
+	p.logger.Info("Exit EnterAccessorObjectOrArray: ")
+}
+*/
+/*
+// ExitAccessorObjectOrArray is called when production accessorObjectOrArray is exited.
+func (p *HilcoPencilGrammarParserListener) ExitAccessorObjectOrArray(ctx *parser.AccessorObjectOrArrayContext) {
+	p.logger.Info("Enter ExitAccessorObjectOrArray: ")
+	p.logger.Info("Exit ExitAccessorObjectOrArray: ")
+}
+
+// EnterAccessorObject is called when production accessorObject is entered.
+func (p *HilcoPencilGrammarParserListener) EnterAccessorObject(ctx *parser.AccessorObjectContext) {
+	p.logger.Info("Enter EnterAccessorObjec: ")
+	p.logger.Info("Exit EnterAccessorObject: ")
+
+}
+*/
+// ExitAccessorObject is called when production accessorObject is exited.
+func (p *HilcoPencilGrammarParserListener) ExitAccessorObject(ctx *parser.AccessorObjectContext) {
+	p.logger.Info("Enter ExitAccessorObject: ")
+	nc := p.pop() // Should be Name Calculator
+	fieldName := nc.Value.(string)
+	ao := accessorObjectElement{
+		fieldName: fieldName,
+	}
+	pr := PencilResult{
+		Type:  PencilTypeDataAccessorElement,
+		Value: ao,
+	}
+	p.push(pr)
+	p.logStack()
+	p.logger.Info("Exit ExitAccessorObject: ")
+
+}
+
+/*
+// EnterAccessorArray is called when production accessorArray is entered.
+func (p *HilcoPencilGrammarParserListener) EnterAccessorArray(ctx *parser.AccessorArrayContext) {
+	p.logger.Info("Enter EnterAccessArray: ")
+	p.logger.Info("Exit EnterAccessorArray: ")
+
+}
+*/
+// ExitAccessorArray is called when production accessorArray is exited.
+func (p *HilcoPencilGrammarParserListener) ExitAccessorArray(ctx *parser.AccessorArrayContext) {
+	p.logger.Info("Enter ExitAccessArray: ")
+	p.logStack()
+
+	foundLeftParen := false
+	expressionArray := make([]accessorArrayElementExpression, 0)
+	for !foundLeftParen {
+		counter := 0
+		expression := accessorArrayElementExpression{}
+		foundComma := false
+		for !foundComma {
+			pr := p.pop()
+			switch pr.Type {
+			case PencilTypeLeftParen:
+				foundLeftParen = true
+				foundComma = true
+			case PencilTypeComma:
+				foundComma = true
+			default:
+				switch counter {
+				case 0:
+					expression.operation = pr
+				case 1:
+					expression.right = pr
+				case 2:
+					expression.left = pr
+				}
+				counter++
+
+			}
+		}
+		expressionArray = append(expressionArray, expression)
+
+	}
+	npr := p.pop()
+	a := accessorArrayElement{
+		fieldName:       npr.Value.(string),
+		accessorArgList: expressionArray,
+	}
+	npr = PencilResult{
+		Type:  PencilTypeDataAccessorElement,
+		Value: a,
+	}
+	p.push(npr)
+	p.logStack()
+	p.logger.Info("Exit ExitAccessorArray: ")
+
+}
+
+/* This is old stuff from the V1 version of the parser
+// EnterAccessorMessage is called when production accessorMessage is entered.
+func (p *HilcoPencilGrammarParserListener) EnterAccessorMessage(ctx *parser.AccessorMessageContext) {
+	p.logger.Info("Enter EnterAccessorMessage: ")
+	p.inAccessorMessage = true
+	pr := PencilResult{
+		Type:  PencilTypeAccessorMessage,
+		Value: nil,
+	}
+	p.push(pr)
+	p.logStack()
+	p.logger.Info("Exit EnterAccessorMessage: ")
+}
+
+// ExitAccessorMessage is called when production accessorMessage is exited.
+func (p *HilcoPencilGrammarParserListener) ExitAccessorMessage(ctx *parser.AccessorMessageContext) {
+	p.logger.Info("Enter ExitAccessorMessage: ")
+	p.inAccessorMessage = false
+
+	p.logger.Info("Exit ExitAccessorMessage: ")
+
+}
+*/
+
+// EnterArgList is called when production argList is entered.
+/*
+func (p *HilcoPencilGrammarParserListener) EnterArgList(ctx *parser.ArgListContext) {
+	p.logger.Info("Enter EnterArgList: ")
+	p.logger.Info("Exit EnterArgList: ")
+
+}
+*/
+// ExitArgList is called when production argList is exited.
+/*
+func (p *HilcoPencilGrammarParserListener) ExitArgList(ctx *parser.ArgListContext) {
+	p.logger.Info("Enter ExitArgList: ")
+	p.logger.Info("Exit ExitArgList: ")
+
+}
+*/
 // VisitTerminal is called when a terminal node is visited.
 func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode) {
 	p.logger.Info("Enter VisitTerminal: " + node.GetText())
@@ -699,20 +963,37 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 		p.logger.Info("VisitTerminal <> Binary Operator: " + text)
 	case "CLASSNAME":
 		if p.inDataAccessor {
-			dae := dataAccessorElement{
-				elementName: value,
-				elementType: "CLASSNAME",
+			pr := p.pop()
+			dae := pr.Value.(dataAccessorElement)
+			dae.className = value
+			pr = PencilResult{
+				Type:  PencilTypeDataAccessor,
+				Value: dae,
 			}
-			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+			p.push(pr)
 		}
 	case "ID":
 		if p.inDataAccessor {
-			dae := dataAccessorElement{
-				elementName: value,
-				elementType: "ID",
+
+			pr := PencilResult{
+				Type:  PencilTypeNameCalculator,
+				Value: value,
 			}
-			p.dataAccessorStack = append(p.dataAccessorStack, dae)
+			p.push(pr)
+
 		}
+	case "COMMA":
+		pr := PencilResult{
+			Type:  PencilTypeComma,
+			Value: name,
+		}
+		p.push(pr)
+	case "LPAREN":
+		pr := PencilResult{
+			Type:  PencilTypeLeftParen,
+			Value: name,
+		}
+		p.push(pr)
 	default:
 		p.logger.Info("VisitTerminal <> Ignoring Terminal:  " + name)
 	}

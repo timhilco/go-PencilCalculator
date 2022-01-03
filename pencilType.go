@@ -16,6 +16,10 @@ const (
 	PencilTypeIntegerFloat
 	PencilTypeBoolean
 	PencilTypeDateTime
+	PencilTypeNameCalculator
+	//PencilTypeClassName
+	PencilTypeLeftParen
+	PencilTypeComma
 	PencilTypeSlice
 	PencilTypeArray
 	PencilTypeMap
@@ -23,6 +27,8 @@ const (
 	PencilTypeOperation
 	PencilTypeCaseStatement
 	PencilTypeCaseItem
+	PencilTypeDataAccessor
+	PencilTypeDataAccessorElement
 )
 
 type BinaryElementType int
@@ -110,18 +116,18 @@ func (fin floatIntegerNumber) Subtract(input floatIntegerNumber) floatIntegerNum
 }
 
 func (fin floatIntegerNumber) Multiply(input floatIntegerNumber) floatIntegerNumber {
-	precision := fin.Precision + input.Precision
-	newInteger := fin.IntegerValue * input.IntegerValue
-	return floatIntegerNumber{
-		IntegerValue: newInteger,
-		Precision:    precision,
-	}
+	left := fin.convertFloatIntToFloat6Decimal()
+	right := input.convertFloatIntToFloat6Decimal()
+	f := left * right
+	s := fmt.Sprintf("%.7f", f)
+	fif, _ := convertFloatStringToFloatIntegerNumber(s)
+	return fif
 }
 func (fin floatIntegerNumber) Divide(input floatIntegerNumber) floatIntegerNumber {
 	//TODO Fix the precision
 
-	left := fin.convertToFloat6Decimal()
-	right := input.convertToFloat6Decimal()
+	left := fin.convertFloatIntToFloat6Decimal()
+	right := input.convertFloatIntToFloat6Decimal()
 	f := left / right
 	s := fmt.Sprintf("%.7f", f)
 	fif, _ := convertFloatStringToFloatIntegerNumber(s)
@@ -144,11 +150,17 @@ func (fin floatIntegerNumber) GreaterThan(i floatIntegerNumber) bool {
 		(fin.Precision == i.Precision))
 	return b
 }
-func (fin floatIntegerNumber) convertToFloat6Decimal() float64 {
+func (fin floatIntegerNumber) convertFloatIntToFloat6Decimal() float64 {
 	numerator := float64(fin.IntegerValue)
 	divisor := (float64)(math.Pow10(int(fin.Precision)))
 	n := numerator / float64(divisor)
 	s := fmt.Sprintf("%.7f", n)
+	_, f64 := convertFloatStringToFloatIntegerNumber(s)
+	return f64
+}
+func convertFloat64ToFloat64with6DecimalPlaces(f float64) float64 {
+
+	s := fmt.Sprintf("%.7f", f)
 	_, f64 := convertFloatStringToFloatIntegerNumber(s)
 	return f64
 }
@@ -186,8 +198,19 @@ func (p PencilResult) String() string {
 	case PencilTypeCaseItem:
 		t = "CaseItem"
 		v = p.Value.(CaseItem).String()
+	case PencilTypeNameCalculator:
+		t = "NameCalculator"
+	case PencilTypeComma:
+		t = "Comma"
+	case PencilTypeLeftParen:
+		t = "LeftParen"
 	case PencilTypeOperation:
 		t = "Operation"
+	case PencilTypeDataAccessor:
+		t = "DataAccessor"
+	case PencilTypeDataAccessorElement:
+		t = "DataAccessorElement"
+
 	default:
 		t = "Unknown"
 	}
