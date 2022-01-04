@@ -27,10 +27,10 @@ func Evaluate(ctx context.Context, input string) PencilResult {
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 	value := listener.Result()
 	if value.Type == PencilTypeIntegerFloat {
-		v := value.Value.(floatIntegerNumber)
+		v := value.PrValue.(floatIntegerNumber)
 		value = PencilResult{
-			Type:  PencilTypeFloat,
-			Value: v.convertFloatIntToFloat6Decimal(),
+			Type:    PencilTypeFloat,
+			PrValue: v.ConvertFloatIntToFloat6Decimal(),
 		}
 	}
 	return value

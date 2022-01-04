@@ -1,0 +1,23 @@
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"EnterProgram"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Enter VisitTerminal: 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Stack is empty"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Exit VisitTerminal: INT(43) -> 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Enter ExitInteger: "}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Exit ExitInteger: 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Enter VisitTerminal: +"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"VisitTerminal <> Binary Operator: ADD(15) -> +"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Exit VisitTerminal: ADD(15) -> +"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Enter VisitTerminal: 3"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"VisitTerminal <> Ignoring Terminal:  INT"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Exit VisitTerminal: INT(43) -> 3"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Enter ExitInteger: "}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"0:Integer --> 1"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"1:Integer --> 3"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"Exit ExitInteger: 3"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":" Enter ExitBinaryArthmeticCalculator"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":"0:Integer --> 4"}
+{"level":"info","time":"2022-01-04T15:17:52-05:00","message":" Exit ExitBinaryArthmeticCalculator"}

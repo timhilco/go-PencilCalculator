@@ -49,8 +49,8 @@ const (
 )
 
 type PencilResult struct {
-	Type  PencilType //
-	Value interface{}
+	Type    PencilType //
+	PrValue interface{}
 }
 type CaseItem struct {
 	matchValue  PencilResult
@@ -116,21 +116,21 @@ func (fin floatIntegerNumber) Subtract(input floatIntegerNumber) floatIntegerNum
 }
 
 func (fin floatIntegerNumber) Multiply(input floatIntegerNumber) floatIntegerNumber {
-	left := fin.convertFloatIntToFloat6Decimal()
-	right := input.convertFloatIntToFloat6Decimal()
+	left := fin.ConvertFloatIntToFloat6Decimal()
+	right := input.ConvertFloatIntToFloat6Decimal()
 	f := left * right
 	s := fmt.Sprintf("%.7f", f)
-	fif, _ := convertFloatStringToFloatIntegerNumber(s)
+	fif, _ := ConvertFloatStringToFloatIntegerNumber(s)
 	return fif
 }
 func (fin floatIntegerNumber) Divide(input floatIntegerNumber) floatIntegerNumber {
 	//TODO Fix the precision
 
-	left := fin.convertFloatIntToFloat6Decimal()
-	right := input.convertFloatIntToFloat6Decimal()
+	left := fin.ConvertFloatIntToFloat6Decimal()
+	right := input.ConvertFloatIntToFloat6Decimal()
 	f := left / right
 	s := fmt.Sprintf("%.7f", f)
-	fif, _ := convertFloatStringToFloatIntegerNumber(s)
+	fif, _ := ConvertFloatStringToFloatIntegerNumber(s)
 	return fif
 }
 func (fin floatIntegerNumber) Equal(i floatIntegerNumber) bool {
@@ -150,18 +150,18 @@ func (fin floatIntegerNumber) GreaterThan(i floatIntegerNumber) bool {
 		(fin.Precision == i.Precision))
 	return b
 }
-func (fin floatIntegerNumber) convertFloatIntToFloat6Decimal() float64 {
+func (fin floatIntegerNumber) ConvertFloatIntToFloat6Decimal() float64 {
 	numerator := float64(fin.IntegerValue)
 	divisor := (float64)(math.Pow10(int(fin.Precision)))
 	n := numerator / float64(divisor)
 	s := fmt.Sprintf("%.7f", n)
-	_, f64 := convertFloatStringToFloatIntegerNumber(s)
+	_, f64 := ConvertFloatStringToFloatIntegerNumber(s)
 	return f64
 }
-func convertFloat64ToFloat64with6DecimalPlaces(f float64) float64 {
+func ConvertFloat64ToFloat64with6DecimalPlaces(f float64) float64 {
 
 	s := fmt.Sprintf("%.7f", f)
-	_, f64 := convertFloatStringToFloatIntegerNumber(s)
+	_, f64 := ConvertFloatStringToFloatIntegerNumber(s)
 	return f64
 }
 func (fin floatIntegerNumber) String() string {
@@ -180,7 +180,7 @@ type CaseStatement struct {
 }
 
 func (p PencilResult) String() string {
-	v := fmt.Sprintf("%v", p.Value)
+	v := fmt.Sprintf("%v", p.PrValue)
 	var t string
 	switch p.Type {
 	case PencilTypeString:
@@ -197,7 +197,7 @@ func (p PencilResult) String() string {
 		t = "DateTime"
 	case PencilTypeCaseItem:
 		t = "CaseItem"
-		v = p.Value.(CaseItem).String()
+		v = p.PrValue.(CaseItem).String()
 	case PencilTypeNameCalculator:
 		t = "NameCalculator"
 	case PencilTypeComma:

@@ -1,4 +1,4 @@
-package pencilCalculator
+package tests
 
 import (
 	"context"
@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog"
+	"github.com/timhilco/go-PencilCalculator/pencilCalculator"
 )
 
 func getTwoRandonIntegers(min int, max int) (int64, int64) {
@@ -67,8 +68,8 @@ func TestFloatPerformance(t *testing.T) {
 	inputData := make(map[string]string)
 	inputData["Employee"] = empJson
 
-	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
-	ctx = context.WithValue(ctx, LoggingLevelContextKey{}, zerolog.Disabled)
+	ctx = context.WithValue(ctx, pencilCalculator.InputDataContextKey{}, inputData)
+	ctx = context.WithValue(ctx, pencilCalculator.LoggingLevelContextKey{}, zerolog.Disabled)
 	var expression string
 	var want float64
 	var err error
@@ -111,7 +112,7 @@ func TestFloatPerformance(t *testing.T) {
 			testname := fmt.Sprintf("Expression: %s", expression)
 
 			t.Run(testname, func(t *testing.T) {
-				ans := Evaluate(ctx, expression)
+				ans := pencilCalculator.Evaluate(ctx, expression)
 				isPass, sResult, sWant, message := DoesTestPass(ans, want)
 				if !isPass {
 					t.Errorf("got %s, want %s  --> %s", sResult, sWant, message)
@@ -145,8 +146,8 @@ func TestIntegerPerformance(t *testing.T) {
 	inputData := make(map[string]string)
 	inputData["Employee"] = empJson
 
-	ctx = context.WithValue(ctx, InputDataContextKey{}, inputData)
-	ctx = context.WithValue(ctx, LoggingLevelContextKey{}, zerolog.Disabled)
+	ctx = context.WithValue(ctx, pencilCalculator.InputDataContextKey{}, inputData)
+	ctx = context.WithValue(ctx, pencilCalculator.LoggingLevelContextKey{}, zerolog.Disabled)
 	var expression string
 	var want int64
 	for i := 1; i < 100; i++ {
@@ -168,8 +169,8 @@ func TestIntegerPerformance(t *testing.T) {
 			}
 			testname := fmt.Sprintf("Expression: %s", expression)
 			t.Run(testname, func(t *testing.T) {
-				ans := Evaluate(ctx, expression)
-				v := ans.Value
+				ans := pencilCalculator.Evaluate(ctx, expression)
+				v := ans.PrValue
 				if v != want {
 					//t.Errorf("got %d, want %d", ans, want)
 					t.Fatalf("got %d, want %d", ans, want)

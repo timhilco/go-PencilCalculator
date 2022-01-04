@@ -14,7 +14,7 @@ type HilcoLogger struct {
 }
 
 //NewMultiWithFile with file
-func NewMultiWithFile(isDebug bool) *HilcoLogger {
+func NewMultiWithFile(isDebug bool, isAppend bool, iFileName string) zerolog.Logger {
 	logLevel := zerolog.InfoLevel
 	if isDebug {
 		logLevel = zerolog.DebugLevel
@@ -22,36 +22,45 @@ func NewMultiWithFile(isDebug bool) *HilcoLogger {
 	zerolog.SetGlobalLevel(logLevel)
 	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
 	//file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	file, err := os.OpenFile("logs.txt", os.O_CREATE|os.O_WRONLY, 0666)
+	fileName := "Consumer-Group-X_logs.txt"
+	if iFileName != "" {
+		fileName = iFileName
+	}
+	flag := os.O_CREATE
+	if isAppend {
+		flag = os.O_APPEND
+	}
+	file, err := os.OpenFile(fileName, flag|os.O_WRONLY, 0666)
 	if err != nil {
-		fmt.Println("Error: HilcoLogger file error")
+		fmt.Println("Error: ZeroLogger file error")
 	}
 	//multi := zerolog.MultiLevelWriter(consoleWriter, os.Stdout, file)
 	multi := zerolog.MultiLevelWriter(consoleWriter, file)
 	logger := zerolog.New(multi).With().Timestamp().Logger()
-	return &HilcoLogger{logger: &logger}
+
+	return logger
 }
 
 // New for zerolog
-func New(isDebug bool) *HilcoLogger {
+func New(isDebug bool) zerolog.Logger {
 	logLevel := zerolog.InfoLevel
 	if isDebug {
 		logLevel = zerolog.DebugLevel
 	}
 	zerolog.SetGlobalLevel(logLevel)
 	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
-	return &HilcoLogger{logger: &logger}
+	return logger
 }
 
 //NewConsole with Concole
-func NewConsole(isDebug bool) *HilcoLogger {
+func NewConsole(isDebug bool) zerolog.Logger {
 	logLevel := zerolog.InfoLevel
 	if isDebug {
 		logLevel = zerolog.DebugLevel
 	}
 	zerolog.SetGlobalLevel(logLevel)
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
-	return &HilcoLogger{logger: &logger}
+	return logger
 }
 
 // Output duplicates the global logger and sets w as its output.
