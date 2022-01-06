@@ -15,10 +15,11 @@ type CalculatorRequest struct {
 	Expression string `json:"expression"`
 }
 type CalculatorResponse struct {
-	Type      string `json:"type"`
-	Result    string `json:"result"`
-	ErrorCode int    `json:"errorCode"`
-	Error     string `json:"error"`
+	Type       string `json:"type"`
+	Result     string `json:"result"`
+	ErrorCode  int    `json:"errorCode"`
+	Error      string `json:"error"`
+	Expression string `json:"expression"`
 }
 
 func (s *ServerEnvironment) apiEvaluate_POST(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +82,5 @@ func (s *ServerEnvironment) apiEvaluate_POST(w http.ResponseWriter, r *http.Requ
 		Str("method", r.Method).
 		Stringer("url", r.URL).
 		Msg("POST::evaluate --> JSON:" + rs)
-	//update response
 
 }
