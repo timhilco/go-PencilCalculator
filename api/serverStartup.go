@@ -29,21 +29,38 @@ func headers(w http.ResponseWriter, req *http.Request) {
 }
 */
 type ServerOptions struct {
-	Logger zerolog.Logger
+	Logger            zerolog.Logger
+	ServerHostName    string
+	ServerHostPort    int
+	ApiServerHostName string
+	LocalEvaluate     bool
+	LogGlobalLevel    zerolog.Level
 }
 type ServerEnvironment struct {
-	Logger zerolog.Logger
+	Logger            zerolog.Logger
+	ServerHostName    string
+	ServerHostPort    int
+	ApiServerHostName string
+	ServerStatus      string
+	ServerName        string
+	LocalEvaluate     bool
+	LogGlobalLevel    zerolog.Level
 }
 
 func Start(ctx context.Context, options ServerOptions) {
 
 	serverEnvironment := ServerEnvironment{
-		Logger: options.Logger,
-		//create	DataAdapter: personAdapter,
+		Logger:            options.Logger,
+		ServerHostName:    options.ServerHostName,
+		ServerHostPort:    options.ServerHostPort,
+		ApiServerHostName: options.ApiServerHostName,
+		LocalEvaluate:     options.LocalEvaluate,
+		LogGlobalLevel:    options.LogGlobalLevel,
 	}
 	//specify endpoints, handler functions and HTTP method
-
-	listener := NewHttpServer("localhost", 8080, serverEnvironment)
+	hostName := serverEnvironment.ServerHostName
+	port := serverEnvironment.ServerHostPort
+	listener := NewHttpServer(hostName, port, serverEnvironment)
 
 	//start and listen to requests
 	options.Logger.Info().Msg("Server running - listening on port 8080")

@@ -7,6 +7,7 @@ import (
 	"math"
 	"testing"
 
+	"github.com/rs/zerolog"
 	"github.com/timhilco/go-PencilCalculator/api"
 	"github.com/timhilco/go-PencilCalculator/pencilCalculator"
 	"github.com/timhilco/go-PencilCalculator/util/logger"
@@ -250,7 +251,12 @@ func TestServerStartup(t *testing.T) {
 	ctx := context.Background()
 	logger := logger.NewMultiWithFile(false, false, "../logs/serverLog.txt")
 	options := api.ServerOptions{
-		Logger: logger,
+		Logger:            logger,
+		ServerHostName:    "localhost",
+		ServerHostPort:    8080,
+		ApiServerHostName: "http://localhost:8080/",
+		LocalEvaluate:     true,
+		LogGlobalLevel:    zerolog.Disabled,
 	}
 	api.Start(ctx, options)
 }
