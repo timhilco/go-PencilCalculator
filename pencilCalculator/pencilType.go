@@ -15,6 +15,7 @@ const (
 	PencilTypeFloat
 	PencilTypeIntegerFloat
 	PencilTypeBoolean
+	PencilTypeNil
 	PencilTypeDateTime
 	PencilTypeNameCalculator
 	//PencilTypeClassName
@@ -29,6 +30,7 @@ const (
 	PencilTypeCaseItem
 	PencilTypeDataAccessor
 	PencilTypeDataAccessorElement
+	PencilTypeError
 )
 
 type BinaryElementType int
@@ -56,12 +58,12 @@ type CaseItem struct {
 	matchValue  PencilResult
 	resultValue PencilResult
 }
-type floatIntegerNumber struct {
+type FloatIntegerNumber struct {
 	IntegerValue int64
 	Precision    int64
 }
 
-func convertTwoFloatIntNumberToCommonPrecision(a floatIntegerNumber, b floatIntegerNumber) (floatIntegerNumber, floatIntegerNumber) {
+func convertTwoFloatIntNumberToCommonPrecision(a FloatIntegerNumber, b FloatIntegerNumber) (FloatIntegerNumber, FloatIntegerNumber) {
 	xPrecision := a.Precision
 	yPrecision := b.Precision
 	xInteger := a.IntegerValue
@@ -85,77 +87,94 @@ func convertTwoFloatIntNumberToCommonPrecision(a floatIntegerNumber, b floatInte
 		yInteger = yInteger * power
 
 	}
-	x := floatIntegerNumber{
+	x := FloatIntegerNumber{
 		IntegerValue: xInteger,
 		Precision:    xPrecision,
 	}
-	y := floatIntegerNumber{
+	y := FloatIntegerNumber{
 		IntegerValue: yInteger,
 		Precision:    yPrecision,
 	}
 	return x, y
 }
 
-func (fin floatIntegerNumber) Add(input floatIntegerNumber) floatIntegerNumber {
+func (fin FloatIntegerNumber) Add(input FloatIntegerNumber) FloatIntegerNumber {
 	left, right := convertTwoFloatIntNumberToCommonPrecision(fin, input)
 
 	newInteger := (left.IntegerValue + right.IntegerValue)
-	return floatIntegerNumber{
+	return FloatIntegerNumber{
 		IntegerValue: newInteger,
 		Precision:    left.Precision,
 	}
 }
-func (fin floatIntegerNumber) Subtract(input floatIntegerNumber) floatIntegerNumber {
+func (fin FloatIntegerNumber) Subtract(input FloatIntegerNumber) FloatIntegerNumber {
 	left, right := convertTwoFloatIntNumberToCommonPrecision(fin, input)
 
 	newInteger := (left.IntegerValue - right.IntegerValue)
-	return floatIntegerNumber{
+	return FloatIntegerNumber{
 		IntegerValue: newInteger,
 		Precision:    left.Precision,
 	}
 }
 
-func (fin floatIntegerNumber) Multiply(input floatIntegerNumber) floatIntegerNumber {
-	left := fin.ConvertFloatIntToFloat6Decimal()
-	right := input.ConvertFloatIntToFloat6Decimal()
-	f := left * right
-	s := fmt.Sprintf("%.7f", f)
-	fif, _ := ConvertFloatStringToFloatIntegerNumber(s)
-	return fif
+func (fin FloatIntegerNumber) Multiply(input FloatIntegerNumber) FloatIntegerNumber {
+	i := fin.IntegerValue * input.IntegerValue
+	p := fin.Precision + input.Precision
+	return FloatIntegerNumber{
+		IntegerValue: i,
+		Precision:    p,
+	}
 }
-func (fin floatIntegerNumber) Divide(input floatIntegerNumber) floatIntegerNumber {
-	//TODO Fix the precision
+func (fin FloatIntegerNumber) Divide(input FloatIntegerNumber) FloatIntegerNumber {
+	i := fin.IntegerValue / input.IntegerValue
+	p := fin.Precision - input.Precision
+	return FloatIntegerNumber{
+		IntegerValue: i,
+		Precision:    p,
+	}
 
-	left := fin.ConvertFloatIntToFloat6Decimal()
-	right := input.ConvertFloatIntToFloat6Decimal()
-	f := left / right
-	s := fmt.Sprintf("%.7f", f)
-	fif, _ := ConvertFloatStringToFloatIntegerNumber(s)
-	return fif
 }
-func (fin floatIntegerNumber) Equal(i floatIntegerNumber) bool {
+func (fin FloatIntegerNumber) Equal(i FloatIntegerNumber) bool {
 	b := ((fin.IntegerValue == i.IntegerValue) &&
 		(fin.Precision == i.Precision))
 	return b
 }
-func (fin floatIntegerNumber) LessThan(i floatIntegerNumber) bool {
+func (fin FloatIntegerNumber) LessThan(i FloatIntegerNumber) bool {
 	//TODO Fix
 	b := ((fin.IntegerValue == i.IntegerValue) &&
 		(fin.Precision == i.Precision))
 	return b
 }
-func (fin floatIntegerNumber) GreaterThan(i floatIntegerNumber) bool {
+func (fin FloatIntegerNumber) GreaterThan(i FloatIntegerNumber) bool {
 	//TODO fix
 	b := ((fin.IntegerValue == i.IntegerValue) &&
 		(fin.Precision == i.Precision))
 	return b
 }
-func (fin floatIntegerNumber) ConvertFloatIntToFloat6Decimal() float64 {
+func (fin FloatIntegerNumber) LessThanEqual(i FloatIntegerNumber) bool {
+	//TODO Fix
+	b := ((fin.IntegerValue == i.IntegerValue) &&
+		(fin.Precision == i.Precision))
+	return b
+}
+func (fin FloatIntegerNumber) GreaterThanEqual(i FloatIntegerNumber) bool {
+	//TODO fix
+	b := ((fin.IntegerValue == i.IntegerValue) &&
+		(fin.Precision == i.Precision))
+	return b
+}
+func (fin FloatIntegerNumber) ConvertFloatIntToFloat6Decimal() float64 {
+	f64 := fin.ConvertFloatIntToFloatInputPlaces(6)
+	return f64
+}
+func (fin FloatIntegerNumber) ConvertFloatIntToFloat64() float64 {
+	f64 := fin.ConvertFloatIntToFloatInputPlaces(fin.Precision)
+	return f64
+}
+func (fin FloatIntegerNumber) ConvertFloatIntToFloatInputPlaces(precision int64) float64 {
 	numerator := float64(fin.IntegerValue)
 	divisor := (float64)(math.Pow10(int(fin.Precision)))
-	n := numerator / float64(divisor)
-	s := fmt.Sprintf("%.7f", n)
-	_, f64 := ConvertFloatStringToFloatIntegerNumber(s)
+	f64 := numerator / float64(divisor)
 	return f64
 }
 func ConvertFloat64ToFloat64with6DecimalPlaces(f float64) float64 {
@@ -164,7 +183,7 @@ func ConvertFloat64ToFloat64with6DecimalPlaces(f float64) float64 {
 	_, f64 := ConvertFloatStringToFloatIntegerNumber(s)
 	return f64
 }
-func (fin floatIntegerNumber) String() string {
+func (fin FloatIntegerNumber) String() string {
 
 	return fmt.Sprintf("%d (%d)", fin.IntegerValue, fin.Precision)
 }
@@ -210,6 +229,8 @@ func (p PencilResult) String() string {
 		t = "DataAccessor"
 	case PencilTypeDataAccessorElement:
 		t = "DataAccessorElement"
+	case PencilTypeNil:
+		t = "Nil"
 
 	default:
 		t = "Unknown"

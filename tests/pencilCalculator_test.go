@@ -42,6 +42,38 @@ func Test1(t *testing.T) {
 	want := 1.524156
 	fmt.Printf("Result:%v -> Want:%f", result, want)
 }
+func TestRounding(t *testing.T) {
+	empJson := `{
+		"id": 11,
+		"name": { "first": "John", "last" : "Sample"},
+		"department": "IT",
+		"designation": "Product Manager",
+		"salary": 50000,
+		"payHistory": [{
+			"effectiveDate": "01/01/2021",
+			"amount": 40000,
+			"units" : 100
+		}, {
+			"effectiveDate": "01/01/2022",
+			"amount": 50000,
+			"units" : 110
+		}]
+	
+	}`
+	ctx := context.Background()
+	inputData := make(map[string]string)
+	inputData["Employee"] = empJson
+	ctx = context.WithValue(ctx, pencilCalculator.InputDataContextKey{}, inputData)
+
+	f := 0.33 * 0.33
+	g := (3333 * 3333) / math.Pow10(2*2)
+	fmt.Printf("%.10f", f)
+	//statment := "@RoundToDecimalPlaces(@RoundToDecimalPlaces(0.3333,2)*@RoundToDecimalPlaces(0.3333,2),2)"
+	statment := "@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,2)"
+	result := pencilCalculator.Evaluate(ctx, statment)
+	//rf := result.PrValue.(float64)
+	fmt.Printf("Result:%v -> Want:%.7f", result, g)
+}
 
 /*
 func TestTypeConversations(t *testing.T) {
@@ -108,6 +140,8 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,2),2)", float64(1110.89)},
+		{"@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,2)", float64(1110.8889)},
 		{"Employee.payHistory(effectiveDate={01-01-2022},amount=50000).units", float64(110)},
 		{"100+200+300", int64(600)},
 		{"@Max(1,2)", float64(2.0)},
@@ -219,6 +253,25 @@ func TestFloat(t *testing.T) {
 	}
 
 }
+
+/*
+tests := [][2]float64{
+	{-0.49999999999999994, negZero}, // -0.5+epsilon
+	{-0.5, -1},
+	{-0.5000000000000001, -1}, // -0.5-epsilon
+	{0, 0},
+	{0.49999999999999994, 0}, // 0.5-epsilon
+	{0.5, 1},
+	{0.5000000000000001, 1},                         // 0.5+epsilon
+	{1.390671161567e-309, 0},                        // denormal
+	{2.2517998136852485e+15, 2.251799813685249e+15}, // 1 bit fraction
+	{4.503599627370497e+15, 4.503599627370497e+15},  // large integer
+	{math.Inf(-1), math.Inf(-1)},
+	{math.Inf(1), math.Inf(1)},
+	{math.NaN(), math.NaN()},
+	{negZero, negZero},
+}
+*/
 func TestJSON(t *testing.T) {
 	//Simple Employee JSON object which we will parse
 	empJson := `{

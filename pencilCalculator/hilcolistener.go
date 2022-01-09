@@ -122,8 +122,8 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	var rightNumberFLOAT float64
 	var leftString string
 	var rightString string
-	var leftIntFloat floatIntegerNumber
-	var rightIntFloat floatIntegerNumber
+	var leftIntFloat FloatIntegerNumber
+	var rightIntFloat FloatIntegerNumber
 	binaryType, resultType := determineBinaryOperationType(left, right)
 
 	switch binaryType {
@@ -141,13 +141,13 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 		rightNumberFLOAT = right.PrValue.(float64)
 	case LeftIntRightIntFloat:
 		leftNumberFLOAT = float64(left.PrValue.(int64))
-		fi := right.PrValue.(floatIntegerNumber)
+		fi := right.PrValue.(FloatIntegerNumber)
 		rightInteger := float64(fi.IntegerValue)
 		divisor := math.Pow10(int(fi.Precision))
 		rightNumberFLOAT = rightInteger / divisor
 	case LeftFloatIntRightIntFloat:
-		leftIntFloat = left.PrValue.(floatIntegerNumber)
-		rightIntFloat = right.PrValue.(floatIntegerNumber)
+		leftIntFloat = left.PrValue.(FloatIntegerNumber)
+		rightIntFloat = right.PrValue.(FloatIntegerNumber)
 	case LeftStringRightString:
 		leftString = left.PrValue.(string)
 		rightString = right.PrValue.(string)
@@ -215,6 +215,16 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 
 		}
 	case "DIVIDE":
+
+		if rightNumberINT == 0 || rightNumberFLOAT == 0 || rightIntFloat.IntegerValue == 0 {
+			message := "can not divide by zero"
+			pr := PencilResult{
+				Type:    PencilTypeError,
+				PrValue: message,
+			}
+			return pr, errors.New(message)
+		}
+
 		switch resultType {
 		case "INT":
 			result = leftNumberINT / rightNumberINT
@@ -265,6 +275,40 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
 		}
+	case "GREATER_THAN_EQUAL":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT >= rightNumberINT
+			returnType = PencilTypeBoolean
+		case "FLOAT":
+			result = leftNumberFLOAT >= rightNumberFLOAT
+			returnType = PencilTypeBoolean
+		case "BOOLEAN":
+		case "STRING":
+		case "INT_FLOAT":
+			result = leftIntFloat.GreaterThanEqual(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
+	case "LESS_THAN_EQUAL":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT <= rightNumberINT
+			returnType = PencilTypeBoolean
+		case "FLOAT":
+			result = leftNumberFLOAT <= rightNumberFLOAT
+			returnType = PencilTypeBoolean
+		case "BOOLEAN":
+		case "STRING":
+		case "INT_FLOAT":
+			result = leftIntFloat.LessThanEqual(rightIntFloat)
+			returnType = PencilTypeIntegerFloat
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
 	case "EQUAL":
 		switch resultType {
 		case "INT":
@@ -283,6 +327,24 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 			panic(fmt.Sprintf("unexpected resultType: %s", operator))
 
 		}
+	case "NOT_EQUAL":
+		switch resultType {
+		case "INT":
+			result = leftNumberINT != rightNumberINT
+			returnType = PencilTypeBoolean
+		case "FLOAT":
+			result = leftNumberFLOAT != rightNumberFLOAT
+			returnType = PencilTypeBoolean
+		case "BOOLEAN":
+			result = left.PrValue != right.PrValue
+			returnType = PencilTypeBoolean
+		case "STRING":
+			result = leftString != rightString
+			returnType = PencilTypeBoolean
+		default:
+			panic(fmt.Sprintf("unexpected resultType: %s", operator))
+
+		}
 	default:
 		panic(fmt.Sprintf("unexpected operator: %s", operator))
 	}
@@ -292,7 +354,7 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 	return pr, nil
 }
 
-func ConvertFloatStringToFloatIntegerNumber(floatString string) (floatIntegerNumber, float64) {
+func ConvertFloatStringToFloatIntegerNumber(floatString string) (FloatIntegerNumber, float64) {
 
 	//negative := strings.ContainsAny(floatString, "-")
 	parts := strings.Split(floatString, ".")
@@ -330,7 +392,7 @@ func ConvertFloatStringToFloatIntegerNumber(floatString string) (floatIntegerNum
 	//fmt.Printf("Before Rounding: s=%s -> %.10f\n", s, f64)
 	//f64 = math.Round(f64*100) / 100
 	//fmt.Printf("After  Rounding: s=%s -> %.10f\n", s, f64)
-	return floatIntegerNumber{
+	return FloatIntegerNumber{
 		IntegerValue: val,
 		Precision:    int64(precision),
 	}, f64
@@ -374,7 +436,7 @@ func DoBooleanLogic(left PencilResult, right PencilResult, operator string) Penc
 // New Listeners start here
 //
 func (p *HilcoPencilGrammarParserListener) EnterProgram(ctx *parser.ProgramContext) {
-	p.logger = logger.NewMultiWithFile(false, false, "log.txt")
+	p.logger = logger.NewMultiWithFile(false, false, "../logs/log.txt")
 	loggingLevel := p.processingContext.Value(LoggingLevelContextKey{})
 	if loggingLevel != nil {
 		level := loggingLevel.(zerolog.Level)
@@ -447,6 +509,50 @@ func (s *HilcoPencilGrammarParserListener) ExitFloat(ctx *parser.FloatContext) {
 	s.push(pr)
 	s.logStack()
 	s.logger.Info().Msg(" Exit ExitFloat: " + value)
+}
+func (s *HilcoPencilGrammarParserListener) ExitPercent(ctx *parser.PercentContext) {
+	s.logger.Info().Msg(" Enter ExitPercent: ")
+
+	value := ctx.GetText()
+	end := len(value) - 2
+	value = value[:end]
+	_, f := ConvertFloatStringToFloatIntegerNumber(value)
+	f = f / 100.0
+	pr := PencilResult{
+		Type:    PencilTypeFloat,
+		PrValue: f,
+	}
+	s.push(pr)
+	s.logStack()
+	s.logger.Info().Msg(" Exit ExitPercent: " + value)
+}
+
+// ExitSpecialKeyword is called when production specialKeyword is exited.
+func (s *HilcoPencilGrammarParserListener) ExitSpecialKeyword(ctx *parser.SpecialKeywordContext) {
+	s.logger.Info().Msg(" Enter ExitSpecialKeyword: ")
+	var pr PencilResult
+	value := ctx.GetText()
+	switch value {
+	case "true":
+		pr = PencilResult{
+			Type:    PencilTypeBoolean,
+			PrValue: true,
+		}
+	case "false":
+		pr = PencilResult{
+			Type:    PencilTypeBoolean,
+			PrValue: false,
+		}
+	case "nil":
+		pr = PencilResult{
+			Type:    PencilTypeNil,
+			PrValue: "nil",
+		}
+	}
+	s.push(pr)
+	s.logStack()
+	s.logger.Info().Msg(" Exit ExitSpecialKeyword: " + value)
+
 }
 
 // EnterNameCalculator is called when production NameCalculator is entered.
@@ -975,7 +1081,8 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 		"DIVIDE",
 		"LESS_THAN",
 		"GREATER_THAN",
-		"EQUAL":
+		"EQUAL",
+		"NOT_EQUAL":
 
 		p.currentOperator = name
 		p.logger.Info().Msg("VisitTerminal <> Binary Operator: " + text)
