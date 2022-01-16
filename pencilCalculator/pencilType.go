@@ -128,6 +128,12 @@ func (fin FloatIntegerNumber) Multiply(input FloatIntegerNumber) FloatIntegerNum
 func (fin FloatIntegerNumber) Divide(input FloatIntegerNumber) FloatIntegerNumber {
 	i := fin.IntegerValue / input.IntegerValue
 	p := fin.Precision - input.Precision
+	if p < 0 {
+		p = p * -1
+		f := math.Pow10(int(p))
+		i = int64(f)
+		p = 0
+	}
 	return FloatIntegerNumber{
 		IntegerValue: i,
 		Precision:    p,

@@ -44,7 +44,7 @@ func convertBinaryElementsToFloat(a PencilResult, b PencilResult) (float64, floa
 	}
 	return leftNumberFLOAT, rightNumberFLOAT
 }
-func Max(a, b interface{}) PencilResult {
+func Max(a, b interface{}) (PencilResult, error) {
 	left := a.(PencilResult)
 	right := b.(PencilResult)
 	leftNumberFLOAT, rightNumberFLOAT := convertBinaryElementsToFloat(left, right)
@@ -55,16 +55,16 @@ func Max(a, b interface{}) PencilResult {
 	return PencilResult{
 		Type:    PencilTypeFloat,
 		PrValue: result,
-	}
+	}, nil
 }
-func Now() PencilResult {
+func Now() (PencilResult, error) {
 	result := time.Now()
 	return PencilResult{
 		Type:    PencilTypeDateTime,
 		PrValue: result,
-	}
+	}, nil
 }
-func NewFloatIntegerBased(integerInt, precisionInt interface{}) PencilResult {
+func NewFloatIntegerBased(integerInt, precisionInt interface{}) (PencilResult, error) {
 	integer := integerInt.(PencilResult).PrValue.(int64)
 	precision := precisionInt.(PencilResult).PrValue.(int64)
 
@@ -74,9 +74,9 @@ func NewFloatIntegerBased(integerInt, precisionInt interface{}) PencilResult {
 			IntegerValue: int64(integer),
 			Precision:    precision,
 		},
-	}
+	}, nil
 }
-func RoundToDecialPlaces_AF(inputFloat, precisionInt interface{}) PencilResult {
+func RoundToDecialPlaces_AF(inputFloat, precisionInt interface{}) (PencilResult, error) {
 	var input float64
 	inputType := inputFloat.(PencilResult).Type
 	switch inputType {
@@ -93,7 +93,7 @@ func RoundToDecialPlaces_AF(inputFloat, precisionInt interface{}) PencilResult {
 	return PencilResult{
 		Type:    PencilTypeFloat,
 		PrValue: result,
-	}
+	}, nil
 }
 func RoundToDecialPlaces(input float64, places int64) (rounded float64, err error) {
 

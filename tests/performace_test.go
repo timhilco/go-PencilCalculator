@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
-	"strconv"
 	"testing"
 	"time"
 
@@ -23,7 +22,7 @@ func getTwoRandonIntegers(min int, max int) (int64, int64) {
 	return i1, i2
 }
 func TestFloatRounding(t *testing.T) {
-	f, _ := getTwoRandonFloats(10000000.0, 20000000.0)
+	f, _ := getTwoRandonFloats(10000000.0, 20000000.0, false)
 	f2 := math.RoundToEven(f * 1000000)
 	fmt.Printf("%.10f\n", f2)
 	f3 := f2 / 1000000
@@ -31,13 +30,17 @@ func TestFloatRounding(t *testing.T) {
 	fmt.Printf("%.10f\n", f3)
 }
 
-func getTwoRandonFloats(min float64, max float64) (float64, float64) {
+func getTwoRandonFloats(min float64, max float64, isLessThanOne bool) (float64, float64) {
 
 	rand.Seed(time.Now().UnixNano())
 
 	f1 := (rand.Float64() * (max - min)) + min
-	f2 := (rand.Float64() * (max - min)) + min
-
+	var f2 float64
+	if isLessThanOne {
+		f2 = rand.Float64()
+	} else {
+		f2 = (rand.Float64() * (max - min)) + min
+	}
 	return f1, f2
 }
 
@@ -72,24 +75,12 @@ func TestFloatPerformance(t *testing.T) {
 	ctx = context.WithValue(ctx, pencilCalculator.LoggingLevelContextKey{}, zerolog.Disabled)
 	var expression string
 	var want float64
-	var err error
-	for i := 1; i < 1000; i++ {
-		i1, i2 := getTwoRandonFloats(0.0, 1000000.0)
-		//fmt.Printf("i1=%.10f", i1)
-		i1s := fmt.Sprintf("%.6f", i1)
-		i2s := fmt.Sprintf("%.6f", i2)
-		i1, err = strconv.ParseFloat(i1s, 64)
-		if err != nil {
-			fmt.Printf("Error:  %s", err)
-		}
-		i2, _ = strconv.ParseFloat(i2s, 64)
-		if err != nil {
-			fmt.Printf("Error:  %s", err)
-		}
-		//fmt.Printf("i1=%.10f\n", i1)
-		//fmt.Printf("i2=%.10f", i2)
-		//i2 = convertFloat64ToFloat64with6DecimalPlaces(i2)
-		//fmt.Printf("i2=%.10f\n", i2)
+	//var err error
+	for i := 1; i < 25; i++ {
+		i1, i2 := getTwoRandonFloats(0.0, 10000.0, true)
+		i1s := fmt.Sprintf("%.10f", i1)
+		i2s := fmt.Sprintf("%.10f", i2)
+
 		for j := 1; j < 5; j++ {
 			switch j {
 			case 1:
@@ -106,9 +97,6 @@ func TestFloatPerformance(t *testing.T) {
 				want = i1 / i2
 			}
 
-			//fmt.Printf("Before: WANT=%.10f\n", want)
-			//want = convertFloat64ToFloat64with6DecimalPlaces(want)
-			//fmt.Printf("After:  WANT=%.10f\n", want)
 			testname := fmt.Sprintf("Expression: %s", expression)
 
 			t.Run(testname, func(t *testing.T) {

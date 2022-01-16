@@ -140,6 +140,17 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)/@NewFloatIntegerBased (3333,2),2)", float64(10.0)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)+@NewFloatIntegerBased (3333,2),2)", float64(366.63)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)-@NewFloatIntegerBased (3333,2),2)", float64(299.97)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)*@NewFloatIntegerBased (3333,2),2)", float64(11108.89)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,1),2)", float64(11108.89)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)/@NewFloatIntegerBased (3333,1),2)", float64(0.1)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)+@NewFloatIntegerBased (3333,1),2)", float64(366.63)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)-@NewFloatIntegerBased (3333,1),2)", float64(-299.97)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)/@NewFloatIntegerBased (3333,2),2)", float64(1.0)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)+@NewFloatIntegerBased (3333,2),2)", float64(66.66)},
+		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)-@NewFloatIntegerBased (3333,2),2)", float64(0.0)},
 		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,2),2)", float64(1110.89)},
 		{"@NewFloatIntegerBased (3333,2)*@NewFloatIntegerBased (3333,2)", float64(1110.8889)},
 		{"Employee.payHistory(effectiveDate={01-01-2022},amount=50000).units", float64(110)},
@@ -187,8 +198,9 @@ func DoesTestPass(result pencilCalculator.PencilResult, want interface{}) (bool,
 			f1 := result.PrValue.(float64)
 			f2 := want.(float64)
 			diff := f1 - f2
-			message = fmt.Sprintf("Difference: %.10f", diff)
+			message = fmt.Sprintf("ERROR: Difference: %.10f over 0.00009", diff)
 			if math.Abs(diff) < 0.0009 {
+				message = fmt.Sprintf("Difference: %.10f", diff)
 				pass = true
 			}
 

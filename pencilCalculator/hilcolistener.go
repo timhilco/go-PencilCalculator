@@ -215,23 +215,28 @@ func DoBinaryArithmatic(left PencilResult, right PencilResult, operator string) 
 
 		}
 	case "DIVIDE":
-
-		if rightNumberINT == 0 || rightNumberFLOAT == 0 || rightIntFloat.IntegerValue == 0 {
-			message := "can not divide by zero"
-			pr := PencilResult{
-				Type:    PencilTypeError,
-				PrValue: message,
-			}
-			return pr, errors.New(message)
-		}
-
 		switch resultType {
 		case "INT":
+			if rightNumberINT == 0 {
+				message := "can not divide by zero"
+				returnType = PencilTypeError
+				result = message
+			}
 			result = leftNumberINT / rightNumberINT
 		case "FLOAT":
+			if rightNumberFLOAT == 0 {
+				message := "can not divide by zero"
+				returnType = PencilTypeError
+				result = message
+			}
 			result = leftNumberFLOAT / rightNumberFLOAT
 			returnType = PencilTypeFloat
 		case "INT_FLOAT":
+			if rightIntFloat.IntegerValue == 0 {
+				message := "can not divide by zero"
+				returnType = PencilTypeError
+				result = message
+			}
 			result = leftIntFloat.Divide(rightIntFloat)
 			returnType = PencilTypeIntegerFloat
 		case "BOOLEAN",
@@ -398,7 +403,7 @@ func ConvertFloatStringToFloatIntegerNumber(floatString string) (FloatIntegerNum
 	}, f64
 }
 
-func Call(f reflect.Value, params []interface{}) (result interface{}, err error) {
+func Call(f reflect.Value, params []interface{}) (result interface{}, err interface{}) {
 	if len(params) != f.Type().NumIn() {
 		err = errors.New("the number of params are out of index")
 		return
@@ -410,6 +415,7 @@ func Call(f reflect.Value, params []interface{}) (result interface{}, err error)
 	//var res []reflect.Value
 	res := f.Call(in)
 	result = res[0].Interface()
+	err = res[1].Interface()
 	return
 }
 
@@ -791,7 +797,13 @@ func (p *HilcoPencilGrammarParserListener) ExitAtFunction(ctx *parser.AtFunction
 		params[j] = args[i]
 		j = j - 1
 	}
-	result, _ := Call(frv, params)
+	result, err := Call(frv, params)
+
+	if err != nil {
+		p.logger.Fatal().Msg("ExitAtFunction: Error Calling @Function")
+
+	}
+
 	p.push(result.(PencilResult))
 	text = result.(PencilResult).String()
 	p.logger.Info().Msg("ExitAtFunction: " + text)
