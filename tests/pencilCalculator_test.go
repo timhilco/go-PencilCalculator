@@ -140,6 +140,26 @@ func TestExpresions(t *testing.T) {
 		expression string
 		want       interface{}
 	}{
+		// Passed test below
+		{"@Max (100,@Max (200, 400))", float64(400.0)},
+		{"@Max (500,@Max (200, 400))", float64(500.0)},
+		{"10000 * (9 + 10000)", int64(100090000)},
+		{"10000 * 9 + 10000", int64(100000)},
+		{"(9 + 10000)", int64(10009)},
+		{"@Max (500, 10000) * (9 + 10000)", float64(100090000.0)},
+		{"@Max (500,(5000*2)) * (9 + 10000)", float64(100090000)},
+		{"Employee.salary * @Max(1,2)", float64(100000.0)},
+		{"Employee.salary + @Max(1,2)", float64(50002.0)},
+		{"Employee.salary - @Max(1,2)", float64(49998.0)},
+		{"Employee.salary / @Max(1,2)", float64(25000.0)},
+		{"Employee.salary * 2", float64(100000.0)},
+		{"Employee.salary + 2", float64(50002.0)},
+		{"Employee.salary - 2", float64(49998.0)},
+		{"Employee.salary / 2", float64(25000.0)},
+		{"Employee.salary * 1", float64(50000.0)},
+		{"Employee.salary + 1", float64(50001.0)},
+		{"Employee.salary - 1", float64(49999.0)},
+		{"Employee.salary / 1", float64(50000.0)},
 		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)/@NewFloatIntegerBased (3333,2),2)", float64(10.0)},
 		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)+@NewFloatIntegerBased (3333,2),2)", float64(366.63)},
 		{"@RoundToDecimalPlaces(@NewFloatIntegerBased (3333,1)-@NewFloatIntegerBased (3333,2),2)", float64(299.97)},

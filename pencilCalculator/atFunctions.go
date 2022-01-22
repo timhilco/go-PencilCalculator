@@ -48,9 +48,16 @@ func Max(a, b interface{}) (PencilResult, error) {
 	left := a.(PencilResult)
 	right := b.(PencilResult)
 	leftNumberFLOAT, rightNumberFLOAT := convertBinaryElementsToFloat(left, right)
-	result := leftNumberFLOAT
+	var result interface{}
+	result = leftNumberFLOAT
 	if rightNumberFLOAT > leftNumberFLOAT {
 		result = rightNumberFLOAT
+	}
+	switch result.(type) {
+	case int64:
+		result = result.(float64)
+	default:
+		// Leave as float64
 	}
 	return PencilResult{
 		Type:    PencilTypeFloat,

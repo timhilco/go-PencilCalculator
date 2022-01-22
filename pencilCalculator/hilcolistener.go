@@ -39,15 +39,16 @@ type accessorArrayElementExpression struct {
 }
 type HilcoPencilGrammarParserListener struct {
 	*parser.BaseHilcoPencilGrammarParserListener
-	stack           []PencilResult
-	logger          zerolog.Logger
-	lexer           *parser.HilcoPencilGrammarLexer
-	currentOperator string
+	stack  []PencilResult
+	logger zerolog.Logger
+	lexer  *parser.HilcoPencilGrammarLexer
+	//currentOperator string
 	//inputDataObject   map[string]interface{}
 	//dataAccessorStack []dataAccessorElement
 	inDataAccessor bool
 	//inArgList         bool
 	inCaseItem        bool
+	inParens          bool
 	processingContext context.Context
 	inputDataStore    map[string]interface{}
 }
@@ -451,6 +452,9 @@ func (p *HilcoPencilGrammarParserListener) EnterProgram(ctx *parser.ProgramConte
 
 	p.logger.Info().Msg("EnterProgram")
 	p.stack = make([]PencilResult, 0)
+	p.inCaseItem = false
+	p.inDataAccessor = false
+	p.inParens = false
 }
 
 // ExitInteger is called when production Integer is exited.
@@ -583,8 +587,8 @@ func (s *HilcoPencilGrammarParserListener) ExitNameCalculator(ctx *parser.NameCa
 func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *parser.BinaryArthmeticCalculatorContext) {
 
 	s.logger.Info().Msg(" Enter ExitBinaryArthmeticCalculator")
-	right, left := s.pop(), s.pop()
-	pr, _ := DoBinaryArithmatic(left, right, s.currentOperator)
+	right, operator, left := s.pop(), s.pop(), s.pop()
+	pr, _ := DoBinaryArithmatic(left, right, operator.PrValue.(string))
 	s.push(pr)
 	s.logStack()
 	s.logger.Info().Msg(" Exit ExitBinaryArthmeticCalculator")
@@ -593,19 +597,21 @@ func (s *HilcoPencilGrammarParserListener) ExitBinaryArthmeticCalculator(ctx *pa
 // ExitBinaryRelationalCalculator is called when production BinaryRelationalCalculator is exited.
 func (s *HilcoPencilGrammarParserListener) ExitBinaryRelationalCalculator(ctx *parser.BinaryRelationalCalculatorContext) {
 	s.logger.Info().Msg("Enter ExitBinaryRelationalCalculator")
-	if s.inDataAccessor {
-		pr := PencilResult{
-			Type:    PencilTypeOperation,
-			PrValue: s.currentOperator,
-		}
-		s.push(pr)
-		s.logStack()
-		s.logger.Info().Msg("Exit ExitBinaryRelationalCalculator: Exit because in DataAccessor")
-		return
+	/*
+		if s.inDataAccessor {
+			pr := PencilResult{
+				Type:    PencilTypeOperation,
+				PrValue: s.currentOperator,
+			}
+			s.push(pr)
+			s.logStack()
+			s.logger.Info().Msg("Exit ExitBinaryRelationalCalculator: Exit because in DataAccessor")
+			return
 
-	}
-	right, left := s.pop(), s.pop()
-	pr, _ := DoBinaryArithmatic(left, right, s.currentOperator)
+		}
+	*/
+	right, operation, left := s.pop(), s.pop(), s.pop()
+	pr, _ := DoBinaryArithmatic(left, right, operation.PrValue.(string))
 	s.push(pr)
 	s.logStack()
 	s.logger.Info().Msg("Exit ExitBinaryRelationalCalculator")
@@ -830,7 +836,38 @@ func (p *HilcoPencilGrammarParserListener) EnterDataAccessor(ctx *parser.DataAcc
 	p.logger.Info().Msg("Exit EnterDataAccessor: ")
 }
 
-// ExitDataAccessor is called when production dataAccessor is exited.
+// EnterParens is called when production Parens is entered.
+func (p *HilcoPencilGrammarParserListener) EnterParens(ctx *parser.ParensContext) {
+	p.logger.Info().Msg("Enter EnterParens: ")
+	p.inParens = true
+	p.logStack()
+	p.logger.Info().Msg("Exit EnterParens: ")
+}
+
+func (p *HilcoPencilGrammarParserListener) ExitParens(ctx *parser.ParensContext) {
+	p.logger.Info().Msg("Enter ExitParens: ")
+	p.inParens = false
+	// Find and Remove LPREN
+	tempStack := make([]PencilResult, 0)
+	foundLPAREN := false
+	for !foundLPAREN {
+		pr := p.pop()
+		switch pr.Type {
+		case PencilTypeLeftParen:
+			foundLPAREN = true
+			for i := len(tempStack) - 1; i >= 0; i-- {
+				p.push(tempStack[i])
+			}
+		default:
+			tempStack = append(tempStack, pr)
+		}
+	}
+
+	p.logStack()
+	p.logger.Info().Msg("Exit ExitParens: ")
+
+}
+
 func (p *HilcoPencilGrammarParserListener) ExitDataAccessor(ctx *parser.DataAccessorContext) {
 	p.logger.Info().Msg("Enter ExitDataAccessor: ")
 	dataAccessorElements := make([]accessorElement, 0)
@@ -1081,12 +1118,13 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 
 	case "AND",
 		"OR":
-		p.logger.Info().Msg("VisitTermnal <> Binary Operator: " + text)
+		p.logger.Info().Msg("VisitTermnal <> Boolean Logic Operator: " + text)
 		pr := PencilResult{
 			Type:    PencilTypeOperation,
 			PrValue: name,
 		}
 		p.push(pr)
+		p.logger.Info().Msg("VisitTerminal <> Binary Operator: " + text)
 	case "ADD",
 		"MINUS",
 		"MULTIPLY",
@@ -1095,8 +1133,11 @@ func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode
 		"GREATER_THAN",
 		"EQUAL",
 		"NOT_EQUAL":
-
-		p.currentOperator = name
+		pr := PencilResult{
+			Type:    PencilTypeOperation,
+			PrValue: name,
+		}
+		p.push(pr)
 		p.logger.Info().Msg("VisitTerminal <> Binary Operator: " + text)
 	case "CLASSNAME":
 		if p.inDataAccessor {
