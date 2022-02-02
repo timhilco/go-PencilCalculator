@@ -3,11 +3,13 @@ package pencilCalculator
 import (
 	"errors"
 	"math"
+	"math/rand"
 	"time"
 )
 
 var functionMap = map[string]interface{}{
 
+	"Long":                 Long,
 	"Max":                  Max,
 	"Now":                  Now,
 	"RoundToDecimalPlaces": RoundToDecialPlaces_AF,
@@ -69,6 +71,19 @@ func Now() (PencilResult, error) {
 	return PencilResult{
 		Type:    PencilTypeDateTime,
 		PrValue: result,
+	}, nil
+}
+func Long(a interface{}, b interface{}) (PencilResult, error) {
+	r := a.(PencilResult).PrValue.(int64)
+	i := a.(PencilResult).PrValue.(int64)
+	rand.Seed(time.Now().UnixNano())
+	ri := int(r)
+	n := rand.Intn(ri) + int(i)
+	d := time.Duration(n) * time.Second
+	time.Sleep(d)
+	return PencilResult{
+		Type:    PencilTypeInteger,
+		PrValue: int64(n),
 	}, nil
 }
 func NewFloatIntegerBased(integerInt, precisionInt interface{}) (PencilResult, error) {

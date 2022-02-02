@@ -67,7 +67,10 @@ SpecialKeyword : 'true' {booleanTrueConstant}
 -----------------------------------------------------------------------------------------------------------------------------------
 */ 
 
-program : expression ;
+program : expression 
+        | statement* |;
+
+statement: expression ASSIGNMENT   expression SEMI_COLON;      
 
 expression   :  caseStatement       	     			#Case
          //   | switchStatement      	 					#ExpressionSwitch
@@ -89,6 +92,7 @@ expression   :  caseStatement       	     			#Case
             | expression AND expression       			#BinaryLogicalCalculator
             | expression OR expression        			#BinaryLogicalCalculator
             | name                  					#NameCalculator
+            | worksheetVariable               #WorkSheetVariableCalculator
             | atFunction           				 		#ExpressionAtFunction
             | dataAccessor         				 		#ExpressionDataAccess
             | specialKeyword   				     		#ExpressionKeyword
@@ -107,8 +111,8 @@ caseItem : expression DOUBLE_COLON expression SEMI_COLON ;
 ifStatement : IF expression THEN expression (ELSE expression)? 
  ;
 
-name  :    ID
-        | CLASSNAME COLON ID ;
+name  :    ID;
+worksheetVariable : CLASSNAME COLON ID ;
 
 atFunction : ATFUNCTION  LPAREN argList? RPAREN;
 argList : expression (COMMA expression? )*;

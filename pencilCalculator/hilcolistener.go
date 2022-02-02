@@ -51,14 +51,21 @@ type HilcoPencilGrammarParserListener struct {
 	inParens          bool
 	processingContext context.Context
 	inputDataStore    map[string]interface{}
+	statementMap      map[string]Statement
+	//wg                sync.WaitGroup
+	processingPass string
 }
 
 func (p *HilcoPencilGrammarParserListener) SetLexer(lexer *parser.HilcoPencilGrammarLexer) {
 	p.lexer = lexer
 }
+
 func (p *HilcoPencilGrammarParserListener) SetContext(ctx context.Context) {
 	p.processingContext = ctx
 	inputData := ctx.Value(InputDataContextKey{}).(map[string]string)
+	p.statementMap = ctx.Value(StatementMapContextKey{}).(map[string]Statement)
+	//p.wg = ctx.Value(WaitGroupContextKey{}).(sync.WaitGroup)
+	p.processingPass = ctx.Value(ProcessingPassContextKey{}).(string)
 	inputDataStore := make(map[string]interface{})
 	// Unmarshal or Decode the JSON to the interface.
 	for key, value := range inputData {
@@ -455,6 +462,10 @@ func (p *HilcoPencilGrammarParserListener) EnterProgram(ctx *parser.ProgramConte
 	p.inCaseItem = false
 	p.inDataAccessor = false
 	p.inParens = false
+}
+func (p *HilcoPencilGrammarParserListener) ExitProgram(ctx *parser.ProgramContext) {
+
+	p.logger.Info().Msg("------------------ Exit Hilco Listener -------------------------")
 }
 
 // ExitInteger is called when production Integer is exited.
@@ -1106,6 +1117,38 @@ func (p *HilcoPencilGrammarParserListener) ExitArgList(ctx *parser.ArgListContex
 
 }
 */
+func (s *HilcoPencilGrammarParserListener) EnterWorksheetVariable(ctx *parser.WorksheetVariableContext) {
+	//s.logger.Info().Msg("Enter EnterWorksheetVariable: ")
+}
+
+// ExitWorksheetVariable is called when production worksheetVariable is exited.
+func (s *HilcoPencilGrammarParserListener) ExitWorksheetVariable(ctx *parser.WorksheetVariableContext) {
+	name := ctx.GetText()
+	s.logger.Info().Msg("Enter ExitWorksheetVariable: " + name)
+	statement := s.statementMap[name]
+	m := fmt.Sprintf("Enter ExitWorksheetVariable: Statement: %s", statement.String())
+	s.logger.Info().Msg(m)
+	pencilResult := statement.Result
+	m = fmt.Sprintf("Enter ExitWorksheetVariable: Result : %v", pencilResult)
+	s.logger.Info().Msg(m)
+	s.push(pencilResult)
+	switch s.processingPass {
+	case "Dependent": // Don't call subscribers
+		m := fmt.Sprintf("Enter ExitWorksheetVariable: Skipping Depedent subscribers -> %s", statement.StatementKey)
+		s.logger.Info().Msg(m)
+	default:
+		for key, subscriber := range statement.SubscriberChannels {
+			m := fmt.Sprintf("Enter ExitWorksheetVariable: Calling Subscribers: %s->%p", key, subscriber)
+			s.logger.Info().Msg(m)
+			subscriber <- key
+			m = fmt.Sprintf("Enter ExitWorksheetVariable:  Called  Subscribers: %s->%p", key, subscriber)
+			s.logger.Info().Msg(m)
+		}
+	}
+	s.logger.Info().Msg("Exit ExitWorksheetVariable: " + name)
+
+}
+
 // VisitTerminal is called when a terminal node is visited.
 func (p *HilcoPencilGrammarParserListener) VisitTerminal(node antlr.TerminalNode) {
 	p.logger.Info().Msg("Enter VisitTerminal: " + node.GetText())

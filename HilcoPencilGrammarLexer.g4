@@ -15,7 +15,8 @@ lexer grammar HilcoPencilGrammarLexer;
 <space> : [\s\t\r\n]+ {ignoreDelimiter};
 ---------------------------------------------------------------------------------------------------------------------------------------
 */
-  CASE : 'case';
+ ASSIGNMENT : ':=';
+ CASE : 'case';
  END_CASE: 'endcase'; 
  IS: 'is';
  SWITCH : 'switch';

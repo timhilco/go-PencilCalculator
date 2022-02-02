@@ -8,6 +8,9 @@ import (
 type PencilType int
 type InputDataContextKey struct{}
 type LoggingLevelContextKey struct{}
+type StatementMapContextKey struct{}
+type WaitGroupContextKey struct{}
+type ProcessingPassContextKey struct{}
 
 const (
 	PencilTypeString PencilType = iota

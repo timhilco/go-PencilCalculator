@@ -11,6 +11,9 @@ type HilcoPencilGrammarParserListener interface {
 	// EnterProgram is called when entering the program production.
 	EnterProgram(c *ProgramContext)
 
+	// EnterStatement is called when entering the statement production.
+	EnterStatement(c *StatementContext)
+
 	// EnterNameCalculator is called when entering the NameCalculator production.
 	EnterNameCalculator(c *NameCalculatorContext)
 
@@ -28,6 +31,9 @@ type HilcoPencilGrammarParserListener interface {
 
 	// EnterBinaryRelationalCalculator is called when entering the BinaryRelationalCalculator production.
 	EnterBinaryRelationalCalculator(c *BinaryRelationalCalculatorContext)
+
+	// EnterWorkSheetVariableCalculator is called when entering the WorkSheetVariableCalculator production.
+	EnterWorkSheetVariableCalculator(c *WorkSheetVariableCalculatorContext)
 
 	// EnterString is called when entering the String production.
 	EnterString(c *StringContext)
@@ -80,6 +86,9 @@ type HilcoPencilGrammarParserListener interface {
 	// EnterName is called when entering the name production.
 	EnterName(c *NameContext)
 
+	// EnterWorksheetVariable is called when entering the worksheetVariable production.
+	EnterWorksheetVariable(c *WorksheetVariableContext)
+
 	// EnterAtFunction is called when entering the atFunction production.
 	EnterAtFunction(c *AtFunctionContext)
 
@@ -107,6 +116,9 @@ type HilcoPencilGrammarParserListener interface {
 	// ExitProgram is called when exiting the program production.
 	ExitProgram(c *ProgramContext)
 
+	// ExitStatement is called when exiting the statement production.
+	ExitStatement(c *StatementContext)
+
 	// ExitNameCalculator is called when exiting the NameCalculator production.
 	ExitNameCalculator(c *NameCalculatorContext)
 
@@ -124,6 +136,9 @@ type HilcoPencilGrammarParserListener interface {
 
 	// ExitBinaryRelationalCalculator is called when exiting the BinaryRelationalCalculator production.
 	ExitBinaryRelationalCalculator(c *BinaryRelationalCalculatorContext)
+
+	// ExitWorkSheetVariableCalculator is called when exiting the WorkSheetVariableCalculator production.
+	ExitWorkSheetVariableCalculator(c *WorkSheetVariableCalculatorContext)
 
 	// ExitString is called when exiting the String production.
 	ExitString(c *StringContext)
@@ -175,6 +190,9 @@ type HilcoPencilGrammarParserListener interface {
 
 	// ExitName is called when exiting the name production.
 	ExitName(c *NameContext)
+
+	// ExitWorksheetVariable is called when exiting the worksheetVariable production.
+	ExitWorksheetVariable(c *WorksheetVariableContext)
 
 	// ExitAtFunction is called when exiting the atFunction production.
 	ExitAtFunction(c *AtFunctionContext)

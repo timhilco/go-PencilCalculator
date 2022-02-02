@@ -27,6 +27,12 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterProgram(ctx *ProgramContext)
 // ExitProgram is called when production program is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitProgram(ctx *ProgramContext) {}
 
+// EnterStatement is called when production statement is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterStatement(ctx *StatementContext) {}
+
+// ExitStatement is called when production statement is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitStatement(ctx *StatementContext) {}
+
 // EnterNameCalculator is called when production NameCalculator is entered.
 func (s *BaseHilcoPencilGrammarParserListener) EnterNameCalculator(ctx *NameCalculatorContext) {}
 
@@ -67,6 +73,14 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterBinaryRelationalCalculator(c
 
 // ExitBinaryRelationalCalculator is called when production BinaryRelationalCalculator is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitBinaryRelationalCalculator(ctx *BinaryRelationalCalculatorContext) {
+}
+
+// EnterWorkSheetVariableCalculator is called when production WorkSheetVariableCalculator is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterWorkSheetVariableCalculator(ctx *WorkSheetVariableCalculatorContext) {
+}
+
+// ExitWorkSheetVariableCalculator is called when production WorkSheetVariableCalculator is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitWorkSheetVariableCalculator(ctx *WorkSheetVariableCalculatorContext) {
 }
 
 // EnterString is called when production String is entered.
@@ -181,6 +195,13 @@ func (s *BaseHilcoPencilGrammarParserListener) EnterName(ctx *NameContext) {}
 
 // ExitName is called when production name is exited.
 func (s *BaseHilcoPencilGrammarParserListener) ExitName(ctx *NameContext) {}
+
+// EnterWorksheetVariable is called when production worksheetVariable is entered.
+func (s *BaseHilcoPencilGrammarParserListener) EnterWorksheetVariable(ctx *WorksheetVariableContext) {
+}
+
+// ExitWorksheetVariable is called when production worksheetVariable is exited.
+func (s *BaseHilcoPencilGrammarParserListener) ExitWorksheetVariable(ctx *WorksheetVariableContext) {}
 
 // EnterAtFunction is called when production atFunction is entered.
 func (s *BaseHilcoPencilGrammarParserListener) EnterAtFunction(ctx *AtFunctionContext) {}
